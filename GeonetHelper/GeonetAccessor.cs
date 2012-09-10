@@ -1,0 +1,94 @@
+﻿using System;
+using System.Net;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
+namespace WhatsShakingNZ.GeonetHelper
+{
+    public static class GeonetAccessor
+    {
+        public static QuakeEventHandler GetQuakesCompletedEvent;
+        public static void GetQuakes()
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://beta.geonet.org.nz/quakes/services/felt.json");
+            request.AllowReadStreamBuffering = true;
+            var token = request.BeginGetResponse(ProcessResponse, request);
+        }
+
+        static void ProcessResponse(IAsyncResult result)
+        {
+            HttpWebRequest request = result.AsyncState as HttpWebRequest;
+            string responseJson = "";
+            if (request != null)
+            {
+                try
+                {
+                    WebResponse response = request.EndGetResponse(result);
+                    using (var stream = response.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(stream))
+                        {
+                            responseJson = reader.ReadToEnd();
+                        }
+                    }
+                }
+                catch (WebException e)
+                {
+                    if(null != GetQuakesCompletedEvent)
+                        GetQuakesCompletedEvent(null, null);
+                    return;
+                }
+            }
+            List<Earthquake> quakes = new List<Earthquake>();
+            if (!string.IsNullOrEmpty(responseJson))
+            {
+                
+                try
+                {
+                    JObject o = JObject.Parse(responseJson);
+                    
+                    foreach (var q in o["features"].Children())
+                    {
+                        Earthquake quake = new Earthquake
+                        {
+                            Location = new Location()
+                            {
+                                Longitude = q["geometry"]["coordinates"].Values<double>().ElementAt(0),
+                                Latitude = q["geometry"]["coordinates"].Values<double>().ElementAt(1)
+                            },
+                            Depth = (double)q["properties"]["depth"],
+                            Magnitude = (double)q["properties"]["magnitude"],
+                            Reference = (string)q["properties"]["publicid"],
+                            // origintime=2012-08-13 05:25:24.727000  (that's in UTC)
+                            Date = DateTime.Parse((string)q["properties"]["origintime"] + "Z"),
+                            Agency = (string)q["properties"]["agency"]
+                        };
+                        quakes.Add(quake);
+                    }
+                    quakes = new List<Earthquake>(quakes.OrderByDescending(q => q.Date));
+                }
+                catch {}
+            }
+            if(null != GetQuakesCompletedEvent)
+                GetQuakesCompletedEvent(null, new QuakeEventArgs(quakes));
+        }
+    }
+    public delegate void QuakeEventHandler(object sender, QuakeEventArgs e);
+    public class QuakeEventArgs : EventArgs
+    {
+        private List<Earthquake> _quakes;
+        public QuakeEventArgs(List<Earthquake> quakes)
+        {
+            _quakes = quakes;
+        }
+        public List<Earthquake> Quakes
+        {
+            get
+            {
+                return _quakes;
+            }
+        }
+    }
+}
