@@ -44,7 +44,7 @@ namespace WhatsShakingNZ
             Earthquake quake = value as Earthquake;
             if (quake == null)
                 return null;
-            return String.Format("Depth: {0:0} kilometers", quake.Depth); ;
+            return String.Format("Depth: {0} kilometers", quake.FormattedDepth); ;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -63,7 +63,7 @@ namespace WhatsShakingNZ
             Earthquake quake = value as Earthquake;
             if (quake == null)
                 return null;
-            return String.Format("{0:0} km", quake.Depth); ;
+            return String.Format("{0} km", quake.FormattedDepth); ;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

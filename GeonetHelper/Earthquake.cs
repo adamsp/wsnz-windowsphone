@@ -16,6 +16,19 @@ namespace WhatsShakingNZ.GeonetHelper
                 _depth = Math.Round(value, 0);
             }
         }
+
+        /// <summary>
+        /// A string representation of this Earthquakes depth, rounded
+        /// as per http://info.geonet.org.nz/display/appdata/Earthquake+Web+Services
+        /// </summary>
+        public string FormattedDepth
+        {
+            get
+            {
+                return string.Format("{0:0}", Depth);
+            }
+        }
+
         public Location Location { get; set; }
         private double _magnitude;
         public double Magnitude
@@ -27,6 +40,18 @@ namespace WhatsShakingNZ.GeonetHelper
             set
             {
                 _magnitude = Math.Round(value, 1);
+            }
+        }
+
+        /// <summary>
+        /// A string representation of this Earthquakes magnitude, rounded
+        /// as per http://info.geonet.org.nz/display/appdata/Earthquake+Web+Services
+        /// </summary>
+        public string FormattedMagnitude
+        {
+            get
+            {
+                return string.Format("{0:N1}", Magnitude);
             }
         }
         public string Reference { get; set; }

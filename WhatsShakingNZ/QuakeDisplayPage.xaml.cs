@@ -28,7 +28,7 @@ namespace WhatsShakingNZ
             Pushpin pin = new Pushpin()
                     {
                         Location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude),
-                        Content = string.Format("{0:0.0}", App.SelectedQuake.Magnitude)
+                        Content = App.SelectedQuake.FormattedMagnitude
                     };
             if (App.SelectedQuake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
                 pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;

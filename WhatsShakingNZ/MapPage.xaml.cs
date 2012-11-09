@@ -100,7 +100,7 @@ namespace WhatsShakingNZ
                     Pushpin pin = new Pushpin()
                     {
                         Location = new GeoCoordinate(q.Location.Latitude, q.Location.Longitude),
-                        Content = String.Format("{0:0.0}", q.Magnitude),
+                        Content = q.FormattedMagnitude,
                         DataContext = q,
                     };
                     pin.Tap += QuakePin_Tap;

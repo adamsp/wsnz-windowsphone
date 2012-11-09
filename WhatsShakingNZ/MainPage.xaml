@@ -53,7 +53,7 @@
                             VerticalAlignment="Center"
 						    HorizontalAlignment="Center"
                             FontSize="{StaticResource PhoneFontSizeExtraLarge}"
-                            Text="{Binding Path=Magnitude, StringFormat=N1}"
+                            Text="{Binding Path=FormattedMagnitude}"
                             Foreground="{Binding Converter={StaticResource FontColourConverter}, Path=Magnitude}"/>
 
                         <StackPanel	Grid.Column="1">

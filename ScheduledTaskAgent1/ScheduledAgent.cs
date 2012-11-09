@@ -81,7 +81,7 @@ namespace ScheduledTaskAgent1
                     NewTileData = new StandardTileData
                     {
                         Title = quakes.Count + " in last 24hrs",
-                        BackContent = "latest quake\n" + string.Format("{0:0.0}", latest.Magnitude) + " mag\n" + string.Format("{0:0}", latest.Depth) + "k deep"
+                        BackContent = string.Format("latest quake\n{0} mag\n{1} k deep",  latest.FormattedMagnitude, latest.FormattedDepth)
                     };
                 }
                 else
