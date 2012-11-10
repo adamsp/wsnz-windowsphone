@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
@@ -78,12 +79,12 @@ namespace WhatsShakingNZ.GeonetHelper
     public delegate void QuakeEventHandler(object sender, QuakeEventArgs e);
     public class QuakeEventArgs : EventArgs
     {
-        private List<Earthquake> _quakes;
+        private ObservableCollection<Earthquake> _quakes;
         public QuakeEventArgs(List<Earthquake> quakes)
         {
-            _quakes = quakes;
+            _quakes = new ObservableCollection<Earthquake>(quakes);
         }
-        public List<Earthquake> Quakes
+        public ObservableCollection<Earthquake> Quakes
         {
             get
             {

@@ -16,30 +16,12 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ
 {
     public partial class App : Application, INotifyPropertyChanged
     {
-        ApplicationBar appBarListView = new ApplicationBar();
-        ApplicationBar appBarMapView = new ApplicationBar();
-        private ObservableCollection<Earthquake> _quakes;
-        public ObservableCollection<Earthquake> Quakes
-        {
-            get
-            {
-                return _quakes;
-            }
-            set
-            {
-                if (_quakes != value)
-                {
-                    _quakes = value;
-                    NotifyPropertyChanged("Quakes");
-                }
-            }
-        }
-
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -166,7 +148,7 @@ namespace WhatsShakingNZ
 
         #endregion
 
-          #region INotifyPropertyChanged Members
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -180,14 +162,14 @@ namespace WhatsShakingNZ
         }
         #endregion
 
-        public static Earthquake SelectedQuake { get; set; }
+        private static readonly EarthquakeContainer _container = new EarthquakeContainer();
+        public EarthquakeContainer EarthquakeContainer
+        {
+            get
+            {
+                return _container;
+            }
+        }
 
-        /// <summary>
-        /// We hold ALL latest quakes so that we don't have to re-download
-        /// the quakes after someone changes the settings.
-        /// </summary>
-        public List<Earthquake> AllLatestQuakes { get; set; }
-
-        public bool SettingsChanged { get; set; }
     }
 }

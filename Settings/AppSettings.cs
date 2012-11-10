@@ -10,12 +10,15 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.IO.IsolatedStorage;
 
-namespace WhatsShakingNZ
+namespace WhatsShakingNZ.Settings
 {
     public class AppSettings
     {
         // Our isolated storage settings
         IsolatedStorageSettings settings;
+
+        public static SettingsChangedEventHandler SettingsChangedEvent;
+        public delegate void SettingsChangedEventHandler();
 
         // The isolated storage key names of our settings
         const string MinimumDisplayMagnitudeKey = "MinimumDisplayMagnitude";
@@ -111,7 +114,8 @@ namespace WhatsShakingNZ
         public void Save()
         {
             settings.Save();
-            (Application.Current as App).SettingsChanged = true;
+            if (null != SettingsChangedEvent)
+                SettingsChangedEvent();
         }
 
 

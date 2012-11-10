@@ -17,22 +17,22 @@ namespace WhatsShakingNZ
 {
     public partial class QuakeDisplayPage : PhoneApplicationPage
     {
-        private AppSettings appSettings;
+        //private AppSettings appSettings;
         public QuakeDisplayPage()
         {
-            appSettings = new AppSettings();
-            InitializeComponent();
-            ContentPanel.DataContext = App.SelectedQuake;
-            GeoCoordinate location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude);
-            QuakeMap.Center = location;
-            Pushpin pin = new Pushpin()
-                    {
-                        Location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude),
-                        Content = App.SelectedQuake.FormattedMagnitude
-                    };
-            if (App.SelectedQuake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
-                pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-            QuakeMap.Children.Add(pin);
+            //appSettings = new AppSettings();
+            //InitializeComponent();
+            //ContentPanel.DataContext = App.SelectedQuake;
+            //GeoCoordinate location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude);
+            //QuakeMap.Center = location;
+            //Pushpin pin = new Pushpin()
+            //        {
+            //            Location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude),
+            //            Content = App.SelectedQuake.FormattedMagnitude
+            //        };
+            //if (App.SelectedQuake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
+            //    pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
+            //QuakeMap.Children.Add(pin);
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)

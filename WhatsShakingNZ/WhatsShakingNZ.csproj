@@ -75,7 +75,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppSettings.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="LittleWatson.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -184,6 +183,10 @@
     <ProjectReference Include="..\ScheduledTaskAgent1\ScheduledTaskAgent1.csproj">
       <Project>{9A13DCDD-7C15-4D21-8A60-775D5DADC9FC}</Project>
       <Name>ScheduledTaskAgent1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Settings\Settings.csproj">
+      <Project>{BCEFF84C-A535-4556-AA0D-B88F8C258F93}</Project>
+      <Name>Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

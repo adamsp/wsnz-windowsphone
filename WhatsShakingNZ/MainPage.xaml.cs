@@ -13,24 +13,25 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Threading;
 using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ
 {
     public partial class MainPage : PhoneApplicationPage
     {
         private enum ButtonNames { RefreshButton = 0, MapButton };
-        private AppSettings appSettings;
-        // Constructor
+        private EarthquakeContainer quakeContainer;
+        
         public MainPage()
         {
-            appSettings = new AppSettings();
+            quakeContainer = (Application.Current as App).EarthquakeContainer;
             InitializeComponent();
-            this.DataContext = Application.Current as App;
+            this.DataContext = quakeContainer;
             ImageBrush backgroundImage = new ImageBrush();
             backgroundImage.ImageSource = ShakingHelper.GetBackgroundImage();
             LayoutRoot.Background = backgroundImage;
             LittleWatson.CheckForPreviousException();
-            if (appSettings.ShowLiveTileSetting)
+            if (quakeContainer.AppSettings.ShowLiveTileSetting)
                 ScheduledTaskHelper.Update();
             // TODO Handle no data connectivity! Primarily serialization & storage of most recent seen quakes list.
             // TODO Add Geonet Beta functionality
@@ -38,56 +39,48 @@ namespace WhatsShakingNZ
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            GeonetAccessor.GetQuakesCompletedEvent += QuakeListener;
+            quakeContainer.PropertyChanged += ListUpdater;
             if (e.NavigationMode != System.Windows.Navigation.NavigationMode.Back)
                 GetQuakes();
-            else if ((Application.Current as App).SettingsChanged)
-            {
-                (Application.Current as App).SettingsChanged = false;
-                // null check added after marketplace submission. Will only crash if someone edits settings before Geonet returns. Eek.
-                if((Application.Current as App).AllLatestQuakes != null)
-                    (Application.Current as App).Quakes = ShakingHelper.GetFilteredQuakes((Application.Current as App).AllLatestQuakes, appSettings);
-            }
+            quakeContainer.RefreshViewsIfSettingsChanged();
             base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-            GeonetAccessor.GetQuakesCompletedEvent -= QuakeListener;
+            quakeContainer.PropertyChanged -= ListUpdater;
             base.OnNavigatedFrom(e);
         }
-
+        
         private void GetQuakes()
         {
-            GeonetAccessor.GetQuakes();
             (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;
+            quakeContainer.DownloadNewQuakes();
         }
 
-        public void QuakeListener(object sender, QuakeEventArgs e)
+        public void ListUpdater(object sender, PropertyChangedEventArgs e)
         {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            if (e != null && e.PropertyName == "Quakes")
             {
-                (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
-                customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
-                customIndeterminateProgressBar.IsIndeterminate = false;
-                if (e != null)
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    (Application.Current as App).Quakes = ShakingHelper.GetFilteredQuakes(e.Quakes, appSettings);
-                    (Application.Current as App).AllLatestQuakes = e.Quakes;
-                }
-                else
-                {
-                    ToastPrompt toast = new ToastPrompt()
+                    (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
+                    customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
+                    customIndeterminateProgressBar.IsIndeterminate = false;
+                    if (e == null)
                     {
-                        TextOrientation = System.Windows.Controls.Orientation.Vertical,
-                        Title = "problem retrieving quakes",
-                        Message = "please check your data connection is working"
-                    };
-                    toast.Show();
-                }
-            });
+                        ToastPrompt toast = new ToastPrompt()
+                        {
+                            TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                            Title = "problem retrieving quakes",
+                            Message = "please check your data connection is working"
+                        };
+                        toast.Show();
+                    }
+                });
+            }
         }
 
         private void RefreshRecentButton_Click(object sender, EventArgs e)
@@ -114,7 +107,7 @@ namespace WhatsShakingNZ
         {
             if (ContentPanel.SelectedIndex >= 0)
             {
-                App.SelectedQuake = ContentPanel.SelectedItem as Earthquake;
+                //App.SelectedQuake = ContentPanel.SelectedItem as Earthquake;
                 ContentPanel.SelectedItem = null;
                 NavigationService.Navigate(new Uri("/QuakeDisplayPage.xaml", UriKind.Relative));
             }
