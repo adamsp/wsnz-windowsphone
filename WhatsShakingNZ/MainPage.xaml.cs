@@ -107,9 +107,10 @@ namespace WhatsShakingNZ
         {
             if (ContentPanel.SelectedIndex >= 0)
             {
-                //App.SelectedQuake = ContentPanel.SelectedItem as Earthquake;
+                int selectedIndex = ContentPanel.SelectedIndex;
+                string navUri = string.Format("/QuakeDisplayPage.xaml?selectedItem={0}", selectedIndex);
                 ContentPanel.SelectedItem = null;
-                NavigationService.Navigate(new Uri("/QuakeDisplayPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
             }
         }
 

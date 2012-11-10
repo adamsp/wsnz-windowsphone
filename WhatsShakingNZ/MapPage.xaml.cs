@@ -79,6 +79,7 @@ namespace WhatsShakingNZ
             double minWarningMagnitude = quakeContainer.AppSettings.MinimumWarningMagnitudeSetting;
             if (quakeContainer.Quakes != null)
             {
+                // Use "reverse" here so newer quakes are on top.
                 foreach (var q in quakeContainer.Quakes.Reverse())
                 {
                     Pushpin pin = new Pushpin()
@@ -106,8 +107,10 @@ namespace WhatsShakingNZ
         private void QuakePin_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Pushpin pin = sender as Pushpin;
-            //App.SelectedQuake = pin.DataContext as Earthquake;
-            NavigationService.Navigate(new Uri("/QuakeDisplayPage.xaml", UriKind.Relative));
+            // Remember the children have been added in the reverse order to the order they appear in the original list.
+            int selectedIndex = (QuakeMap.Children.Count - 1) - QuakeMap.Children.IndexOf(pin);
+            string navUri = string.Format("/QuakeDisplayPage.xaml?selectedItem={0}", selectedIndex);
+            NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)

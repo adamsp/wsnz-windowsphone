@@ -12,27 +12,41 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Device.Location;
 using Microsoft.Phone.Controls.Maps;
+using WhatsShakingNZ.GeonetHelper;
 
 namespace WhatsShakingNZ
 {
     public partial class QuakeDisplayPage : PhoneApplicationPage
     {
-        //private AppSettings appSettings;
         public QuakeDisplayPage()
         {
-            //appSettings = new AppSettings();
-            //InitializeComponent();
-            //ContentPanel.DataContext = App.SelectedQuake;
-            //GeoCoordinate location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude);
-            //QuakeMap.Center = location;
-            //Pushpin pin = new Pushpin()
-            //        {
-            //            Location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude),
-            //            Content = App.SelectedQuake.FormattedMagnitude
-            //        };
-            //if (App.SelectedQuake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
-            //    pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-            //QuakeMap.Children.Add(pin);
+            InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            string selectedIndex = string.Empty;
+            int index;
+            if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
+            {
+                index = int.Parse(selectedIndex);
+            }
+            else return;
+            
+            Earthquake quake = (Application.Current as App).EarthquakeContainer.Quakes[index];
+
+            ContentPanel.DataContext = quake;
+            GeoCoordinate location = new GeoCoordinate(quake.Location.Latitude, quake.Location.Longitude);
+            QuakeMap.Center = location;
+            Pushpin pin = new Pushpin()
+            {
+                Location = new GeoCoordinate(quake.Location.Latitude, quake.Location.Longitude),
+                Content = quake.FormattedMagnitude
+            };
+            if (quake.Magnitude >= (Application.Current as App).EarthquakeContainer.AppSettings.MinimumWarningMagnitudeSetting)
+                pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
+            QuakeMap.Children.Add(pin);
+            base.OnNavigatedTo(e);
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)
