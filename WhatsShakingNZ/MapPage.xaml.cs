@@ -21,30 +21,55 @@ using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ
 {
-    public partial class MapPage : PhoneApplicationPage
+    public partial class MapPage : WhatsShakingBasePage
     {
         private enum ButtonNames { ZoomOutButton = 0, RefreshButton, ListButton, ZoomInButton };
-        private EarthquakeContainer quakeContainer;
-        public MapPage()
+        
+        public MapPage() : base()
         {
-            quakeContainer = (Application.Current as App).EarthquakeContainer;
             InitializeComponent();
+            InitializeApplicationBar();
+        }
+
+        private void InitializeApplicationBar()
+        {
+            List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
+
+            ApplicationBarIconButton zoomOutButton = new ApplicationBarIconButton();
+            zoomOutButton.Text = "zoom out";
+            zoomOutButton.IconUri = new Uri("/Icons/appbar.minus.rest.png", UriKind.Relative);
+            zoomOutButton.Click += ZoomOutButton_Click;
+
+            ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
+            refreshButton.Text = "refresh";
+            refreshButton.IconUri = new Uri("/Icons/appbar.refresh.rest.png", UriKind.Relative);
+            refreshButton.Click += RefreshRecentButton_Click;
+
+            ApplicationBarIconButton listViewButton = new ApplicationBarIconButton();
+            listViewButton.Text = "list view";
+            listViewButton.IconUri = new Uri("/Icons/appbar.list.png", UriKind.Relative);
+            listViewButton.Click += ListPageButton_Click;
+
+            ApplicationBarIconButton zoomInButton = new ApplicationBarIconButton();
+            zoomInButton.Text = "zoom in";
+            zoomInButton.IconUri = new Uri("/Icons/appbar.add.rest.png", UriKind.Relative);
+            zoomInButton.Click += ZoomInButton_Click;
+
+            buttons.Add(zoomOutButton);
+            buttons.Add(refreshButton);
+            buttons.Add(listViewButton);
+            buttons.Add(zoomInButton);
+
+            base.InitializeApplicationBar(buttons);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            quakeContainer.PropertyChanged += MapUpdater;
-            quakeContainer.RefreshViews();
             base.OnNavigatedTo(e);
+            QuakeContainer.RefreshViews();
         }
 
-        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            quakeContainer.PropertyChanged -= MapUpdater;
-            base.OnNavigatedFrom(e);
-        }
-
-        public void MapUpdater(object sender, PropertyChangedEventArgs e)
+        public override void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
         {
             if (e != null && e.PropertyName == "Quakes")
             {
@@ -70,17 +95,17 @@ namespace WhatsShakingNZ
                 });
             }
         }
-
+        
         private void UpdateMap()
         {
             QuakeMap.Children.Clear();
             // Select only quakes above the settings magnitude
             // The OrderBy means that higher magnitude quakes will be pinned on top OrderBy(s => s.Magnitude)
-            double minWarningMagnitude = quakeContainer.AppSettings.MinimumWarningMagnitudeSetting;
-            if (quakeContainer.Quakes != null)
+            double minWarningMagnitude = QuakeContainer.AppSettings.MinimumWarningMagnitudeSetting;
+            if (QuakeContainer.Quakes != null)
             {
                 // Use "reverse" here so newer quakes are on top.
-                foreach (var q in quakeContainer.Quakes.Reverse())
+                foreach (var q in QuakeContainer.Quakes.Reverse())
                 {
                     Pushpin pin = new Pushpin()
                     {
@@ -88,7 +113,7 @@ namespace WhatsShakingNZ
                         Content = q.FormattedMagnitude,
                         DataContext = q,
                     };
-                    pin.Tap += QuakePin_Tap;
+                    pin.Tap += QuakeItem_Tap;
                     if (q.Magnitude >= minWarningMagnitude)
                         pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
                     QuakeMap.Children.Add(pin);
@@ -96,21 +121,20 @@ namespace WhatsShakingNZ
             }
         }
 
-        private void GetQuakes()
+        protected override void GetQuakes()
         {
            (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;
-            quakeContainer.DownloadNewQuakes();
+            QuakeContainer.DownloadNewQuakes();
         }
 
-        private void QuakePin_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        protected override void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Pushpin pin = sender as Pushpin;
             // Remember the children have been added in the reverse order to the order they appear in the original list.
             int selectedIndex = (QuakeMap.Children.Count - 1) - QuakeMap.Children.IndexOf(pin);
-            string navUri = string.Format("/QuakeDisplayPage.xaml?selectedItem={0}", selectedIndex);
-            NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
+            NavigateToQuakePage(selectedIndex);
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)
@@ -118,11 +142,6 @@ namespace WhatsShakingNZ
             double zoom;
             zoom = QuakeMap.ZoomLevel;
             QuakeMap.ZoomLevel = ++zoom;
-        }
-
-        private void RefreshRecentButton_Click(object sender, EventArgs e)
-        {
-            GetQuakes();
         }
 
         private void ListPageButton_Click(object sender, EventArgs e)
@@ -138,16 +157,6 @@ namespace WhatsShakingNZ
             double zoom;
             zoom = QuakeMap.ZoomLevel;
             QuakeMap.ZoomLevel = --zoom;
-        }
-
-        private void SettingsPageMenuItem_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
-        }
-
-        private void AboutPageMenuItem_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
         }
     }
 }

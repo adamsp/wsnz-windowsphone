@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage 
+﻿<local:WhatsShakingBasePage
     x:Class="WhatsShakingNZ.MapPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:WhatsShakingNZ"
     xmlns:maps="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -43,15 +44,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.minus.rest.png" Text="zoom out" Click="ZoomOutButton_Click"/>
-            <shell:ApplicationBarIconButton x:Name="RefreshButton" IconUri="/Icons/appbar.refresh.rest.png" Text="refresh" Click="RefreshRecentButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.list.png" Text="list view" Click="ListPageButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.add.rest.png" Text="zoom in" Click="ZoomInButton_Click"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="settings" Click="SettingsPageMenuItem_Click"/>
-                <shell:ApplicationBarMenuItem Text="about" Click="AboutPageMenuItem_Click"/>
-            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-</phone:PhoneApplicationPage>
+</local:WhatsShakingBasePage>

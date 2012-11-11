@@ -14,53 +14,70 @@ using System.Windows.Media.Imaging;
 using System.Threading;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Settings;
+using System.Collections.Generic;
 
 namespace WhatsShakingNZ
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : WhatsShakingBasePage
     {
         private enum ButtonNames { RefreshButton = 0, MapButton };
-        private EarthquakeContainer quakeContainer;
         
         public MainPage()
         {
-            quakeContainer = (Application.Current as App).EarthquakeContainer;
             InitializeComponent();
-            this.DataContext = quakeContainer;
+            InitializeApplicationBar();
+            this.DataContext = QuakeContainer;
+            SetBackgroundImage();
+            LittleWatson.CheckForPreviousException();
+            if (QuakeContainer.AppSettings.ShowLiveTileSetting)
+                ScheduledTaskHelper.Update();
+            // TODO Handle no data connectivity! Primarily serialization & storage of most recent seen quakes list.
+        }
+
+        private void SetBackgroundImage()
+        {
             ImageBrush backgroundImage = new ImageBrush();
             backgroundImage.ImageSource = ShakingHelper.GetBackgroundImage();
             LayoutRoot.Background = backgroundImage;
-            LittleWatson.CheckForPreviousException();
-            if (quakeContainer.AppSettings.ShowLiveTileSetting)
-                ScheduledTaskHelper.Update();
-            // TODO Handle no data connectivity! Primarily serialization & storage of most recent seen quakes list.
-            // TODO Add Geonet Beta functionality
+        }
+
+        private void InitializeApplicationBar()
+        {
+            List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
+            
+            ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
+            refreshButton.Text = "refresh";
+            refreshButton.IconUri = new Uri("/Icons/appbar.refresh.rest.png", UriKind.Relative);
+            refreshButton.Click += RefreshRecentButton_Click;
+            
+            ApplicationBarIconButton mapViewButton = new ApplicationBarIconButton();
+            mapViewButton.Text = "map view";
+            mapViewButton.IconUri = new Uri("/Icons/appbar.map.png", UriKind.Relative);
+            mapViewButton.Click += MapPageButton_Click;
+            
+            buttons.Add(refreshButton);
+            buttons.Add(mapViewButton);
+            
+            base.InitializeApplicationBar(buttons);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            quakeContainer.PropertyChanged += ListUpdater;
+            base.OnNavigatedTo(e);
             if (e.NavigationMode != System.Windows.Navigation.NavigationMode.Back)
                 GetQuakes();
-            quakeContainer.RefreshViewsIfSettingsChanged();
-            base.OnNavigatedTo(e);
+            QuakeContainer.RefreshViewsIfSettingsChanged();
         }
 
-        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            quakeContainer.PropertyChanged -= ListUpdater;
-            base.OnNavigatedFrom(e);
-        }
-        
-        private void GetQuakes()
+        protected override void GetQuakes()
         {
             (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;
-            quakeContainer.DownloadNewQuakes();
+            QuakeContainer.DownloadNewQuakes();
         }
 
-        public void ListUpdater(object sender, PropertyChangedEventArgs e)
+        public override void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
         {
             if (e != null && e.PropertyName == "Quakes")
             {
@@ -83,34 +100,18 @@ namespace WhatsShakingNZ
             }
         }
 
-        private void RefreshRecentButton_Click(object sender, EventArgs e)
-        {
-            GetQuakes();
-        }
-
         private void MapPageButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/MapPage.xaml", UriKind.Relative));
         }
 
-        private void SettingsPageMenuItem_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
-        }
-
-        private void AboutPageMenuItem_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
-        }
-
-        private void ContentPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        protected override void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (ContentPanel.SelectedIndex >= 0)
             {
                 int selectedIndex = ContentPanel.SelectedIndex;
-                string navUri = string.Format("/QuakeDisplayPage.xaml?selectedItem={0}", selectedIndex);
                 ContentPanel.SelectedItem = null;
-                NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
+                NavigateToQuakePage(selectedIndex);
             }
         }
 
