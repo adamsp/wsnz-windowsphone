@@ -15,7 +15,47 @@ namespace WhatsShakingNZ
     /// </summary>
     public abstract partial class WhatsShakingBasePage : PhoneApplicationPage
     {
+        /// <summary>
+        /// This method is called when an item in the subclasses set of quakes is tapped.
+        /// It should pass the correct index (relative to the QuakeContainer.Quakes
+        /// collection) to the NavigateToQuakePage method.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected abstract void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e);
+
+        /// <summary>
+        /// Do any page-specific modifications (such as disabling the Refresh button) before
+        /// calling the QuakeContainer.DownloadNewQuakes() method.
+        /// </summary>
+        protected abstract void GetQuakes();
+
+        /// <summary>
+        /// This will be attached to the QuakeContainer.PropertyChanged event automatically
+        /// for you in the OnNavigatedTo method, and removed again in the OnNavigatedFrom.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public abstract void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e);
+
+        private EarthquakeContainer _quakeContainer;
+        /// <summary>
+        /// Used to download new quakes, update your display when navigated to, etc.
+        /// </summary>
+        protected EarthquakeContainer QuakeContainer
+        {
+            get
+            {
+                if (null == _quakeContainer)
+                    _quakeContainer = (Application.Current as App).EarthquakeContainer;
+                return _quakeContainer;
+            }
+        }
+
         private AppSettings _appSettings;
+        /// <summary>
+        /// Used to access the application settings.
+        /// </summary>
         protected AppSettings AppSettingsForPage
         {
             get
@@ -74,21 +114,6 @@ namespace WhatsShakingNZ
             InitializeApplicationBar(buttons, null);
         }
         
-        protected abstract void GetQuakes();
-
-        private EarthquakeContainer _quakeContainer;
-        protected EarthquakeContainer QuakeContainer
-        {
-            get
-            {
-                if (null == _quakeContainer)
-                    _quakeContainer = (Application.Current as App).EarthquakeContainer;
-                return _quakeContainer;
-            }
-        }
-
-        public abstract void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e);
-
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             QuakeContainer.PropertyChanged += QuakesUpdatedEventHandler;
@@ -115,8 +140,6 @@ namespace WhatsShakingNZ
         {
             GetQuakes();
         }
-
-        protected abstract void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e);
 
         protected void NavigateToQuakePage(int selectedIndex)
         {

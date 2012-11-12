@@ -150,6 +150,11 @@ namespace WhatsShakingNZ
         #endregion
 
         private static readonly EarthquakeContainer _container = new EarthquakeContainer();
+        /// <summary>
+        /// Shared earthquake container so all pages that need to display quake information
+        /// can use the same indexes into the collection of quakes, don't have to duplicate
+        /// quakes in memory, etc.
+        /// </summary>
         public EarthquakeContainer EarthquakeContainer
         {
             get
