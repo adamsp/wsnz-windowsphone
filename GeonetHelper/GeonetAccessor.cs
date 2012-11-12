@@ -54,11 +54,8 @@ namespace WhatsShakingNZ.GeonetHelper
                     {
                         Earthquake quake = new Earthquake
                         {
-                            Location = new Location()
-                            {
-                                Longitude = q["geometry"]["coordinates"].Values<double>().ElementAt(0),
-                                Latitude = q["geometry"]["coordinates"].Values<double>().ElementAt(1)
-                            },
+                            Location = new Location(q["geometry"]["coordinates"].Values<double>().ElementAt(0),
+                                q["geometry"]["coordinates"].Values<double>().ElementAt(1)),
                             Depth = (double)q["properties"]["depth"],
                             Magnitude = (double)q["properties"]["magnitude"],
                             Reference = (string)q["properties"]["publicid"],

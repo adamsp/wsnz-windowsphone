@@ -66,7 +66,7 @@
                                 FontSize="{StaticResource PhoneFontSizeMedium}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Text="{Binding Converter={StaticResource DepthConverter}}"/>
+                                Text="{Binding Path=RelativeLocation}"/>
                             <Border BorderBrush="{StaticResource PhoneDisabledBrush}" BorderThickness="0,0,0,1" Width="280" HorizontalAlignment="Center" Margin="0,6,0,0" />
                         </StackPanel>
                     </Grid>
