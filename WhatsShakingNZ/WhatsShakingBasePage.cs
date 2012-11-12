@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
-using System.ComponentModel;
-using WhatsShakingNZ.GeonetHelper;
-using Microsoft.Phone.Shell;
-using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
+using Coding4Fun.Phone.Controls;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ
 {
@@ -22,6 +15,16 @@ namespace WhatsShakingNZ
     /// </summary>
     public abstract partial class WhatsShakingBasePage : PhoneApplicationPage
     {
+        private AppSettings _appSettings;
+        protected AppSettings AppSettingsForPage
+        {
+            get
+            {
+                if (null == _appSettings)
+                    _appSettings = new AppSettings();
+                return _appSettings;
+            }
+        }
         /// <summary>
         /// Initializes the application bar with default menu items.
         /// </summary>
@@ -119,6 +122,17 @@ namespace WhatsShakingNZ
         {
             string navUri = string.Format("/QuakeDisplayPage.xaml?selectedItem={0}", selectedIndex);
             NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
+        }
+
+        protected void ShowNoConnectivityToast()
+        {
+            ToastPrompt toast = new ToastPrompt()
+            {
+                TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                Title = "problem retrieving quakes",
+                Message = "please check your data connection is working"
+            };
+            toast.Show();
         }
     }
 }

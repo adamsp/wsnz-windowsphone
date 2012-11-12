@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Device.Location;
 using System.Windows;
-using Coding4Fun.Phone.Controls;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Controls.Maps;
 using System.Windows.Media;
 using Microsoft.Phone.Shell;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Threading;
-using WhatsShakingNZ.GeonetHelper;
-using WhatsShakingNZ.Settings;
-using System.Collections.Generic;
 
 namespace WhatsShakingNZ
 {
@@ -29,9 +18,8 @@ namespace WhatsShakingNZ
             this.DataContext = QuakeContainer;
             SetBackgroundImage();
             LittleWatson.CheckForPreviousException();
-            if (QuakeContainer.AppSettings.ShowLiveTileSetting)
+            if (AppSettingsForPage.ShowLiveTileSetting)
                 ScheduledTaskHelper.Update();
-            // TODO Handle no data connectivity! Primarily serialization & storage of most recent seen quakes list.
         }
 
         private void SetBackgroundImage()
@@ -43,6 +31,10 @@ namespace WhatsShakingNZ
 
         private void InitializeApplicationBar()
         {
+            /***
+             * Make sure these buttons are added in the same order as the button names in the 
+             * enumeration above. Otherwise we don't know which button is where - see GetQuakes().
+             **/
             List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
             
             ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
@@ -66,11 +58,16 @@ namespace WhatsShakingNZ
             base.OnNavigatedTo(e);
             if (e.NavigationMode != System.Windows.Navigation.NavigationMode.Back)
                 GetQuakes();
-            QuakeContainer.RefreshViewsIfSettingsChanged();
+            else
+                QuakeContainer.RefreshViews();
         }
 
         protected override void GetQuakes()
         {
+            /**
+             * Can't put this in the base class because the refresh button has no identifier - so we can't
+             * just find it in the collection. Ugh.
+             * */
             (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;
@@ -86,15 +83,9 @@ namespace WhatsShakingNZ
                     (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
                     customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
                     customIndeterminateProgressBar.IsIndeterminate = false;
-                    if (e == null)
+                    if (QuakeContainer.Quakes.Count == 0)
                     {
-                        ToastPrompt toast = new ToastPrompt()
-                        {
-                            TextOrientation = System.Windows.Controls.Orientation.Vertical,
-                            Title = "problem retrieving quakes",
-                            Message = "please check your data connection is working"
-                        };
-                        toast.Show();
+                        ShowNoConnectivityToast();
                     }
                 });
             }

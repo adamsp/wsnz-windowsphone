@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Controls.Maps;
 using System.ComponentModel;
 using System.Device.Location;
-using Coding4Fun.Phone.Controls;
-using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Media;
+using Microsoft.Phone.Controls.Maps;
 using Microsoft.Phone.Shell;
-using WhatsShakingNZ.GeonetHelper;
-using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ
 {
@@ -33,6 +22,10 @@ namespace WhatsShakingNZ
 
         private void InitializeApplicationBar()
         {
+            /***
+             * Make sure these buttons are added in the same order as the button names in the 
+             * enumeration above. Otherwise we don't know which button is where - see GetQuakes().
+             **/
             List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
 
             ApplicationBarIconButton zoomOutButton = new ApplicationBarIconButton();
@@ -78,19 +71,13 @@ namespace WhatsShakingNZ
                     (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
                     customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
                     customIndeterminateProgressBar.IsIndeterminate = false;
-                    if (e != null)
+                    if (QuakeContainer.Quakes.Count > 0)
                     {
                         UpdateMap();
                     }
                     else
                     {
-                        ToastPrompt toast = new ToastPrompt()
-                        {
-                            TextOrientation = System.Windows.Controls.Orientation.Vertical,
-                            Title = "problem retrieving quakes",
-                            Message = "please check your data connection is working"
-                        };
-                        toast.Show();
+                        ShowNoConnectivityToast();
                     }
                 });
             }
@@ -101,7 +88,7 @@ namespace WhatsShakingNZ
             QuakeMap.Children.Clear();
             // Select only quakes above the settings magnitude
             // The OrderBy means that higher magnitude quakes will be pinned on top OrderBy(s => s.Magnitude)
-            double minWarningMagnitude = QuakeContainer.AppSettings.MinimumWarningMagnitudeSetting;
+            double minWarningMagnitude = AppSettingsForPage.MinimumWarningMagnitudeSetting;
             if (QuakeContainer.Quakes != null)
             {
                 // Use "reverse" here so newer quakes are on top.
@@ -123,6 +110,10 @@ namespace WhatsShakingNZ
 
         protected override void GetQuakes()
         {
+            /**
+             * Can't put this in the base class because the refresh button has no identifier - so we can't
+             * just find it in the collection. Ugh.
+             * */
            (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;

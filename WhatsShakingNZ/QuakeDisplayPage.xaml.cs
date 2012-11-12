@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
 using System.Device.Location;
+using System.Windows;
+using System.Windows.Media;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Maps;
 using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ
 {
     public partial class QuakeDisplayPage : PhoneApplicationPage
     {
+        private AppSettings appSettings;
         public QuakeDisplayPage()
         {
+            appSettings = new AppSettings();
             InitializeComponent();
         }
 
@@ -43,7 +38,7 @@ namespace WhatsShakingNZ
                 Location = new GeoCoordinate(quake.Location.Latitude, quake.Location.Longitude),
                 Content = quake.FormattedMagnitude
             };
-            if (quake.Magnitude >= (Application.Current as App).EarthquakeContainer.AppSettings.MinimumWarningMagnitudeSetting)
+            if (quake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
                 pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
             QuakeMap.Children.Add(pin);
             base.OnNavigatedTo(e);
