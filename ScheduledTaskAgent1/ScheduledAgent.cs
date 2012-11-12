@@ -1,14 +1,10 @@
-﻿using System.Windows;
-using System.Linq;
-using Microsoft.Phone.Scheduler;
-using System.Windows.Media.Imaging;
-using WhatsShakingNZ.GeonetHelper;
-using Microsoft.Phone.Shell;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.IO.IsolatedStorage;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using Microsoft.Phone.Scheduler;
+using Microsoft.Phone.Shell;
+using WhatsShakingNZ.GeonetHelper;
 
 namespace ScheduledTaskAgent1
 {
