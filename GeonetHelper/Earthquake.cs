@@ -65,6 +65,7 @@ namespace WhatsShakingNZ.GeonetHelper
         public string Reference { get; set; }
         public string Agency { get; set; }
         public DateTime Date { get; set; }
+        public string Status { get; set; }
     }
 
     public class Location

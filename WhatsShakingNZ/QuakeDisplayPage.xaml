@@ -53,12 +53,15 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="magnitude" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}" />
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="depth" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
-                    <TextBlock Grid.Row="1" Name="MagnitudeValue" Grid.Column="0" Text="{Binding Path=Magnitude, StringFormat=N1}" Margin="12,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}" />
+                    <TextBlock Grid.Row="1" Name="MagnitudeValue" Grid.Column="0" Text="{Binding Path=FormattedMagnitude}" Margin="12,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}" />
                     <TextBlock Grid.Row="1" Name="DepthValue" Grid.Column="1" Text="{Binding Converter={StaticResource ShortDepthConverter}}" Style="{StaticResource PhoneTextExtraLargeStyle}"  Margin="12,0,0,0"/>
                 </Grid>
                 <TextBlock Text="time" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
                 <TextBlock Text="{Binding Converter={StaticResource DateConverter}}"
                            Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="12,0,0,0"/>
+                <TextBlock Text="status" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
+                <TextBlock Text="{Binding Path=Status}"
+                           Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="12,0,0,0" Tap="StatusTextBlock_Tap"/>
             </StackPanel>
             <maps:Map Grid.Row="1" Margin="4,6,4,4" x:Name="QuakeMap" 
                               CredentialsProvider="your_maps_api_key_here" 

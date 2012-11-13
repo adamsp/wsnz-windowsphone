@@ -61,7 +61,8 @@ namespace WhatsShakingNZ.GeonetHelper
                             Reference = (string)q["properties"]["publicid"],
                             // origintime=2012-08-13 05:25:24.727000  (that's in UTC)
                             Date = DateTime.Parse((string)q["properties"]["origintime"] + "Z"),
-                            Agency = (string)q["properties"]["agency"]
+                            Agency = (string)q["properties"]["agency"],
+                            Status = (string)q["properties"]["status"]
                         };
                         quakes.Add(quake);
                     }

@@ -6,12 +6,14 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Maps;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Settings;
+using Coding4Fun.Phone.Controls;
 
 namespace WhatsShakingNZ
 {
     public partial class QuakeDisplayPage : PhoneApplicationPage
     {
         private AppSettings appSettings;
+        private Earthquake quake;
         public QuakeDisplayPage()
         {
             appSettings = new AppSettings();
@@ -28,7 +30,7 @@ namespace WhatsShakingNZ
             }
             else return;
             
-            Earthquake quake = (Application.Current as App).EarthquakeContainer.Quakes[index];
+            quake = (Application.Current as App).EarthquakeContainer.Quakes[index];
 
             ContentPanel.DataContext = quake;
             GeoCoordinate location = new GeoCoordinate(quake.Location.Latitude, quake.Location.Longitude);
@@ -56,6 +58,45 @@ namespace WhatsShakingNZ
             double zoom;
             zoom = QuakeMap.ZoomLevel;
             QuakeMap.ZoomLevel = --zoom;
+        }
+
+        private void StatusTextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            /**
+             * These messages come from Geonet. If you go to http://www.geonet.org.nz/quakes/region/newzealand
+             * and go to any quake page, then click the little question mark next to "Status", these
+             * messages popup in a wee window.
+             */
+            if (null == quake) return;
+            string toastMessage;
+            if (quake.Status.Equals("reviewed", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = "This earthquake has been reviewed and confirmed by a duty officer or analyst.";
+            }
+            else if (quake.Status.Equals("automatic", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = "An automatic earthquake location that has not been reviewed by a duty officer or analyst.";
+            }
+            else if (quake.Status.Equals("deleted", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = "Oops! This was not a real earthquake and has been deleted.";
+            }
+            else if (quake.Status.Equals("duplicate", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = "This earthquake location is a duplicate of another one.";
+            }
+            else
+            {
+                toastMessage = "We don't know what this status means! :(";
+            }
+            ToastPrompt toast = new ToastPrompt()
+            {
+                TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                TextWrapping = System.Windows.TextWrapping.Wrap,
+                Title = quake.Status,
+                Message = toastMessage
+            };
+            toast.Show();
         }
     }
 }

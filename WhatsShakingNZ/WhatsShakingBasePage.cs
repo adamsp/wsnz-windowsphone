@@ -152,6 +152,7 @@ namespace WhatsShakingNZ
             ToastPrompt toast = new ToastPrompt()
             {
                 TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                TextWrapping = System.Windows.TextWrapping.Wrap,
                 Title = "problem retrieving quakes",
                 Message = "please check your data connection is working"
             };
