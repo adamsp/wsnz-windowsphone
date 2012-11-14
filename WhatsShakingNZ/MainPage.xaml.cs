@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Phone.Shell;
+using WhatsShakingNZ.Localization;
+using WhatsShakingNZ.GeonetHelper;
 
 namespace WhatsShakingNZ
 {
@@ -38,18 +40,18 @@ namespace WhatsShakingNZ
             List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
             
             ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
-            refreshButton.Text = "refresh";
+            refreshButton.Text = AppResources.AppBarRefreshButtonText;
             refreshButton.IconUri = new Uri("/Icons/appbar.refresh.rest.png", UriKind.Relative);
             refreshButton.Click += RefreshRecentButton_Click;
             
             ApplicationBarIconButton mapViewButton = new ApplicationBarIconButton();
-            mapViewButton.Text = "map view";
+            mapViewButton.Text = AppResources.AppBarMapViewButtonText;
             mapViewButton.IconUri = new Uri("/Icons/appbar.map.png", UriKind.Relative);
             mapViewButton.Click += MapPageButton_Click;
             
             buttons.Add(refreshButton);
             buttons.Add(mapViewButton);
-            
+
             base.InitializeApplicationBar(buttons);
         }
 
@@ -76,7 +78,7 @@ namespace WhatsShakingNZ
 
         public override void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
         {
-            if (e != null && e.PropertyName == "Quakes")
+            if (e != null && e.PropertyName == EarthquakeContainer.QuakesUpdatedEventKey)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {

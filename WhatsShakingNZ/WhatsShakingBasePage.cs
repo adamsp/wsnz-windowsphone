@@ -7,6 +7,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Settings;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -71,11 +72,11 @@ namespace WhatsShakingNZ
         internal void InitializeApplicationBarDefaults()
         {
             ApplicationBarMenuItem settingsMenuItem = new ApplicationBarMenuItem();
-            settingsMenuItem.Text = "settings";
+            settingsMenuItem.Text = AppResources.AppBarSettingsMenuItemText;
             settingsMenuItem.Click += SettingsPageMenuItem_Click;
 
             ApplicationBarMenuItem aboutMenuItem = new ApplicationBarMenuItem();
-            aboutMenuItem.Text = "about";
+            aboutMenuItem.Text = AppResources.AppBarAboutMenuItemText;
             aboutMenuItem.Click += AboutPageMenuItem_Click;
 
             ApplicationBar.MenuItems.Add(settingsMenuItem);
@@ -153,8 +154,8 @@ namespace WhatsShakingNZ
             {
                 TextOrientation = System.Windows.Controls.Orientation.Vertical,
                 TextWrapping = System.Windows.TextWrapping.Wrap,
-                Title = "problem retrieving quakes",
-                Message = "please check your data connection is working"
+                Title = AppResources.BasePageNoConnectivityToastTitle,
+                Message = AppResources.BasePageNoConnectivityToastMessage
             };
             toast.Show();
         }

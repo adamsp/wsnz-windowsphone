@@ -8,7 +8,7 @@ namespace WhatsShakingNZ.GeonetHelper
     public sealed class EarthquakeContainer : INotifyPropertyChanged
     {
         private AppSettings appSettings;
-
+        public const string QuakesUpdatedEventKey = "Quakes";
         public EarthquakeContainer()
         {
             appSettings = new AppSettings();
@@ -34,14 +34,14 @@ namespace WhatsShakingNZ.GeonetHelper
                 if (_quakes != value)
                 {
                     _quakes = value;
-                    NotifyPropertyChanged("Quakes");
+                    NotifyPropertyChanged(QuakesUpdatedEventKey);
                 }
             }
         }
 
         public void RefreshViews()
         {
-            NotifyPropertyChanged("Quakes");
+            NotifyPropertyChanged(QuakesUpdatedEventKey);
         }
 
         public void DownloadNewQuakes()

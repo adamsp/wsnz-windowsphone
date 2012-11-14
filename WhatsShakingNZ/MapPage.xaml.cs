@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Phone.Controls.Maps;
 using Microsoft.Phone.Shell;
+using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -29,22 +31,22 @@ namespace WhatsShakingNZ
             List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
 
             ApplicationBarIconButton zoomOutButton = new ApplicationBarIconButton();
-            zoomOutButton.Text = "zoom out";
+            zoomOutButton.Text = AppResources.AppBarZoomOutButtonText;
             zoomOutButton.IconUri = new Uri("/Icons/appbar.minus.rest.png", UriKind.Relative);
             zoomOutButton.Click += ZoomOutButton_Click;
 
             ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
-            refreshButton.Text = "refresh";
+            refreshButton.Text = AppResources.AppBarRefreshButtonText;
             refreshButton.IconUri = new Uri("/Icons/appbar.refresh.rest.png", UriKind.Relative);
             refreshButton.Click += RefreshRecentButton_Click;
 
             ApplicationBarIconButton listViewButton = new ApplicationBarIconButton();
-            listViewButton.Text = "list view";
+            listViewButton.Text = AppResources.AppBarListViewButtonText;
             listViewButton.IconUri = new Uri("/Icons/appbar.list.png", UriKind.Relative);
             listViewButton.Click += ListPageButton_Click;
 
             ApplicationBarIconButton zoomInButton = new ApplicationBarIconButton();
-            zoomInButton.Text = "zoom in";
+            zoomInButton.Text = AppResources.AppBarZoomInButtonText;
             zoomInButton.IconUri = new Uri("/Icons/appbar.add.rest.png", UriKind.Relative);
             zoomInButton.Click += ZoomInButton_Click;
 
@@ -64,7 +66,7 @@ namespace WhatsShakingNZ
 
         public override void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
         {
-            if (e != null && e.PropertyName == "Quakes")
+            if (e != null && e.PropertyName == EarthquakeContainer.QuakesUpdatedEventKey)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {

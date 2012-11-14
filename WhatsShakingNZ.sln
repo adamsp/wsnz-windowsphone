@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeonetHelper", "GeonetHelpe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "Settings\Settings.csproj", "{BCEFF84C-A535-4556-AA0D-B88F8C258F93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization", "Localization\Localization.csproj", "{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BCEFF84C-A535-4556-AA0D-B88F8C258F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCEFF84C-A535-4556-AA0D-B88F8C258F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCEFF84C-A535-4556-AA0D-B88F8C258F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
