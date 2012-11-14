@@ -13,7 +13,7 @@ namespace WhatsShakingNZ.GeonetHelper
         public static QuakeEventHandler GetQuakesCompletedEvent;
         public static void GetQuakes()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://beta.geonet.org.nz/quakes/services/felt.json");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://geonet.org.nz/quakes/services/felt.json");
             request.AllowReadStreamBuffering = true;
             var token = request.BeginGetResponse(ProcessResponse, request);
         }
