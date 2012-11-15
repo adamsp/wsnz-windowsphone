@@ -7,6 +7,7 @@ using Microsoft.Phone.Controls.Maps;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Settings;
 using Coding4Fun.Phone.Controls;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -71,23 +72,23 @@ namespace WhatsShakingNZ
             string toastMessage;
             if (quake.Status.Equals("reviewed", StringComparison.OrdinalIgnoreCase))
             {
-                toastMessage = "This earthquake has been reviewed and confirmed by a duty officer or analyst.";
+                toastMessage = AppResources.EarthquakeStatusReviewed;
             }
             else if (quake.Status.Equals("automatic", StringComparison.OrdinalIgnoreCase))
             {
-                toastMessage = "An automatic earthquake location that has not been reviewed by a duty officer or analyst.";
+                toastMessage = AppResources.EarthquakeStatusAutomatic;
             }
             else if (quake.Status.Equals("deleted", StringComparison.OrdinalIgnoreCase))
             {
-                toastMessage = "Oops! This was not a real earthquake and has been deleted.";
+                toastMessage = AppResources.EarthquakeStatusDeleted;
             }
             else if (quake.Status.Equals("duplicate", StringComparison.OrdinalIgnoreCase))
             {
-                toastMessage = "This earthquake location is a duplicate of another one.";
+                toastMessage = AppResources.EarthquakeStatusDuplicate;
             }
             else
             {
-                toastMessage = "We don't know what this status means! :(";
+                toastMessage = AppResources.EarthquakeStatusUnknown;
             }
             ToastPrompt toast = new ToastPrompt()
             {

@@ -140,5 +140,95 @@ namespace WhatsShakingNZ.Localization {
                 return ResourceManager.GetString("BasePageNoConnectivityToastTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An automatic earthquake location that has not been reviewed by a duty officer or analyst..
+        /// </summary>
+        public static string EarthquakeStatusAutomatic {
+            get {
+                return ResourceManager.GetString("EarthquakeStatusAutomatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! This was not a real earthquake and has been deleted..
+        /// </summary>
+        public static string EarthquakeStatusDeleted {
+            get {
+                return ResourceManager.GetString("EarthquakeStatusDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This earthquake location is a duplicate of another one..
+        /// </summary>
+        public static string EarthquakeStatusDuplicate {
+            get {
+                return ResourceManager.GetString("EarthquakeStatusDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This earthquake has been reviewed and confirmed by a duty officer or analyst..
+        /// </summary>
+        public static string EarthquakeStatusReviewed {
+            get {
+                return ResourceManager.GetString("EarthquakeStatusReviewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We don&apos;t know what this status means! :(.
+        /// </summary>
+        public static string EarthquakeStatusUnknown {
+            get {
+                return ResourceManager.GetString("EarthquakeStatusUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem Report.
+        /// </summary>
+        public static string LittleWatsonMessageBoxCaption {
+            get {
+                return ResourceManager.GetString("LittleWatsonMessageBoxCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A problem occurred the last time you ran this application. Would you like to send an email to report it?.
+        /// </summary>
+        public static string LittleWatsonMessageBoxText {
+            get {
+                return ResourceManager.GetString("LittleWatsonMessageBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What&apos;s Shaking NZ task for live tile.
+        /// </summary>
+        public static string LiveTileTaskDescription {
+            get {
+                return ResourceManager.GetString("LiveTileTaskDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to scheduled task limit has been reached. please disable other apps scheduled tasks in phone settings..
+        /// </summary>
+        public static string LiveTileTaskLimitReachedToastMessage {
+            get {
+                return ResourceManager.GetString("LiveTileTaskLimitReachedToastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cannot use live tile.
+        /// </summary>
+        public static string LiveTileTaskLimitReachedToastTitle {
+            get {
+                return ResourceManager.GetString("LiveTileTaskLimitReachedToastTitle", resourceCulture);
+            }
+        }
     }
 }

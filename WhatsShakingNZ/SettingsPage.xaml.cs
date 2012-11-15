@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using Coding4Fun.Phone.Controls;
 using Microsoft.Phone.Controls;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -24,8 +25,8 @@ namespace WhatsShakingNZ
                 ToastPrompt toast = new ToastPrompt()
                 {
                     TextOrientation = System.Windows.Controls.Orientation.Vertical,
-                    Title = "cannot use live tile",
-                    Message = "scheduled task limit has been reached. please disable other apps scheduled tasks in phone settings."
+                    Title = AppResources.LiveTileTaskLimitReachedToastTitle,
+                    Message = AppResources.LiveTileTaskLimitReachedToastMessage
                 };
                 toast.Show();
                 LiveTileToggle.IsChecked = false;

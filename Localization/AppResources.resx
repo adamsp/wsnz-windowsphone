@@ -144,4 +144,34 @@
   <data name="BasePageNoConnectivityToastTitle" xml:space="preserve">
     <value>problem retrieving quakes</value>
   </data>
+  <data name="EarthquakeStatusAutomatic" xml:space="preserve">
+    <value>An automatic earthquake location that has not been reviewed by a duty officer or analyst.</value>
+  </data>
+  <data name="EarthquakeStatusDeleted" xml:space="preserve">
+    <value>Oops! This was not a real earthquake and has been deleted.</value>
+  </data>
+  <data name="EarthquakeStatusDuplicate" xml:space="preserve">
+    <value>This earthquake location is a duplicate of another one.</value>
+  </data>
+  <data name="EarthquakeStatusReviewed" xml:space="preserve">
+    <value>This earthquake has been reviewed and confirmed by a duty officer or analyst.</value>
+  </data>
+  <data name="EarthquakeStatusUnknown" xml:space="preserve">
+    <value>We don't know what this status means! :(</value>
+  </data>
+  <data name="LittleWatsonMessageBoxCaption" xml:space="preserve">
+    <value>Problem Report</value>
+  </data>
+  <data name="LittleWatsonMessageBoxText" xml:space="preserve">
+    <value>A problem occurred the last time you ran this application. Would you like to send an email to report it?</value>
+  </data>
+  <data name="LiveTileTaskDescription" xml:space="preserve">
+    <value>What's Shaking NZ task for live tile</value>
+  </data>
+  <data name="LiveTileTaskLimitReachedToastMessage" xml:space="preserve">
+    <value>scheduled task limit has been reached. please disable other apps scheduled tasks in phone settings.</value>
+  </data>
+  <data name="LiveTileTaskLimitReachedToastTitle" xml:space="preserve">
+    <value>cannot use live tile</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Phone.Scheduler;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -15,7 +16,7 @@ namespace WhatsShakingNZ
         {
             PeriodicTask periodicTask = new PeriodicTask(ShakingHelper.PeriodicTaskName);
 
-            periodicTask.Description = "What's Shaking NZ task for live tile";
+            periodicTask.Description = AppResources.LiveTileTaskDescription;
             periodicTask.ExpirationTime = System.DateTime.Now.AddDays(14);
 
             // If the agent is already registered with the system,
