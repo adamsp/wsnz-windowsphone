@@ -230,5 +230,14 @@ namespace WhatsShakingNZ.Localization {
                 return ResourceManager.GetString("LiveTileTaskLimitReachedToastTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to latest quakes.
+        /// </summary>
+        public static string PageTitleLatestQuakes {
+            get {
+                return ResourceManager.GetString("PageTitleLatestQuakes", resourceCulture);
+            }
+        }
     }
 }

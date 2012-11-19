@@ -174,4 +174,7 @@
   <data name="LiveTileTaskLimitReachedToastTitle" xml:space="preserve">
     <value>cannot use live tile</value>
   </data>
+  <data name="PageTitleLatestQuakes" xml:space="preserve">
+    <value>latest quakes</value>
+  </data>
 </root>
