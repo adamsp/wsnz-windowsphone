@@ -30,7 +30,9 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,6">
-            <TextBlock x:Name="ApplicationTitle" Text="WHAT'S SHAKING NZ?" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="ApplicationTitle" 
+                       Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -51,15 +53,21 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="magnitude" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="depth" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="{Binding Path=LocalizedResources.QuakeDisplayPageMagnitudeHeading, Source={StaticResource LocalizedStrings}}"
+                               Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" 
+                               Text="{Binding Path=LocalizedResources.QuakeDisplayPageDepthHeading, Source={StaticResource LocalizedStrings}}"
+                               Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
                     <TextBlock Grid.Row="1" Name="MagnitudeValue" Grid.Column="0" Text="{Binding Path=FormattedMagnitude}" Margin="12,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}" />
                     <TextBlock Grid.Row="1" Name="DepthValue" Grid.Column="1" Text="{Binding Converter={StaticResource ShortDepthConverter}}" Style="{StaticResource PhoneTextExtraLargeStyle}"  Margin="12,0,0,0"/>
                 </Grid>
-                <TextBlock Text="time" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.QuakeDisplayPageTimeHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
                 <TextBlock Text="{Binding Converter={StaticResource DateConverter}}"
                            Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="12,0,0,0"/>
-                <TextBlock Text="status" Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.QuakeDisplayPageStatusHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
                 <TextBlock Text="{Binding Path=Status}"
                            Style="{StaticResource PhoneTextExtraLargeStyle}" Margin="12,0,0,0" Tap="StatusTextBlock_Tap"/>
             </StackPanel>

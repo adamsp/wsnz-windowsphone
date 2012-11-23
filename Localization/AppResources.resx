@@ -117,6 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutPageAboutAppHeading" xml:space="preserve">
+    <value>the app</value>
+  </data>
+  <data name="AboutPageAboutAppText" xml:space="preserve">
+    <value>What's Shaking NZ? uses the Geonet.org.nz data feed to provide you with up to date information about the latest earthquakes around New Zealand.
+Please tweet or email us with any problems you find or suggestions for features you'd like to see in the next version.
+</value>
+  </data>
+  <data name="AboutPageUpdate11Heading" xml:space="preserve">
+    <value>update 1.1</value>
+  </data>
+  <data name="AboutPageUpdate11Text" xml:space="preserve">
+    <value>Fixed an issue where sometimes the application would crash when the settings page was accessed too quickly.
+Modified the magnitude and depth values to display with the correct number of decimal places, as specified on the Geonet website.
+</value>
+  </data>
+  <data name="AboutPageUpdate12Heading" xml:space="preserve">
+    <value>update 1.2</value>
+  </data>
+  <data name="AboutPageUpdate12Text" xml:space="preserve">
+    <value>Geonet have recently changed the way they provide their data feed, and we can now only retrieve the latest 30 quakes. Previously we could retrieve the latest N days of quakes - this was limited to a maximum of 3 days within the app. However, quakes are now reported on significantly faster.
+Now you can specify the maximum number of quakes you would like displayed - from 10 to 30. In some cases you may get less than your specified maximum, if your "minimum magnitude to display" value is set high enough.
+Modified the layout of this screen.
+Fixed a bug where the application would occasionally crash on the Map view page.
+</value>
+  </data>
   <data name="AppBarAboutMenuItemText" xml:space="preserve">
     <value>about</value>
   </data>
@@ -138,11 +164,24 @@
   <data name="AppBarZoomOutButtonText" xml:space="preserve">
     <value>zoom out</value>
   </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>WHAT'S SHAKING NZ?</value>
+  </data>
   <data name="BasePageNoConnectivityToastMessage" xml:space="preserve">
     <value>please check your data connection is working</value>
   </data>
   <data name="BasePageNoConnectivityToastTitle" xml:space="preserve">
     <value>problem retrieving quakes</value>
+  </data>
+  <data name="ConverterLongDepthFormat" xml:space="preserve">
+    <value>Depth: {0} kilometers</value>
+  </data>
+  <data name="ConverterShortDepthFormat" xml:space="preserve">
+    <value>{0} km</value>
+  </data>
+  <data name="EarthquakeLocationFormat" xml:space="preserve">
+    <value>{0:N0} km {1} of {2}</value>
+    <comment>X km DIRECTION of LOCATION, eg 10 km north-east of Auckland</comment>
   </data>
   <data name="EarthquakeStatusAutomatic" xml:space="preserve">
     <value>An automatic earthquake location that has not been reviewed by a duty officer or analyst.</value>
@@ -159,11 +198,28 @@
   <data name="EarthquakeStatusUnknown" xml:space="preserve">
     <value>We don't know what this status means! :(</value>
   </data>
+  <data name="East" xml:space="preserve">
+    <value>east</value>
+  </data>
   <data name="LittleWatsonMessageBoxCaption" xml:space="preserve">
     <value>Problem Report</value>
   </data>
   <data name="LittleWatsonMessageBoxText" xml:space="preserve">
     <value>A problem occurred the last time you ran this application. Would you like to send an email to report it?</value>
+  </data>
+  <data name="LiveTileBackContentFormat" xml:space="preserve">
+    <value>latest quake
+{0} mag
+{1} k deep</value>
+  </data>
+  <data name="LiveTileBackContentNoQuakes" xml:space="preserve">
+    <value>No quakes in the last 24 hours!</value>
+  </data>
+  <data name="LiveTileDefaultTitle" xml:space="preserve">
+    <value>Latest NZ Quakes</value>
+  </data>
+  <data name="LiveTileQuakeCountFormat" xml:space="preserve">
+    <value>{0} in last 24hrs</value>
   </data>
   <data name="LiveTileTaskDescription" xml:space="preserve">
     <value>What's Shaking NZ task for live tile</value>
@@ -174,7 +230,53 @@
   <data name="LiveTileTaskLimitReachedToastTitle" xml:space="preserve">
     <value>cannot use live tile</value>
   </data>
+  <data name="North" xml:space="preserve">
+    <value>north</value>
+  </data>
+  <data name="NorthEastFormat" xml:space="preserve">
+    <value>{0}-{1}</value>
+    <comment>For example, "north-east" or "south-west" etc.</comment>
+  </data>
+  <data name="PageTitleAbout" xml:space="preserve">
+    <value>about</value>
+  </data>
   <data name="PageTitleLatestQuakes" xml:space="preserve">
     <value>latest quakes</value>
+  </data>
+  <data name="PageTitleSettings" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="QuakeDisplayPageDepthHeading" xml:space="preserve">
+    <value>depth</value>
+  </data>
+  <data name="QuakeDisplayPageMagnitudeHeading" xml:space="preserve">
+    <value>magnitude</value>
+  </data>
+  <data name="QuakeDisplayPageStatusHeading" xml:space="preserve">
+    <value>status</value>
+  </data>
+  <data name="QuakeDisplayPageTimeHeading" xml:space="preserve">
+    <value>time</value>
+  </data>
+  <data name="SettingsPageMaximumQuakesToShowHeading" xml:space="preserve">
+    <value>maximum number of quakes to show</value>
+  </data>
+  <data name="SettingsPageMinimumDisplayMagnitudeHeading" xml:space="preserve">
+    <value>minimum magnitude to display</value>
+  </data>
+  <data name="SettingsPageMinimumHighlightMagnitudeHeading" xml:space="preserve">
+    <value>minimum magnitude to highlight</value>
+  </data>
+  <data name="SettingsPageUse24HourClockHeading" xml:space="preserve">
+    <value>use 24 hour clock</value>
+  </data>
+  <data name="SettingsPageUseLiveTileHeading" xml:space="preserve">
+    <value>live tile</value>
+  </data>
+  <data name="South" xml:space="preserve">
+    <value>south</value>
+  </data>
+  <data name="West" xml:space="preserve">
+    <value>west</value>
   </data>
 </root>

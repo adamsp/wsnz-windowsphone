@@ -5,13 +5,14 @@ using System.Windows;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Localization;
 
 namespace ScheduledTaskAgent1
 {
     public class ScheduledAgent : ScheduledTaskAgent
     {
         private static volatile bool _classInitialized;
-        private const string TileTitle = "Latest NZ Quakes";
+        private string TileTitle;
         private string TaskName;
 
         /// <remarks>
@@ -19,6 +20,7 @@ namespace ScheduledTaskAgent1
         /// </remarks>
         public ScheduledAgent()
         {
+            TileTitle = AppResources.LiveTileDefaultTitle;
             if (!_classInitialized)
             {
                 _classInitialized = true;
@@ -76,8 +78,8 @@ namespace ScheduledTaskAgent1
                     Earthquake latest = quakes.First();
                     NewTileData = new StandardTileData
                     {
-                        Title = quakes.Count + " in last 24hrs",
-                        BackContent = string.Format("latest quake\n{0} mag\n{1} k deep",  latest.FormattedMagnitude, latest.FormattedDepth)
+                        Title = String.Format(AppResources.LiveTileQuakeCountFormat, quakes.Count),
+                        BackContent = String.Format(AppResources.LiveTileBackContentFormat,  latest.FormattedMagnitude, latest.FormattedDepth)
                     };
                 }
                 else
@@ -85,7 +87,7 @@ namespace ScheduledTaskAgent1
                     NewTileData = new StandardTileData
                     {
                         Title = TileTitle,
-                        BackContent = "No quakes in the last 24 hours!"
+                        BackContent = AppResources.LiveTileBackContentNoQuakes
                     };
                 }
             }

@@ -46,6 +46,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Device" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -54,6 +55,7 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistanceTool.cs" />
     <Compile Include="Earthquake.cs" />
     <Compile Include="EarthquakeContainer.cs" />
     <Compile Include="GeonetAccessor.cs" />
@@ -64,6 +66,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Localization\Localization.csproj">
+      <Project>{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}</Project>
+      <Name>Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Settings\Settings.csproj">
       <Project>{BCEFF84C-A535-4556-AA0D-B88F8C258F93}</Project>
       <Name>Settings</Name>

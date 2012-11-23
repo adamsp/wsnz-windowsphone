@@ -27,15 +27,20 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="WHAT'S SHAKING NZ?" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" 
+                       Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" 
+                       Text="{Binding Path=LocalizedResources.PageTitleSettings, Source={StaticResource LocalizedStrings}}"
+                       Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="ContentPanel" Margin="12,0,12,0">
 
-                <TextBlock Text="minimum magnitude to display" Margin="12,0,0,0"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageMinimumDisplayMagnitudeHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="88"/>
@@ -49,7 +54,8 @@
                             Name="MinDisplayMagnitudeSlider"/>
                 </Grid>
 
-                <TextBlock Text="minimum magnitude to highlight" Margin="12,0,0,0"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageMinimumHighlightMagnitudeHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="88"/>
@@ -63,7 +69,8 @@
                             Name="MinWarningMagnitudeSlider"/>
                 </Grid>
 
-                <TextBlock Text="maximum number of quakes to show" Margin="12,0,0,0"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageMaximumQuakesToShowHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="88"/>
@@ -77,21 +84,19 @@
                             Name="NumDaysSlider" />
                 </Grid>
 
-                <TextBlock Text="use 24 hour clock" Margin="12,0,0,0"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageUse24HourClockHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0"/>
                 <toolkit:ToggleSwitch 
                     IsChecked="{Binding Source={StaticResource appSettings}, 
                    Path=TwentyFourHourClockSetting, Mode=TwoWay}"/>
-                <TextBlock Text="live tile" Margin="12,0,0,0"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageUseLiveTileHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0"/>
                 <toolkit:ToggleSwitch 
                     Name="LiveTileToggle"
                     IsChecked="{Binding Source={StaticResource appSettings}, 
                     Path=ShowLiveTileSetting, Mode=TwoWay}" 
                     Checked="ToggleSwitch_Checked"
                     Unchecked="ToggleSwitch_Unchecked"/>
-                <TextBlock Text="use geonet rapid (beta)" Margin="12,0,0,0" Visibility="Collapsed"/>
-                <toolkit:ToggleSwitch 
-                    IsChecked="{Binding Source={StaticResource appSettings}, 
-                   Path=UseGeonetRapidSetting, Mode=TwoWay}" Visibility="Collapsed"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
