@@ -17,7 +17,10 @@ namespace WhatsShakingNZ.GeonetHelper
 
         public void QuakeListener(object sender, QuakeEventArgs e)
         {
-            Quakes = e.Quakes;   
+            if (e != null)
+                Quakes = e.Quakes;
+            else
+                Quakes = null;
         }
 
         private ObservableCollection<Earthquake> _quakes;
