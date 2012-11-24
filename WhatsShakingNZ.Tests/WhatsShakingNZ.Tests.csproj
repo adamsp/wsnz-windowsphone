@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="GeonetHelperTests\DistanceToolTests.cs" />
+    <Compile Include="GeonetHelperTests\EarthquakeTests.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
