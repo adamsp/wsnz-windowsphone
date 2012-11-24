@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.Device.Location;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
@@ -54,8 +55,8 @@ namespace WhatsShakingNZ.GeonetHelper
                     {
                         Earthquake quake = new Earthquake
                         {
-                            Location = new Location(q["geometry"]["coordinates"].Values<double>().ElementAt(0),
-                                q["geometry"]["coordinates"].Values<double>().ElementAt(1)),
+                            Location = new GeoCoordinate(q["geometry"]["coordinates"].Values<double>().ElementAt(1),
+                                q["geometry"]["coordinates"].Values<double>().ElementAt(0)),
                             Depth = (double)q["properties"]["depth"],
                             Magnitude = (double)q["properties"]["magnitude"],
                             Reference = (string)q["properties"]["publicid"],

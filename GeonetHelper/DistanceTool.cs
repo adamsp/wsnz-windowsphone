@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using WhatsShakingNZ.Localization;
 using System.Collections.Generic;
+using System.Device.Location;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
@@ -21,39 +22,39 @@ namespace WhatsShakingNZ.GeonetHelper
          * and simply selected all the locations that were in a large font.
          * For the latitude & longitude of the locations, I used Google Maps.
          */
-        private static Dictionary<string, Location> locations;
-        private static Location Whangarei = new Location(174.323735, -35.725156);
-        private static Location Auckland = new Location(174.763351, -36.848457);
-        private static Location Tauranga = new Location(176.165149, -37.687798);
-        private static Location Hamilton = new Location(175.279268, -37.787009);
-        private static Location Whakatane = new Location(176.990813, -37.953419);
-        private static Location Rotorua = new Location(176.249759, -38.136875);
-        private static Location Gisborne = new Location(178.017648, -38.662354);
-        private static Location Taupo = new Location(176.070214, -38.685686);
-        private static Location NewPlymouth = new Location(174.075247, -39.055622);
-        private static Location Napier = new Location(176.912026, -39.492839);
-        private static Location Hastings = new Location(176.839247, -39.639558);
-        private static Location Wanganui = new Location(175.047932, -39.930093);
-        private static Location PalmerstonNorth = new Location(175.608204, -40.352309);
-        private static Location Levin = new Location(175.286181, -40.622243);
-        private static Location Masterton = new Location(175.657356, -40.951114);
-        private static Location UpperHutt = new Location(175.070785, -41.124415);
-        private static Location Porirua = new Location(174.840628, -41.133935);
-        private static Location LowerHutt = new Location(174.90805, -41.209163);
-        private static Location Wellington = new Location(174.776231, -41.28647);
-        private static Location Nelson = new Location(173.284049, -41.270632);
-        private static Location Blenheim = new Location(173.961261, -41.513444);
-        private static Location Greymouth = new Location(171.210765, -42.450398);
-        private static Location Christchurch = new Location(172.636268, -43.532041);
-        private static Location Timaru = new Location(171.255005, -44.396999);
-        private static Location Queenstown = new Location(168.662643, -45.031176);
-        private static Location Dunedin = new Location(170.502812, -45.878764);
-        private static Location Invercargill = new Location(168.35376, -46.413177);
+        private static Dictionary<string, GeoCoordinate> locations;
+        private static GeoCoordinate Whangarei = new GeoCoordinate(-35.725156, 174.323735);
+        private static GeoCoordinate Auckland = new GeoCoordinate(-36.848457, 174.763351);
+        private static GeoCoordinate Tauranga = new GeoCoordinate(-37.687798, 176.165149);
+        private static GeoCoordinate Hamilton = new GeoCoordinate(-37.787009, 175.279268);
+        private static GeoCoordinate Whakatane = new GeoCoordinate(-37.953419, 176.990813);
+        private static GeoCoordinate Rotorua = new GeoCoordinate(-38.136875, 176.249759);
+        private static GeoCoordinate Gisborne = new GeoCoordinate(-38.662354, 178.017648);
+        private static GeoCoordinate Taupo = new GeoCoordinate(-38.685686, 176.070214);
+        private static GeoCoordinate NewPlymouth = new GeoCoordinate(-39.055622, 174.075247);
+        private static GeoCoordinate Napier = new GeoCoordinate(-39.492839, 176.912026);
+        private static GeoCoordinate Hastings = new GeoCoordinate(-39.639558, 176.839247);
+        private static GeoCoordinate Wanganui = new GeoCoordinate(-39.930093, 175.047932);
+        private static GeoCoordinate PalmerstonNorth = new GeoCoordinate(-40.352309, 175.608204);
+        private static GeoCoordinate Levin = new GeoCoordinate(-40.622243, 175.286181);
+        private static GeoCoordinate Masterton = new GeoCoordinate(-40.951114, 175.657356);
+        private static GeoCoordinate UpperHutt = new GeoCoordinate(-41.124415, 175.070785);
+        private static GeoCoordinate Porirua = new GeoCoordinate(-41.133935, 174.840628);
+        private static GeoCoordinate LowerHutt = new GeoCoordinate(-41.209163, 174.90805);
+        private static GeoCoordinate Wellington = new GeoCoordinate(-41.28647, 174.776231);
+        private static GeoCoordinate Nelson = new GeoCoordinate(-41.270632, 173.284049);
+        private static GeoCoordinate Blenheim = new GeoCoordinate(-41.513444, 173.961261);
+        private static GeoCoordinate Greymouth = new GeoCoordinate(-42.450398, 171.210765);
+        private static GeoCoordinate Christchurch = new GeoCoordinate(-43.532041, 172.636268);
+        private static GeoCoordinate Timaru = new GeoCoordinate(-44.396999, 171.255005);
+        private static GeoCoordinate Queenstown = new GeoCoordinate(-45.031176, 168.662643);
+        private static GeoCoordinate Dunedin = new GeoCoordinate(-45.878764, 170.502812);
+        private static GeoCoordinate Invercargill = new GeoCoordinate(-46.413177, 168.35376);
 
         static DistanceTool()
         {
             // Not localising these, as I'm not sure how you'd spell "Whangarei" in German...
-            locations = new Dictionary<String, Location>();
+            locations = new Dictionary<String, GeoCoordinate>();
             locations.Add("Whangarei", Whangarei);
             locations.Add("Auckland", Auckland);
             locations.Add("Tauranga", Tauranga);
@@ -82,12 +83,12 @@ namespace WhatsShakingNZ.GeonetHelper
             locations.Add("Dunedin", Dunedin);
             locations.Add("Invercargill", Invercargill);
         }
-        public static String GetClosestTown(Location quakeEpicenter)
+        public static String GetClosestTown(GeoCoordinate quakeEpicenter)
         {
             // Find the distance from the closest town
             double closestTownDistance = -1;
             String closestTownName = null;
-            Location closestTown = null;
+            GeoCoordinate closestTown = null;
             foreach (var location in locations.Keys)
             {
                 if (closestTownDistance < 0)
@@ -115,8 +116,8 @@ namespace WhatsShakingNZ.GeonetHelper
             return String.Format(locationFormatString, closestTownDistance, direction, closestTownName);
         }
 
-        private static String GetDirectionFromTown(Location closestTown,
-                Location quakeEpicenter)
+        private static String GetDirectionFromTown(GeoCoordinate closestTown,
+                GeoCoordinate quakeEpicenter)
         {
             double dLon = Math.Abs(quakeEpicenter.Longitude - closestTown.Longitude);
             double dLat = Math.Abs(quakeEpicenter.Latitude - closestTown.Latitude);
@@ -158,7 +159,7 @@ namespace WhatsShakingNZ.GeonetHelper
         /// </summary>
         /// <param name="x">Degrees</param>
         /// <returns>The equivalent in radians</returns>
-        public static double Radians(double x)
+        private static double Radians(double x)
         {
             return x * PIx / 180;
         }
@@ -171,7 +172,7 @@ namespace WhatsShakingNZ.GeonetHelper
         /// <param name="lon2"></param>
         /// <param name="lat2"></param>
         /// <returns></returns>
-        public static double DistanceBetweenPlaces(
+        private static double DistanceBetweenPlaces(
             double lon1,
             double lat1,
             double lon2,

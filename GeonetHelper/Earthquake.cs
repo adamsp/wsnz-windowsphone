@@ -32,7 +32,7 @@ namespace WhatsShakingNZ.GeonetHelper
             }
         }
 
-        public Location Location { get; set; }
+        public GeoCoordinate Location { get; set; }
         public string RelativeLocation
         {
             get
@@ -68,16 +68,5 @@ namespace WhatsShakingNZ.GeonetHelper
         public string Agency { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; }
-    }
-
-    public class Location
-    {
-        public Location(double longitude, double latitude)
-        {
-            Latitude = latitude;
-            Longitude = longitude;
-        }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
     }
 }
