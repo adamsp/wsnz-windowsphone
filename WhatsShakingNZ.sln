@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "Settings\Settin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization", "Localization\Localization.csproj", "{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsShakingNZ.Tests", "WhatsShakingNZ.Tests\WhatsShakingNZ.Tests.csproj", "{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
