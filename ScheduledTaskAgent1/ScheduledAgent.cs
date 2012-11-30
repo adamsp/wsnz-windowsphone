@@ -6,6 +6,7 @@ using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Localization;
+using HttpWebAdapters;
 
 namespace ScheduledTaskAgent1
 {
@@ -14,6 +15,7 @@ namespace ScheduledTaskAgent1
         private static volatile bool _classInitialized;
         private string TileTitle;
         private string TaskName;
+        private GeonetAccessor geonet;
 
         /// <remarks>
         /// ScheduledAgent constructor, initializes the UnhandledException handler
@@ -30,6 +32,7 @@ namespace ScheduledTaskAgent1
                     Application.Current.UnhandledException += ScheduledAgent_UnhandledException;
                 });
             }
+            geonet = new GeonetAccessor(new HttpWebRequestFactory());
         }
 
         /// Code to execute on Unhandled Exceptions
@@ -54,8 +57,8 @@ namespace ScheduledTaskAgent1
         protected override void OnInvoke(ScheduledTask task)
         {
             TaskName = task.Name;
-            GeonetAccessor.GetQuakesCompletedEvent += QuakeListener;
-            GeonetAccessor.GetQuakes();
+            geonet.GetQuakesCompletedEvent += QuakeListener;
+            geonet.GetQuakes();
         }
 
         public void QuakeListener(object sender, QuakeEventArgs e)

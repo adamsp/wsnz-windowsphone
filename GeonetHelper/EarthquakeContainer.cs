@@ -2,17 +2,21 @@
 using System.ComponentModel;
 using System.Windows;
 using WhatsShakingNZ.Settings;
+using HttpWebAdapters;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
     public sealed class EarthquakeContainer : INotifyPropertyChanged
     {
         private AppSettings appSettings;
+        private GeonetAccessor geonet;
         public const string QuakesUpdatedEventKey = "Quakes";
+
         public EarthquakeContainer()
         {
             appSettings = new AppSettings();
-            GeonetAccessor.GetQuakesCompletedEvent += QuakeListener;
+            geonet = new GeonetAccessor(new HttpWebRequestFactory());
+            geonet.GetQuakesCompletedEvent += QuakeListener;
         }
 
         public void QuakeListener(object sender, QuakeEventArgs e)
@@ -49,7 +53,7 @@ namespace WhatsShakingNZ.GeonetHelper
 
         public void DownloadNewQuakes()
         {
-            GeonetAccessor.GetQuakes();
+            geonet.GetQuakes();
         }
 
         #region INotifyPropertyChanged Members

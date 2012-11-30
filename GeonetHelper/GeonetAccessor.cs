@@ -6,28 +6,43 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Device.Location;
+using HttpWebAdapters;
+using HttpWebAdapters.Adapters;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
-    public static class GeonetAccessor
+    public class GeonetAccessor
     {
-        public static QuakeEventHandler GetQuakesCompletedEvent;
-        public static void GetQuakes()
+        public QuakeEventHandler GetQuakesCompletedEvent;
+
+        private IHttpWebRequestFactory webRequestFactory;
+
+        public GeonetAccessor(IHttpWebRequestFactory webRequestFactory)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://geonet.org.nz/quakes/services/felt.json");
+            this.webRequestFactory = webRequestFactory;
+        }
+
+        public void GetQuakes()
+        {
+            GetQuakes("http://geonet.org.nz/quakes/services/felt.json");
+        }
+
+        public void GetQuakes(string uriString)
+        {
+            var request = webRequestFactory.Create(new Uri(uriString));
             request.AllowReadStreamBuffering = true;
             var token = request.BeginGetResponse(ProcessResponse, request);
         }
 
-        static void ProcessResponse(IAsyncResult result)
+        void ProcessResponse(IAsyncResult result)
         {
-            HttpWebRequest request = result.AsyncState as HttpWebRequest;
+            IHttpWebRequest request = result.AsyncState as IHttpWebRequest;
             string responseJson = "";
             if (request != null)
             {
                 try
                 {
-                    WebResponse response = request.EndGetResponse(result);
+                    var response = request.EndGetResponse(result);
                     using (var stream = response.GetResponseStream())
                     {
                         using (StreamReader reader = new StreamReader(stream))
@@ -60,7 +75,7 @@ namespace WhatsShakingNZ.GeonetHelper
                             Depth = (double)q["properties"]["depth"],
                             Magnitude = (double)q["properties"]["magnitude"],
                             Reference = (string)q["properties"]["publicid"],
-                            // origintime=2012-08-13 05:25:24.727000  (that's in UTC)
+                            /* origintime=2012-08-13 05:25:24.727000  (that's in UTC) */
                             Date = DateTime.Parse((string)q["properties"]["origintime"] + "Z"),
                             Agency = (string)q["properties"]["agency"],
                             Status = (string)q["properties"]["status"]

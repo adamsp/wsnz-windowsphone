@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9A13DCDD-7C15-4D21-8A60-775D5DADC9FC}</ProjectGuid>
+    <ProjectGuid>{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScheduledTaskAgent1</RootNamespace>
-    <AssemblyName>ScheduledTaskAgent1</AssemblyName>
+    <RootNamespace>HttpWebAdapters</RootNamespace>
+    <AssemblyName>HttpWebAdapters</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
@@ -18,7 +18,6 @@
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <BackgroundAgentType>ScheduledTaskAgent</BackgroundAgentType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,7 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Phone" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -51,22 +49,16 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScheduledAgent.cs" />
+    <Compile Include="IHttpWebRequest.cs" />
+    <Compile Include="IHttpWebRequestFactory.cs" />
+    <Compile Include="IHttpWebResponse.cs" />
+    <Compile Include="Impl\BasicAuthHttpWebRequestFactory.cs" />
+    <Compile Include="Impl\HttpWebRequestAdapter.cs" />
+    <Compile Include="Impl\HttpWebRequestFactory.cs" />
+    <Compile Include="Impl\HttpWebRequestMethod.cs" />
+    <Compile Include="Impl\HttpWebResponseAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GeonetHelper\GeonetHelper.csproj">
-      <Project>{4321B8F9-A2FE-4751-85FB-F2C29F368301}</Project>
-      <Name>GeonetHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HttpWebAdapters\HttpWebAdapters.csproj">
-      <Project>{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}</Project>
-      <Name>HttpWebAdapters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Localization\Localization.csproj">
-      <Project>{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}</Project>
-      <Name>Localization</Name>
-    </ProjectReference>
+    <Compile Include="WebResponseStub.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

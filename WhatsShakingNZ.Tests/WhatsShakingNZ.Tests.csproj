@@ -72,10 +72,14 @@
     </Compile>
     <Compile Include="GeonetHelperTests\DistanceToolTests.cs" />
     <Compile Include="GeonetHelperTests\EarthquakeTests.cs" />
+    <Compile Include="GeonetHelperTests\GeonetAccessorTests.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindowExtensions.cs" />
+    <Compile Include="Mocks\HttpWebRequest.cs" />
+    <Compile Include="Mocks\HttpWebRequestFactory.cs" />
+    <Compile Include="Mocks\HttpWebResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTest.cs" />
   </ItemGroup>
@@ -108,6 +112,10 @@
     <ProjectReference Include="..\GeonetHelper\GeonetHelper.csproj">
       <Project>{4321B8F9-A2FE-4751-85FB-F2C29F368301}</Project>
       <Name>GeonetHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HttpWebAdapters\HttpWebAdapters.csproj">
+      <Project>{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}</Project>
+      <Name>HttpWebAdapters</Name>
     </ProjectReference>
     <ProjectReference Include="..\Localization\Localization.csproj">
       <Project>{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}</Project>

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization", "Localizatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsShakingNZ.Tests", "WhatsShakingNZ.Tests\WhatsShakingNZ.Tests.csproj", "{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpWebAdapters", "HttpWebAdapters\HttpWebAdapters.csproj", "{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09E48BBE-2BA6-4099-B215-DE2986C4AFEB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
