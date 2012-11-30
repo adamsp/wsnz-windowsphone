@@ -8,9 +8,12 @@ using Newtonsoft.Json.Linq;
 using System.Device.Location;
 using HttpWebAdapters;
 using HttpWebAdapters.Adapters;
+using Newtonsoft.Json;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
+    public enum GeonetSuccessStatus { Success, NetworkFailure, BadGeonetData, NoGeonetData }
+
     public class GeonetAccessor
     {
         public QuakeEventHandler GetQuakesCompletedEvent;
@@ -51,52 +54,59 @@ namespace WhatsShakingNZ.GeonetHelper
                         }
                     }
                 }
-                catch (WebException e)
+                catch (WebException)
                 {
-                    if(null != GetQuakesCompletedEvent)
-                        GetQuakesCompletedEvent(null, null);
+                    Completed(null, GeonetSuccessStatus.NetworkFailure);
                     return;
                 }
             }
-            List<Earthquake> quakes = new List<Earthquake>();
+            IEnumerable<Earthquake> quakes;
             if (!string.IsNullOrEmpty(responseJson))
             {
-                
+
                 try
                 {
-                    JObject o = JObject.Parse(responseJson);
-                    
-                    foreach (var q in o["features"].Children())
-                    {
-                        Earthquake quake = new Earthquake
-                        {
-                            Location = new GeoCoordinate(q["geometry"]["coordinates"].Values<double>().ElementAt(1),
-                                q["geometry"]["coordinates"].Values<double>().ElementAt(0)),
-                            Depth = (double)q["properties"]["depth"],
-                            Magnitude = (double)q["properties"]["magnitude"],
-                            Reference = (string)q["properties"]["publicid"],
-                            /* origintime=2012-08-13 05:25:24.727000  (that's in UTC) */
-                            Date = DateTime.Parse((string)q["properties"]["origintime"] + "Z"),
-                            Agency = (string)q["properties"]["agency"],
-                            Status = (string)q["properties"]["status"]
-                        };
-                        quakes.Add(quake);
-                    }
-                    quakes = new List<Earthquake>(quakes.OrderByDescending(q => q.Date));
+                    GeonetJsonParser jsonParser = new GeonetJsonParser();
+                    quakes = jsonParser.ParseJsonToQuakes(responseJson);
+                    Completed(quakes, GeonetSuccessStatus.Success);
                 }
-                catch {}
+                catch (JsonException e)
+                {
+                    Completed(null, GeonetSuccessStatus.BadGeonetData);
+                }
             }
-            if(null != GetQuakesCompletedEvent)
-                GetQuakesCompletedEvent(null, new QuakeEventArgs(quakes));
+            else
+            {
+                Completed(null, GeonetSuccessStatus.NoGeonetData);
+            }
+        }
+
+        private void Completed(IEnumerable<Earthquake> quakes, GeonetSuccessStatus success)
+        {
+            if (null != GetQuakesCompletedEvent)
+                GetQuakesCompletedEvent(this, new QuakeEventArgs(quakes, success));
         }
     }
+
     public delegate void QuakeEventHandler(object sender, QuakeEventArgs e);
     public class QuakeEventArgs : EventArgs
     {
         private ObservableCollection<Earthquake> _quakes;
-        public QuakeEventArgs(List<Earthquake> quakes)
+        private GeonetSuccessStatus _status;
+        public QuakeEventArgs(IEnumerable<Earthquake> quakes, GeonetSuccessStatus status)
         {
-            _quakes = new ObservableCollection<Earthquake>(quakes);
+            if (quakes != null)
+                _quakes = new ObservableCollection<Earthquake>(quakes);
+            else
+                _quakes = new ObservableCollection<Earthquake>();
+            _status = status;
+        }
+        public GeonetSuccessStatus Status
+        {
+            get
+            {
+                return _status;
+            }
         }
         public ObservableCollection<Earthquake> Quakes
         {

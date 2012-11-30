@@ -59,6 +59,7 @@
     <Compile Include="Earthquake.cs" />
     <Compile Include="EarthquakeContainer.cs" />
     <Compile Include="GeonetAccessor.cs" />
+    <Compile Include="GeonetJsonParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuakeFilter.cs" />
   </ItemGroup>
