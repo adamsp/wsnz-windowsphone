@@ -12,19 +12,34 @@ namespace WhatsShakingNZ.GeonetHelper
         private GeonetAccessor geonet;
         public const string QuakesUpdatedEventKey = "Quakes";
 
-        public EarthquakeContainer()
+        public EarthquakeContainer() : this(new HttpWebRequestFactory())
+        {
+        }
+
+        public EarthquakeContainer(IHttpWebRequestFactory factory)
         {
             appSettings = new AppSettings();
-            geonet = new GeonetAccessor(new HttpWebRequestFactory());
+            geonet = new GeonetAccessor(factory);
             geonet.GetQuakesCompletedEvent += QuakeListener;
         }
 
-        public void QuakeListener(object sender, QuakeEventArgs e)
+        private void QuakeListener(object sender, QuakeEventArgs e)
         {
+            // TODO Show different messages depending on e.Status
             if (e != null)
-                Quakes = e.Quakes;
-            else
-                Quakes = null;
+            {
+                switch (e.Status)
+                {
+                    case GeonetSuccessStatus.Success:
+                        Quakes = e.Quakes;
+                        break;
+                    case GeonetSuccessStatus.BadGeonetData:
+                    case GeonetSuccessStatus.NetworkFailure:
+                    case GeonetSuccessStatus.NoGeonetData:
+                        Quakes = null;
+                        break;
+                }
+            }
         }
 
         private ObservableCollection<Earthquake> _quakes;
@@ -38,11 +53,8 @@ namespace WhatsShakingNZ.GeonetHelper
             }
             set
             {
-                if (_quakes != value)
-                {
-                    _quakes = value;
-                    NotifyPropertyChanged(QuakesUpdatedEventKey);
-                }
+                _quakes = value;
+                NotifyPropertyChanged(QuakesUpdatedEventKey);
             }
         }
 
