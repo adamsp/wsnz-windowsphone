@@ -79,6 +79,7 @@
     <Compile Include="GeonetHelperTests\EarthquakeTests.cs" />
     <Compile Include="GeonetHelperTests\GeonetAccessorTests.cs" />
     <Compile Include="GeonetHelperTests\GeonetJsonParserTests.cs" />
+    <Compile Include="GeonetHelperTests\QuakeFilterTests.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\Localization\Localization.csproj">
       <Project>{51595D04-9DA7-4C5E-BB96-9E01B4BB5BF6}</Project>
       <Name>Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Settings\Settings.csproj">
+      <Project>{BCEFF84C-A535-4556-AA0D-B88F8C258F93}</Project>
+      <Name>Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
