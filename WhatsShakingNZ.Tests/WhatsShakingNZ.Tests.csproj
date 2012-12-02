@@ -58,6 +58,10 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
       <HintPath>..\packages\silverlight.unittest.wp7.3.0.40609.1000\lib\sl4-wp71\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Device" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -74,6 +78,7 @@
     <Compile Include="GeonetHelperTests\EarthquakeContainerTests.cs" />
     <Compile Include="GeonetHelperTests\EarthquakeTests.cs" />
     <Compile Include="GeonetHelperTests\GeonetAccessorTests.cs" />
+    <Compile Include="GeonetHelperTests\GeonetJsonParserTests.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
