@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
-    public enum GeonetSuccessStatus { Success, NetworkFailure, BadGeonetData, NoGeonetData }
+    public enum GeonetSuccessStatus { Success = 0, NetworkFailure, BadGeonetData, NoGeonetData }
 
     public class GeonetAccessor
     {

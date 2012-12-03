@@ -28,6 +28,7 @@ namespace WhatsShakingNZ.GeonetHelper
             // TODO Show different messages depending on e.Status
             if (e != null)
             {
+                Status = e.Status;
                 switch (e.Status)
                 {
                     case GeonetSuccessStatus.Success:
@@ -40,6 +41,12 @@ namespace WhatsShakingNZ.GeonetHelper
                         break;
                 }
             }
+        }
+
+        public GeonetSuccessStatus Status
+        {
+            get;
+            set;
         }
 
         private ObservableCollection<Earthquake> _quakes;

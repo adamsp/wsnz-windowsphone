@@ -193,20 +193,20 @@ namespace WhatsShakingNZ.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to please check your data connection is working.
+        ///   Looks up a localized string similar to There are no quakes available that fit the criteria for your settings. Try lowering the minimum display values..
         /// </summary>
-        public static string BasePageNoConnectivityToastMessage {
+        public static string BasePageRestrictiveSettingsToastMessage {
             get {
-                return ResourceManager.GetString("BasePageNoConnectivityToastMessage", resourceCulture);
+                return ResourceManager.GetString("BasePageRestrictiveSettingsToastMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to problem retrieving quakes.
+        ///   Looks up a localized string similar to Restrictive Settings.
         /// </summary>
-        public static string BasePageNoConnectivityToastTitle {
+        public static string BasePageRestrictiveSettingsToastTitle {
             get {
-                return ResourceManager.GetString("BasePageNoConnectivityToastTitle", resourceCulture);
+                return ResourceManager.GetString("BasePageRestrictiveSettingsToastTitle", resourceCulture);
             }
         }
         
@@ -288,6 +288,51 @@ namespace WhatsShakingNZ.Localization {
         public static string East {
             get {
                 return ResourceManager.GetString("East", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data received from Geonet was unusable. Please try again..
+        /// </summary>
+        public static string GeonetProblemBadGeonetData {
+            get {
+                return ResourceManager.GetString("GeonetProblemBadGeonetData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an unexpected problem downloading data from Geonet. Please try again..
+        /// </summary>
+        public static string GeonetProblemDefault {
+            get {
+                return ResourceManager.GetString("GeonetProblemDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem with your internet connection. Please check you have connection and then try again..
+        /// </summary>
+        public static string GeonetProblemNetworkFailure {
+            get {
+                return ResourceManager.GetString("GeonetProblemNetworkFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geonet sent no data. Please try again..
+        /// </summary>
+        public static string GeonetProblemNoGeonetData {
+            get {
+                return ResourceManager.GetString("GeonetProblemNoGeonetData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem downloading latest quakes.
+        /// </summary>
+        public static string GeonetProblemToastTitle {
+            get {
+                return ResourceManager.GetString("GeonetProblemToastTitle", resourceCulture);
             }
         }
         

@@ -26,10 +26,35 @@ namespace WhatsShakingNZ
         protected abstract void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e);
 
         /// <summary>
-        /// Do any page-specific modifications (such as disabling the Refresh button) before
-        /// calling the QuakeContainer.DownloadNewQuakes() method.
+        /// Used so the page can do any page-specific modifications (such as disabling the 
+        /// Refresh button) before the QuakeContainer.DownloadNewQuakes() method gets called.
         /// </summary>
-        protected abstract void GetQuakes();
+        protected abstract void StartGetQuakes();
+
+        /// <summary>
+        /// Used so the page can do any page-specific modifications (such as enabling the 
+        /// Refresh button) after the QuakeContainer.DownloadNewQuakes() method returns.
+        /// </summary>
+        protected abstract void GetQuakesFinished();
+
+        /// <summary>
+        /// Makes the calls required to set up the pages for downloading new quakes, and
+        /// then starts the download.
+        /// </summary>
+        protected void DownloadNewQuakes()
+        {
+            StartGetQuakes();
+            QuakeContainer.DownloadNewQuakes();
+        }
+
+        /// <summary>
+        /// Does not download new quakes but fires the "updated" event, useful when
+        /// settings may have changed.
+        /// </summary>
+        protected void RefreshViews()
+        {
+            QuakeContainer.RefreshViews();
+        }
 
         /// <summary>
         /// This will be attached to the QuakeContainer.PropertyChanged event automatically
@@ -37,7 +62,56 @@ namespace WhatsShakingNZ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public abstract void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e);
+        public void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+            if (e != null && e.PropertyName == EarthquakeContainer.QuakesUpdatedEventKey)
+            {
+                GetQuakesFinished();
+                if (!ShouldUpdateQuakesDisplay()) return;
+                if (QuakeContainer.Quakes.Count == 0)
+                {
+                    ShowRestrictiveSettingsToast();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Will display a toast informing the user that something went wrong with the
+        /// Geonet request, if something went wrong.
+        /// </summary>
+        /// <returns>true if nothing went wrong and you should update your display,
+        /// or false if something did go wrong and you should leave old quakes there.</returns>
+        protected bool ShouldUpdateQuakesDisplay()
+        {
+            string toastMessage;
+            switch(QuakeContainer.Status)
+            {
+                case GeonetSuccessStatus.Success:
+                    return true;
+                case GeonetSuccessStatus.BadGeonetData:
+                    toastMessage = AppResources.GeonetProblemBadGeonetData;
+                    break;
+                case GeonetSuccessStatus.NetworkFailure:
+                    toastMessage = AppResources.GeonetProblemNetworkFailure;
+                    break;
+                case GeonetSuccessStatus.NoGeonetData:
+                    toastMessage = AppResources.GeonetProblemNoGeonetData;
+                    break;
+                default:
+                    toastMessage = AppResources.GeonetProblemDefault;
+                    break;
+            }
+
+            ToastPrompt toast = new ToastPrompt()
+            {
+                TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                TextWrapping = System.Windows.TextWrapping.Wrap,
+                Title = AppResources.GeonetProblemToastTitle,
+                Message = toastMessage
+            };
+            toast.Show();
+            return false;
+        }
 
         private EarthquakeContainer _quakeContainer;
         /// <summary>
@@ -139,7 +213,7 @@ namespace WhatsShakingNZ
 
         protected void RefreshRecentButton_Click(object sender, EventArgs e)
         {
-            GetQuakes();
+            DownloadNewQuakes();
         }
 
         protected void NavigateToQuakePage(int selectedIndex)
@@ -148,14 +222,14 @@ namespace WhatsShakingNZ
             NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
         }
 
-        protected void ShowNoConnectivityToast()
+        protected void ShowRestrictiveSettingsToast()
         {
             ToastPrompt toast = new ToastPrompt()
             {
                 TextOrientation = System.Windows.Controls.Orientation.Vertical,
                 TextWrapping = System.Windows.TextWrapping.Wrap,
-                Title = AppResources.BasePageNoConnectivityToastTitle,
-                Message = AppResources.BasePageNoConnectivityToastMessage
+                Title = AppResources.BasePageRestrictiveSettingsToastTitle,
+                Message = AppResources.BasePageRestrictiveSettingsToastMessage
             };
             toast.Show();
         }

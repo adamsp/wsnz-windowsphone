@@ -59,12 +59,12 @@ namespace WhatsShakingNZ
         {
             base.OnNavigatedTo(e);
             if (e.NavigationMode != System.Windows.Navigation.NavigationMode.Back)
-                GetQuakes();
+                DownloadNewQuakes();
             else
-                QuakeContainer.RefreshViews();
+                RefreshViews();
         }
 
-        protected override void GetQuakes()
+        protected override void StartGetQuakes()
         {
             /**
              * Can't put this in the base class because the refresh button has no identifier - so we can't
@@ -73,24 +73,16 @@ namespace WhatsShakingNZ
             (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;
-            QuakeContainer.DownloadNewQuakes();
         }
 
-        public override void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
+        protected override void GetQuakesFinished()
         {
-            if (e != null && e.PropertyName == EarthquakeContainer.QuakesUpdatedEventKey)
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
-                    customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
-                    customIndeterminateProgressBar.IsIndeterminate = false;
-                    if (QuakeContainer.Quakes.Count == 0)
-                    {
-                        ShowNoConnectivityToast();
-                    }
-                });
-            }
+                (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
+                customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
+                customIndeterminateProgressBar.IsIndeterminate = false;
+            });
         }
 
         private void MapPageButton_Click(object sender, EventArgs e)

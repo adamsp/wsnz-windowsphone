@@ -68,6 +68,7 @@ namespace WhatsShakingNZ.Tests.GeonetHelperTests
             {
                 Assert.AreEqual(EarthquakeContainer.QuakesUpdatedEventKey, e.PropertyName);
                 Assert.AreEqual(3, container.Quakes.Count);
+                Assert.AreEqual(GeonetSuccessStatus.Success, container.Status);
                 EnqueueTestComplete();
             };
             container.DownloadNewQuakes();
@@ -88,6 +89,7 @@ namespace WhatsShakingNZ.Tests.GeonetHelperTests
             container.PropertyChanged += (sender, e) => {
                 Assert.AreEqual(EarthquakeContainer.QuakesUpdatedEventKey, e.PropertyName);
                 Assert.AreEqual(0, container.Quakes.Count);
+                Assert.AreEqual(GeonetSuccessStatus.NetworkFailure, container.Status);
                 EnqueueTestComplete();
             };
             container.DownloadNewQuakes();

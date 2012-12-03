@@ -61,30 +61,9 @@ namespace WhatsShakingNZ
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            QuakeContainer.RefreshViews();
+            RefreshViews();
         }
 
-        public override void QuakesUpdatedEventHandler(object sender, PropertyChangedEventArgs e)
-        {
-            if (e != null && e.PropertyName == EarthquakeContainer.QuakesUpdatedEventKey)
-            {
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
-                    customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
-                    customIndeterminateProgressBar.IsIndeterminate = false;
-                    if (QuakeContainer.Quakes.Count > 0)
-                    {
-                        UpdateMap();
-                    }
-                    else
-                    {
-                        ShowNoConnectivityToast();
-                    }
-                });
-            }
-        }
-        
         private void UpdateMap()
         {
             QuakeMap.Children.Clear();
@@ -110,7 +89,7 @@ namespace WhatsShakingNZ
             }
         }
 
-        protected override void GetQuakes()
+        protected override void StartGetQuakes()
         {
             /**
              * Can't put this in the base class because the refresh button has no identifier - so we can't
@@ -119,7 +98,17 @@ namespace WhatsShakingNZ
            (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
             customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
             customIndeterminateProgressBar.IsIndeterminate = true;
-            QuakeContainer.DownloadNewQuakes();
+        }
+
+        protected override void GetQuakesFinished()
+        {
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
+                customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
+                customIndeterminateProgressBar.IsIndeterminate = false;
+                UpdateMap();
+            });
         }
 
         protected override void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)

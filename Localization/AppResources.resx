@@ -167,11 +167,11 @@ Fixed a bug where the application would occasionally crash on the Map view page.
   <data name="ApplicationTitle" xml:space="preserve">
     <value>WHAT'S SHAKING NZ?</value>
   </data>
-  <data name="BasePageNoConnectivityToastMessage" xml:space="preserve">
-    <value>please check your data connection is working</value>
+  <data name="BasePageRestrictiveSettingsToastMessage" xml:space="preserve">
+    <value>There are no quakes available that fit the criteria for your settings. Try lowering the minimum display values.</value>
   </data>
-  <data name="BasePageNoConnectivityToastTitle" xml:space="preserve">
-    <value>problem retrieving quakes</value>
+  <data name="BasePageRestrictiveSettingsToastTitle" xml:space="preserve">
+    <value>Restrictive Settings</value>
   </data>
   <data name="ConverterLongDepthFormat" xml:space="preserve">
     <value>Depth: {0} kilometers</value>
@@ -200,6 +200,21 @@ Fixed a bug where the application would occasionally crash on the Map view page.
   </data>
   <data name="East" xml:space="preserve">
     <value>east</value>
+  </data>
+  <data name="GeonetProblemBadGeonetData" xml:space="preserve">
+    <value>Data received from Geonet was unusable. Please try again.</value>
+  </data>
+  <data name="GeonetProblemDefault" xml:space="preserve">
+    <value>There was an unexpected problem downloading data from Geonet. Please try again.</value>
+  </data>
+  <data name="GeonetProblemNetworkFailure" xml:space="preserve">
+    <value>Problem with your internet connection. Please check you have connection and then try again.</value>
+  </data>
+  <data name="GeonetProblemNoGeonetData" xml:space="preserve">
+    <value>Geonet sent no data. Please try again.</value>
+  </data>
+  <data name="GeonetProblemToastTitle" xml:space="preserve">
+    <value>Problem downloading latest quakes</value>
   </data>
   <data name="LittleWatsonMessageBoxCaption" xml:space="preserve">
     <value>Problem Report</value>
