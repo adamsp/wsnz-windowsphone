@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhatsShakingNZ.Settings;
+using System.IO.IsolatedStorage;
+using Settings;
 
 namespace WhatsShakingNZ.Tests.SettingsTests
 {
@@ -38,6 +40,19 @@ namespace WhatsShakingNZ.Tests.SettingsTests
             Assert.AreEqual(13, settings.NumberOfQuakesToShowSetting);
             Assert.AreEqual(true, settings.ShowLiveTileSetting);
             Assert.AreEqual(false, settings.TwentyFourHourClockSetting);
+        }
+
+        [TestMethod]
+        public void TestDefaultSettingsAreReturned()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            Assert.AreEqual(DefaultSettings.MinimumDisplayMagnitudeDefaultValue, settings.MinimumDisplayMagnitudeSetting);
+            Assert.AreEqual(DefaultSettings.MinimumWarningMagnitudeDefaultValue, settings.MinimumWarningMagnitudeSetting);
+            Assert.AreEqual(DefaultSettings.NumberOfQuakesToShowDefaultValue, settings.NumberOfQuakesToShowSetting);
+            Assert.AreEqual(DefaultSettings.ShowLiveTileDefaultValue, settings.ShowLiveTileSetting);
+            Assert.AreEqual(DefaultSettings.TwentyFourHourClockDefaultValue, settings.TwentyFourHourClockSetting);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
+using Settings;
 
 namespace WhatsShakingNZ.Settings
 {
@@ -17,14 +18,6 @@ namespace WhatsShakingNZ.Settings
         const string TwentyFourHourClockKey = "TwentyFourHourClock";
         const string ShowLiveTileKey = "ShowLiveTile";
         const string NumberOfQuakesToShowKey = "QuakesToShow";
-
-        
-        // The default value of our settings
-        const double MinimumDisplayMagnitudeDefaultValue = 2.0;
-        const double MinimumWarningMagnitudeDefaultValue = 4.0;
-        const bool TwentyFourHourClockDefaultValue = false;
-        const bool ShowLiveTileDefaultValue = false;
-        const int NumberOfQuakesToShowDefaultValue = 10;
 
         /// <summary>
         /// Constructor that gets the application settings.
@@ -117,7 +110,7 @@ namespace WhatsShakingNZ.Settings
         {
             get
             {
-                return GetValueOrDefault<double>(MinimumDisplayMagnitudeKey, MinimumDisplayMagnitudeDefaultValue);
+                return GetValueOrDefault<double>(MinimumDisplayMagnitudeKey, DefaultSettings.MinimumDisplayMagnitudeDefaultValue);
             }
             set
             {
@@ -136,7 +129,7 @@ namespace WhatsShakingNZ.Settings
         {
             get
             {
-                return GetValueOrDefault<double>(MinimumWarningMagnitudeKey, MinimumWarningMagnitudeDefaultValue);
+                return GetValueOrDefault<double>(MinimumWarningMagnitudeKey, DefaultSettings.MinimumWarningMagnitudeDefaultValue);
             }
             set
             {
@@ -154,7 +147,7 @@ namespace WhatsShakingNZ.Settings
         {
             get
             {
-                return GetValueOrDefault<int>(NumberOfQuakesToShowKey, NumberOfQuakesToShowDefaultValue);
+                return GetValueOrDefault<int>(NumberOfQuakesToShowKey, DefaultSettings.NumberOfQuakesToShowDefaultValue);
             }
             set
             {
@@ -173,7 +166,7 @@ namespace WhatsShakingNZ.Settings
         {
             get
             {
-                return GetValueOrDefault<bool>(TwentyFourHourClockKey, TwentyFourHourClockDefaultValue);
+                return GetValueOrDefault<bool>(TwentyFourHourClockKey, DefaultSettings.TwentyFourHourClockDefaultValue);
             }
             set
             {
@@ -192,7 +185,7 @@ namespace WhatsShakingNZ.Settings
         {
             get
             {
-                return GetValueOrDefault<bool>(ShowLiveTileKey, ShowLiveTileDefaultValue);
+                return GetValueOrDefault<bool>(ShowLiveTileKey, DefaultSettings.ShowLiveTileDefaultValue);
             }
             set
             {
