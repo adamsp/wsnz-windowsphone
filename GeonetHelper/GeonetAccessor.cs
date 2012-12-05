@@ -9,10 +9,17 @@ using System.Device.Location;
 using HttpWebAdapters;
 using HttpWebAdapters.Adapters;
 using Newtonsoft.Json;
+using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
     public enum GeonetSuccessStatus { Success = 0, NetworkFailure, BadGeonetData, NoGeonetData }
+
+    public class GeonetEndpoints
+    {
+        public const string AllQuakes = "http://geonet.org.nz/quakes/services/all.json";
+        public const string FeltQuakes = "http://geonet.org.nz/quakes/services/felt.json";
+    }
 
     public class GeonetAccessor
     {
@@ -20,17 +27,25 @@ namespace WhatsShakingNZ.GeonetHelper
 
         private IHttpWebRequestFactory webRequestFactory;
 
+        private AppSettings settings;
+
         public GeonetAccessor(IHttpWebRequestFactory webRequestFactory)
         {
             this.webRequestFactory = webRequestFactory;
+            this.settings = new AppSettings();
         }
 
         public void GetQuakes()
         {
-            GetQuakes("http://geonet.org.nz/quakes/services/felt.json");
+            string endpoint;
+            if (settings.UseGeonetAllQuakesEndpointSetting)
+                endpoint = GeonetEndpoints.AllQuakes;
+            else
+                endpoint = GeonetEndpoints.FeltQuakes;
+            GetQuakes(endpoint);
         }
 
-        public void GetQuakes(string uriString)
+        private void GetQuakes(string uriString)
         {
             var request = webRequestFactory.Create(new Uri(uriString));
             request.AllowReadStreamBuffering = true;

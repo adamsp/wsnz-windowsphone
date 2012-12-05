@@ -19,5 +19,6 @@ namespace Settings
         public const bool TwentyFourHourClockDefaultValue = false;
         public const bool ShowLiveTileDefaultValue = false;
         public const int NumberOfQuakesToShowDefaultValue = 10;
+        public const bool UseGeonetAllQuakesEndpointDefaultValue = false;
     }
 }

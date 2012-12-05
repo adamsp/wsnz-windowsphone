@@ -24,35 +24,132 @@ namespace WhatsShakingNZ.Tests.SettingsTests
         }
 
         [TestMethod]
-        public void TestSettingsSave()
+        public void TestSettingsSaveMinDisplayMagnitude()
         {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
             AppSettings settings = new AppSettings();
             settings.MinimumDisplayMagnitudeSetting = 3.2;
-            settings.MinimumWarningMagnitudeSetting = 4.3;
-            settings.NumberOfQuakesToShowSetting = 13;
-            settings.ShowLiveTileSetting = true;
-            settings.TwentyFourHourClockSetting = false;
+
 
             // New instance to ensure it persists.
             settings = new AppSettings();
             Assert.AreEqual(3.2, settings.MinimumDisplayMagnitudeSetting);
-            Assert.AreEqual(4.3, settings.MinimumWarningMagnitudeSetting);
-            Assert.AreEqual(13, settings.NumberOfQuakesToShowSetting);
-            Assert.AreEqual(true, settings.ShowLiveTileSetting);
-            Assert.AreEqual(false, settings.TwentyFourHourClockSetting);
         }
 
         [TestMethod]
-        public void TestDefaultSettingsAreReturned()
+        public void TestSettingsSaveMinWarningMagnitude()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            settings.MinimumWarningMagnitudeSetting = 4.3;
+            // New instance to ensure it persists.
+            settings = new AppSettings();
+            Assert.AreEqual(4.3, settings.MinimumWarningMagnitudeSetting);
+        }
+
+
+        [TestMethod]
+        public void TestSettingsSaveNumQuakes()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            settings.NumberOfQuakesToShowSetting = 13;
+            // New instance to ensure it persists.
+            settings = new AppSettings();
+            Assert.AreEqual(13, settings.NumberOfQuakesToShowSetting);
+        }
+
+        [TestMethod]
+        public void TestSettingsSaveLiveTile()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            settings.ShowLiveTileSetting = true;
+            // New instance to ensure it persists.
+            settings = new AppSettings();
+            Assert.AreEqual(true, settings.ShowLiveTileSetting);
+        }
+
+        [TestMethod]
+        public void TestSettingsSaveTwentyFourHourClock()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            settings.TwentyFourHourClockSetting = true;
+            // New instance to ensure it persists.
+            settings = new AppSettings();
+            Assert.AreEqual(true, settings.TwentyFourHourClockSetting);
+        }
+
+        [TestMethod]
+        public void TestSettingsSaveUseAllQuakesEndpoint()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            settings.UseGeonetAllQuakesEndpointSetting = true;
+            // New instance to ensure it persists.
+            settings = new AppSettings();
+            Assert.AreEqual(true, settings.UseGeonetAllQuakesEndpointSetting);
+        }
+
+        [TestMethod]
+        public void TestDefaultSettingsMinDisplayMagnitude()
         {
             // Delete all saved settings
             IsolatedStorageSettings.ApplicationSettings.Clear();
             AppSettings settings = new AppSettings();
             Assert.AreEqual(DefaultSettings.MinimumDisplayMagnitudeDefaultValue, settings.MinimumDisplayMagnitudeSetting);
+
+        }
+        [TestMethod]
+        public void TestDefaultSettingsMinWarningMagnitude()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
             Assert.AreEqual(DefaultSettings.MinimumWarningMagnitudeDefaultValue, settings.MinimumWarningMagnitudeSetting);
+        }
+
+        [TestMethod]
+        public void TestDefaultSettingsNumQuakes()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
             Assert.AreEqual(DefaultSettings.NumberOfQuakesToShowDefaultValue, settings.NumberOfQuakesToShowSetting);
+        }
+
+        [TestMethod]
+        public void TestDefaultSettingsLiveTile()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
             Assert.AreEqual(DefaultSettings.ShowLiveTileDefaultValue, settings.ShowLiveTileSetting);
+        }
+
+        [TestMethod]
+        public void TestDefaultSettingsTwentyFourHourClock()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
             Assert.AreEqual(DefaultSettings.TwentyFourHourClockDefaultValue, settings.TwentyFourHourClockSetting);
+        }
+
+        [TestMethod]
+        public void TestDefaultSettingsUseAllQuakesEndpoint()
+        {
+            // Delete all saved settings
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+            AppSettings settings = new AppSettings();
+            Assert.AreEqual(DefaultSettings.UseGeonetAllQuakesEndpointDefaultValue, settings.UseGeonetAllQuakesEndpointSetting);
         }
     }
 }

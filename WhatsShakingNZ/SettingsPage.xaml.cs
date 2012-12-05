@@ -18,7 +18,7 @@ namespace WhatsShakingNZ
             LayoutRoot.Background = backgroundImage;
         }
 
-        private void ToggleSwitch_Checked(object sender, RoutedEventArgs e)
+        private void LiveTileToggleSwitch_Checked(object sender, RoutedEventArgs e)
         {
             if(!ScheduledTaskHelper.Add())
             {
@@ -26,16 +26,32 @@ namespace WhatsShakingNZ
                 {
                     TextOrientation = System.Windows.Controls.Orientation.Vertical,
                     Title = AppResources.LiveTileTaskLimitReachedToastTitle,
-                    Message = AppResources.LiveTileTaskLimitReachedToastMessage
+                    Message = AppResources.LiveTileTaskLimitReachedToastMessage,
+                    TextWrapping = TextWrapping.Wrap
                 };
                 toast.Show();
                 LiveTileToggle.IsChecked = false;
             }
         }
 
-        private void ToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
+        private void LiveTileToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
             ScheduledTaskHelper.Remove();
+        }
+
+        private void GeonetEndpointToggle_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as ToggleSwitch).IsChecked ?? false)
+            {
+                ToastPrompt toast = new ToastPrompt()
+                {
+                    TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                    Title = AppResources.GeonetAllQuakesEndpointSettingEnabledWarningToastTitle,
+                    Message = AppResources.GeonetAllQuakesEndpointSettingEnabledWarningToastMessage,
+                    TextWrapping = TextWrapping.Wrap,
+                };
+                toast.Show();
+            }
         }
     }
 }

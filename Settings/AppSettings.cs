@@ -18,6 +18,7 @@ namespace WhatsShakingNZ.Settings
         const string TwentyFourHourClockKey = "TwentyFourHourClock";
         const string ShowLiveTileKey = "ShowLiveTile";
         const string NumberOfQuakesToShowKey = "QuakesToShow";
+        const string UseGeonetAllQuakesEndpointKey = "UseGeonetAllQuakesEndpoint";
 
         /// <summary>
         /// Constructor that gets the application settings.
@@ -179,7 +180,7 @@ namespace WhatsShakingNZ.Settings
 
 
         /// <summary>
-        /// Property to get and set a whether to show the Live Tile or not.
+        /// Property to get and set whether to show the Live Tile or not.
         /// </summary>
         public bool ShowLiveTileSetting
         {
@@ -190,6 +191,25 @@ namespace WhatsShakingNZ.Settings
             set
             {
                 if (AddOrUpdateValue(ShowLiveTileKey, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to get and set whether to use the all quakes endpoint or not.
+        /// Defaults to false, meaning use the 'felt' endpoint.
+        /// </summary>
+        public bool UseGeonetAllQuakesEndpointSetting
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(UseGeonetAllQuakesEndpointKey, DefaultSettings.UseGeonetAllQuakesEndpointDefaultValue);
+            }
+            set
+            {
+                if (AddOrUpdateValue(UseGeonetAllQuakesEndpointKey, value))
                 {
                     Save();
                 }

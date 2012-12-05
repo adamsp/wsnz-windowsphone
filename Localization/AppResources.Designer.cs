@@ -292,6 +292,24 @@ namespace WhatsShakingNZ.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to enabling the &quot;all quakes&quot; option will show many more earthquakes than normal, including a large number not felt by people..
+        /// </summary>
+        public static string GeonetAllQuakesEndpointSettingEnabledWarningToastMessage {
+            get {
+                return ResourceManager.GetString("GeonetAllQuakesEndpointSettingEnabledWarningToastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to warning.
+        /// </summary>
+        public static string GeonetAllQuakesEndpointSettingEnabledWarningToastTitle {
+            get {
+                return ResourceManager.GetString("GeonetAllQuakesEndpointSettingEnabledWarningToastTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data received from Geonet was unusable. Please try again..
         /// </summary>
         public static string GeonetProblemBadGeonetData {
@@ -533,6 +551,15 @@ namespace WhatsShakingNZ.Localization {
         public static string SettingsPageUse24HourClockHeading {
             get {
                 return ResourceManager.GetString("SettingsPageUse24HourClockHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to show all earthquakes (not just those felt).
+        /// </summary>
+        public static string SettingsPageUseGeonetAllQuakesEndpointHeading {
+            get {
+                return ResourceManager.GetString("SettingsPageUseGeonetAllQuakesEndpointHeading", resourceCulture);
             }
         }
         

@@ -95,8 +95,15 @@
                     Name="LiveTileToggle"
                     IsChecked="{Binding Source={StaticResource appSettings}, 
                     Path=ShowLiveTileSetting, Mode=TwoWay}" 
-                    Checked="ToggleSwitch_Checked"
-                    Unchecked="ToggleSwitch_Unchecked"/>
+                    Checked="LiveTileToggleSwitch_Checked"
+                    Unchecked="LiveTileToggleSwitch_Unchecked"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.SettingsPageUseGeonetAllQuakesEndpointHeading, Source={StaticResource LocalizedStrings}}"
+                           Margin="12,0,0,0"/>
+                <toolkit:ToggleSwitch 
+                    Name="GeonetEndpointToggle"
+                    IsChecked="{Binding Source={StaticResource appSettings}, 
+                    Path=UseGeonetAllQuakesEndpointSetting, Mode=TwoWay}"
+                    Click="GeonetEndpointToggle_Click"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

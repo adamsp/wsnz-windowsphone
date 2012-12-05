@@ -201,6 +201,12 @@ Fixed a bug where the application would occasionally crash on the Map view page.
   <data name="East" xml:space="preserve">
     <value>east</value>
   </data>
+  <data name="GeonetAllQuakesEndpointSettingEnabledWarningToastMessage" xml:space="preserve">
+    <value>enabling the "all quakes" option will show many more earthquakes than normal, including a large number not felt by people.</value>
+  </data>
+  <data name="GeonetAllQuakesEndpointSettingEnabledWarningToastTitle" xml:space="preserve">
+    <value>warning</value>
+  </data>
   <data name="GeonetProblemBadGeonetData" xml:space="preserve">
     <value>Data received from Geonet was unusable. Please try again.</value>
   </data>
@@ -284,6 +290,9 @@ Fixed a bug where the application would occasionally crash on the Map view page.
   </data>
   <data name="SettingsPageUse24HourClockHeading" xml:space="preserve">
     <value>use 24 hour clock</value>
+  </data>
+  <data name="SettingsPageUseGeonetAllQuakesEndpointHeading" xml:space="preserve">
+    <value>show all earthquakes (not just those felt)</value>
   </data>
   <data name="SettingsPageUseLiveTileHeading" xml:space="preserve">
     <value>live tile</value>
