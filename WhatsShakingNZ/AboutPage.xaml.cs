@@ -21,7 +21,6 @@ namespace WhatsShakingNZ
             backgroundImage.Stretch = Stretch.None;
             backgroundImage.AlignmentY = AlignmentY.Top;
             LayoutRoot.Background = backgroundImage;
-            PopulateAboutPage();
         }
 
         private void ReviewApp_Click(object sender, EventArgs e)
@@ -33,13 +32,6 @@ namespace WhatsShakingNZ
         {
             searchTask.SearchTerms = "Adam Speakman";
             searchTask.Show();
-        }
-
-        private void PopulateAboutPage()
-        {
-            AboutAppTextBlock.Text = AppResources.AboutPageAboutAppText;
-            Update12TextBlock.Text = AppResources.AboutPageUpdate12Text;
-            Update11TextBlock.Text = AppResources.AboutPageUpdate11Text;
         }
 
         private void TwitterButton_Click(object sender, EventArgs e)

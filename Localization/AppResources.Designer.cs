@@ -121,6 +121,26 @@ namespace WhatsShakingNZ.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to update 1.3.
+        /// </summary>
+        public static string AboutPageUpdate13Heading {
+            get {
+                return ResourceManager.GetString("AboutPageUpdate13Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can now see whether an earthquake has been reviewed by a Geonet technician or is automatically reported.
+        ///The list view now shows earthquake location as a direction and distance from the nearest town or city.
+        ///Added an option to see all of the latest recorded earthquakes from around the country, rather than just the latest earthquakes likely to have been felt by people. This can give you an idea of just how many minor earthquakes happen around New Zealand every day. Note that this is still restricted to [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string AboutPageUpdate13Text {
+            get {
+                return ResourceManager.GetString("AboutPageUpdate13Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to about.
         /// </summary>
         public static string AppBarAboutMenuItemText {

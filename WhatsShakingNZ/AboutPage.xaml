@@ -32,15 +32,23 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Path=LocalizedResources.AboutPageAboutAppHeading, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock TextWrapping="Wrap" Margin="12,0,12,0"
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageAboutAppText, Source={StaticResource LocalizedStrings}}"
+                               TextWrapping="Wrap" Margin="12,0,12,0"
                                Name="AboutAppTextBlock"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate13Heading, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PhoneTextSmallStyle}" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate13Text, Source={StaticResource LocalizedStrings}}"
+                               TextWrapping="Wrap" Margin="12,0,12,0"
+                               Name="Update13TextBlock"/>
                     <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate12Heading, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock TextWrapping="Wrap" Margin="12,0,12,0"
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate12Text, Source={StaticResource LocalizedStrings}}"
+                               TextWrapping="Wrap" Margin="12,0,12,0"
                                Name="Update12TextBlock"/>
                     <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate11Heading, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock TextWrapping="Wrap" Margin="12,0,12,0"
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate11Text, Source={StaticResource LocalizedStrings}}"
+                               TextWrapping="Wrap" Margin="12,0,12,0"
                                Name="Update11TextBlock"/>
                 </StackPanel>
             </ScrollViewer>
