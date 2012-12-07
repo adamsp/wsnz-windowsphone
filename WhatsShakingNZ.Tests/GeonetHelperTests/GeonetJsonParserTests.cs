@@ -54,7 +54,8 @@ namespace WhatsShakingNZ.Tests.GeonetHelperTests
             Assert.AreEqual("WEL(GNS_Primary)", quake.Agency);
             Assert.AreEqual(new DateTime(2012, 11, 30, 19, 09, 43, 244, DateTimeKind.Utc), quake.Date.ToUniversalTime());
             Assert.AreEqual(10.0, quake.Depth);
-            Assert.AreEqual(new GeoCoordinate(-43.451538, 172.8091), quake.Location);
+            Assert.AreEqual(new GeoCoordinate(-43.451538, 172.8091).Latitude, quake.Location.Latitude);
+            Assert.AreEqual(new GeoCoordinate(-43.451538, 172.8091).Longitude, quake.Location.Longitude);
             Assert.AreEqual(3.2, quake.Magnitude);
             Assert.AreEqual("2012p904860", quake.Reference);
             Assert.AreEqual("reviewed", quake.Status);
@@ -69,10 +70,15 @@ namespace WhatsShakingNZ.Tests.GeonetHelperTests
             try
             {
                 var quakes = parser.ParseJsonToQuakes(json);
-            }
+            } // TODO: WHY IS THIS CRASHING FFS
+            //catch (JsonException e)
+            //{
+            //    // We're expecting a JsonException, so this is good.
+            //}
             catch (Exception e)
             {
-                Assert.AreEqual(typeof(JsonException), e.GetType());
+                // We want to fail on any other kind of exception.
+                Assert.Fail();
             }
         }
     }
