@@ -70,11 +70,11 @@ namespace WhatsShakingNZ.Tests.GeonetHelperTests
             try
             {
                 var quakes = parser.ParseJsonToQuakes(json);
-            } // TODO: WHY IS THIS CRASHING FFS
-            //catch (JsonException e)
-            //{
-            //    // We're expecting a JsonException, so this is good.
-            //}
+            }
+            catch (JsonException e)
+            {
+                // We're expecting a JsonException, so this is good.
+            }
             catch (Exception e)
             {
                 // We want to fail on any other kind of exception.
