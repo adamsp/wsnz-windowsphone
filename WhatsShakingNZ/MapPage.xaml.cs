@@ -5,10 +5,11 @@ using System.Device.Location;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Microsoft.Phone.Controls.Maps;
 using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Localization;
+using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Maps.Controls;
 
 namespace WhatsShakingNZ
 {
@@ -66,26 +67,34 @@ namespace WhatsShakingNZ
 
         private void UpdateMap()
         {
-            QuakeMap.Children.Clear();
+            QuakeMap.Layers.Clear();
             // Select only quakes above the settings magnitude
             // The OrderBy means that higher magnitude quakes will be pinned on top OrderBy(s => s.Magnitude)
             double minWarningMagnitude = AppSettingsForPage.MinimumWarningMagnitudeSetting;
             if (QuakeContainer.Quakes != null)
             {
+                MapLayer layer = new MapLayer();
                 // Use "reverse" here so newer quakes are on top.
                 foreach (var q in QuakeContainer.Quakes.Reverse())
                 {
                     Pushpin pin = new Pushpin()
                     {
-                        Location = new GeoCoordinate(q.Location.Latitude, q.Location.Longitude),
+                        GeoCoordinate = q.Location,
                         Content = q.FormattedMagnitude,
                         DataContext = q,
                     };
                     pin.Tap += QuakeItem_Tap;
                     if (q.Magnitude >= minWarningMagnitude)
                         pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-                    QuakeMap.Children.Add(pin);
+                    MapOverlay overlay = new MapOverlay();
+                    overlay.Content = pin;
+                    overlay.GeoCoordinate = q.Location;
+                    overlay.PositionOrigin = new Point(0, 1);
+
+                    layer.Add(overlay);
+                    
                 }
+                QuakeMap.Layers.Add(layer);
             }
         }
 
@@ -115,7 +124,7 @@ namespace WhatsShakingNZ
         {
             Pushpin pin = sender as Pushpin;
             // Remember the children have been added in the reverse order to the order they appear in the original list.
-            int selectedIndex = (QuakeMap.Children.Count - 1) - QuakeMap.Children.IndexOf(pin);
+            int selectedIndex = QuakeContainer.Quakes.IndexOf(pin.DataContext as Earthquake);
             NavigateToQuakePage(selectedIndex);
         }
 
@@ -139,6 +148,12 @@ namespace WhatsShakingNZ
             double zoom;
             zoom = QuakeMap.ZoomLevel;
             QuakeMap.ZoomLevel = --zoom;
+        }
+
+        private void QuakeMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.ApplicationId = ShakingHelper.MapsApplicationId;
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.AuthenticationToken = ShakingHelper.MapsAuthenticationToken;
         }
     }
 }

@@ -3,11 +3,12 @@ using System.Device.Location;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Controls.Maps;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Settings;
 using Coding4Fun.Phone.Controls;
 using WhatsShakingNZ.Localization;
+using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Maps.Controls;
 
 namespace WhatsShakingNZ
 {
@@ -34,16 +35,25 @@ namespace WhatsShakingNZ
             quake = (Application.Current as App).EarthquakeContainer.Quakes[index];
 
             ContentPanel.DataContext = quake;
-            GeoCoordinate location = new GeoCoordinate(quake.Location.Latitude, quake.Location.Longitude);
-            QuakeMap.Center = location;
-            Pushpin pin = new Pushpin()
+
+            QuakeMap.Center = quake.Location;
+            Pushpin pin = new Pushpin
             {
-                Location = new GeoCoordinate(quake.Location.Latitude, quake.Location.Longitude),
+                GeoCoordinate = quake.Location,
                 Content = quake.FormattedMagnitude
             };
             if (quake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
                 pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-            QuakeMap.Children.Add(pin);
+
+            MapOverlay overlay = new MapOverlay();
+            overlay.Content = pin;
+            overlay.GeoCoordinate = quake.Location;
+            overlay.PositionOrigin = new Point(0, 1);
+
+            MapLayer layer = new MapLayer();
+            layer.Add(overlay);
+            QuakeMap.Layers.Add(layer);
+
             base.OnNavigatedTo(e);
         }
 
@@ -98,6 +108,12 @@ namespace WhatsShakingNZ
                 Message = toastMessage
             };
             toast.Show();
+        }
+
+        private void QuakeMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.ApplicationId = ShakingHelper.MapsApplicationId;
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.AuthenticationToken = ShakingHelper.MapsAuthenticationToken;
         }
     }
 }

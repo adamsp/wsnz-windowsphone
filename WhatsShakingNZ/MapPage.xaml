@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:WhatsShakingNZ"
-    xmlns:maps="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
+        xmlns:maps="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -30,15 +30,9 @@
             Style="{StaticResource CustomIndeterminateProgressBar}"
             VerticalAlignment="Top"/>
         <maps:Map Grid.Row="1" Name="QuakeMap" 
-                              CredentialsProvider="your_maps_api_key_here" 
-                              ZoomLevel="5.3" 
-                              ZoomBarVisibility="Collapsed"
-                              CopyrightVisibility="Collapsed" 
-                              LogoVisibility="Collapsed" 
-                              ScaleVisibility="Visible">
-            <maps:Map.Center>
-                <my:GeoCoordinate Altitude="NaN" Course="NaN" HorizontalAccuracy="NaN" Latitude="-41" Longitude="173" Speed="NaN" VerticalAccuracy="NaN" />
-            </maps:Map.Center>
+                  ZoomLevel="5.3"
+                  Center="-41, 173"
+                  Loaded="QuakeMap_Loaded">
         </maps:Map>
     </Grid>
 

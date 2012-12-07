@@ -9,6 +9,8 @@ namespace WhatsShakingNZ
     {
         public static readonly SolidColorBrush WarningColour = new SolidColorBrush(Colors.Red);
         public static readonly string PeriodicTaskName = "WhatsShakingNZPeriodicTask";
+        public static readonly string MapsApplicationId = "your_app_id";
+        public static readonly string MapsAuthenticationToken = "your_auth_token";
         private static readonly BitmapImage darkBackground = new BitmapImage(new Uri("Images/background_dark.png", UriKind.Relative));
         private static readonly BitmapImage lightBackground = new BitmapImage(new Uri("Images/background_light.png", UriKind.Relative));
         static ShakingHelper() { }
