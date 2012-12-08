@@ -48,7 +48,7 @@
                             <ColumnDefinition Width="88" />
                             <ColumnDefinition Width="330" />
                         </Grid.ColumnDefinitions>
-                            <TextBlock
+                        <TextBlock
                             Grid.Column="0"
                             VerticalAlignment="Center"
 						    HorizontalAlignment="Center"
