@@ -15,6 +15,23 @@ namespace WhatsShakingNZ
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
 
+        enum SessionType
+        {
+            None,
+            Home,
+            DeepLink
+        }
+
+        // Set to Home when the app is launched from Primary tile.
+        // Set to DeepLink when the app is launched from Deep Link.
+        private SessionType sessionType = SessionType.None;
+
+        // Set to true when the page navigation is being reset 
+        bool wasRelaunched = false;
+
+        // set to true when 5 min passed since the app was relaunched
+        bool mustClearPagestack = false;
+
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
@@ -118,8 +135,79 @@ namespace WhatsShakingNZ
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
+            // Handle reset requests for clearing the backstack
+            RootFrame.Navigated += CheckForResetNavigation;
+
+            // Monitor deep link launching 
+            RootFrame.Navigating += RootFrame_Navigating;
+
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+        }
+
+        void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+
+
+            if (sessionType == SessionType.None && e.NavigationMode == NavigationMode.New)
+            {
+                // This block will run if the current navigation is part of the app's intial launch
+
+
+                // Keep track of Session Type 
+                if (e.Uri.ToString().Contains("DeepLink=true"))
+                {
+                    sessionType = SessionType.DeepLink;
+                }
+                else if (e.Uri.ToString().Contains("/MainPage.xaml"))
+                {
+                    sessionType = SessionType.Home;
+                }
+            }
+
+
+            if (e.NavigationMode == NavigationMode.Reset)
+            {
+                // This block will execute if the current navigation is a relaunch.
+                // If so, another navigation will be coming, so this records that a relaunch just happened
+                // so that the next navigation can use this info.
+                wasRelaunched = true;
+            }
+            else if (e.NavigationMode == NavigationMode.New && wasRelaunched)
+            {
+                // This block will run if the previous navigation was a relaunch
+                wasRelaunched = false;
+
+                if (e.Uri.ToString().Contains("DeepLink=true"))
+                {
+                    // This block will run if the launch Uri contains "DeepLink=true" which
+                    // was specified when the secondary tile was created in MainPage.xaml.cs
+
+                    sessionType = SessionType.DeepLink;
+                    // The app was relaunched via a Deep Link.
+                    // The page stack will be cleared.
+                }
+                else if (e.Uri.ToString().Contains("/MainPage.xaml"))
+                {
+                    // This block will run if the navigation Uri is the main page
+                    if (sessionType == SessionType.DeepLink)
+                    {
+                        // When the app was previously launched via Deep Link and relaunched via Main Tile, we need to clear the page stack. 
+                        sessionType = SessionType.Home;
+                    }
+                    else
+                    {
+                        if (!mustClearPagestack)
+                        {
+                            //The app was previously launched via Main Tile and relaunched via Main Tile. Cancel the navigation to resume.
+                            e.Cancel = true;
+                            RootFrame.Navigated -= ClearBackStackAfterReset;
+                        }
+                    }
+                }
+
+                mustClearPagestack = false;
+            }
         }
 
         // Do not add any additional code to this method
@@ -131,6 +219,30 @@ namespace WhatsShakingNZ
 
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
+        }
+
+        private void CheckForResetNavigation(object sender, NavigationEventArgs e)
+        {
+            // If the app has received a 'reset' navigation, then we need to check
+            // on the next navigation to see if the page stack should be reset
+            if (e.NavigationMode == NavigationMode.Reset)
+                RootFrame.Navigated += ClearBackStackAfterReset;
+        }
+
+        private void ClearBackStackAfterReset(object sender, NavigationEventArgs e)
+        {
+            // Unregister the event so it doesn't get called again
+            RootFrame.Navigated -= ClearBackStackAfterReset;
+
+            // Only clear the stack for 'new' (forward) and 'refresh' navigations
+            if (e.NavigationMode != NavigationMode.New)
+                return;
+
+            // For UI consistency, clear the entire page stack
+            while (RootFrame.RemoveBackEntry() != null)
+            {
+                ; // do nothing
+            }
         }
 
         #endregion
