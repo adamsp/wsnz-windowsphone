@@ -76,12 +76,15 @@ namespace WhatsShakingNZ
         }
         
         private string QuakesStateKey = "QuakesState";
+        private string QuakesStatusStateKey = "QuakesStatusState";
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
             if(PhoneApplicationService.Current.State.ContainsKey(QuakesStateKey))
                 EarthquakeContainer.Quakes = (ObservableCollection<Earthquake>)PhoneApplicationService.Current.State[QuakesStateKey];
+            if (PhoneApplicationService.Current.State.ContainsKey(QuakesStatusStateKey))
+                EarthquakeContainer.Status = (GeonetSuccessStatus)PhoneApplicationService.Current.State[QuakesStatusStateKey];
         }
         
         // Code to execute when the application is deactivated (sent to background)
@@ -89,6 +92,7 @@ namespace WhatsShakingNZ
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
             PhoneApplicationService.Current.State[QuakesStateKey] = EarthquakeContainer.Quakes;
+            PhoneApplicationService.Current.State[QuakesStatusStateKey] = EarthquakeContainer.Status;
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
