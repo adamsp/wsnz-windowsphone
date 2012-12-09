@@ -96,7 +96,6 @@ ClientBin
 [Ss]tyle[Cc]op.*
 ~$*
 *.dbmdl
-Thumbs.db #gg windows 8
 Generated_Code #added for RIA/Silverlight projects
 
 # Backup & report files from converting an old project file to a newer
@@ -108,3 +107,14 @@ UpgradeLog*.XML
 # Windows Phone Stuff
 SampleData
 SubmissionInfo
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
