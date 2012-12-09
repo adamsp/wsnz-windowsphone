@@ -3,6 +3,7 @@ using System.Windows.Media;
 using Coding4Fun.Phone.Controls;
 using Microsoft.Phone.Controls;
 using WhatsShakingNZ.Localization;
+using TileControls;
 
 namespace WhatsShakingNZ
 {
@@ -37,6 +38,8 @@ namespace WhatsShakingNZ
         private void LiveTileToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
             ScheduledTaskHelper.Remove();
+            var ftc = new FlipTileController();
+            ftc.ClearFlipTile();
         }
 
         private void GeonetEndpointToggle_Click(object sender, RoutedEventArgs e)

@@ -238,6 +238,10 @@
       <Project>{BCEFF84C-A535-4556-AA0D-B88F8C258F93}</Project>
       <Name>Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TileControls\TileControls.csproj">
+      <Project>{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}</Project>
+      <Name>TileControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

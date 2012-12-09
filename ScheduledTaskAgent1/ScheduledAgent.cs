@@ -7,6 +7,7 @@ using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
 using WhatsShakingNZ.Localization;
 using HttpWebAdapters;
+using TileControls;
 
 namespace ScheduledTaskAgent1
 {
@@ -63,52 +64,15 @@ namespace ScheduledTaskAgent1
 
         public void QuakeListener(object sender, QuakeEventArgs e)
         {
-            FlipTileData newTileData;
-            // Following code found here: http://stackoverflow.com/questions/8027812/can-i-update-a-live-tile-in-mango-using-local-data
+
+            FlipTileController ftc = new FlipTileController();
             if (e != null && e.Status == GeonetSuccessStatus.Success) // If e is null or unsuccesful, we have no data connection
             {
-                List<Earthquake> quakes = new List<Earthquake>();
-                TimeSpan oneDay = new TimeSpan(24,0,0);
-                DateTime yesterday = DateTime.Now.Subtract(oneDay);
-                foreach (Earthquake q in e.Quakes)
-                {
-                    if (DateTime.Compare(q.Date, yesterday) > 0) quakes.Add(q); // Within the last 24 hours.
-                }
-                if (quakes.Count > 0)
-                {
-                    Earthquake latest = quakes.First();
-                    newTileData = new FlipTileData
-                    {
-                        Title = String.Format(AppResources.LiveTileTitleFormat, quakes.Count),
-                        BackTitle = String.Format(AppResources.LiveTileTitleFormat, quakes.Count),
-                        BackContent = String.Format(AppResources.LiveTileBackContentFormat,  latest.FormattedMagnitude, latest.FormattedDepth),
-                        WideBackContent = String.Format(AppResources.LiveTileWideBackContentFormat, latest.FormattedMagnitude, latest.FormattedDepth, latest.RelativeLocation),
-                    };
-                }
-                else
-                {
-                    newTileData = new FlipTileData
-                    {
-                        Title = TileTitle,
-                        BackContent = AppResources.LiveTileBackContentNoQuakes,
-                        WideBackContent = AppResources.LiveTileBackContentNoQuakes,
-                    };
-                }
+                ftc.UpdateFlipTile(e.Quakes);
             }
             else
             {
-                newTileData = new FlipTileData
-                {
-                    Title = TileTitle,
-                };
-            }
-            // Application Tile is always the first Tile, even if it is not pinned to Start
-            ShellTile tileToFind = ShellTile.ActiveTiles.First();
-            // Application Tile should always be found
-            if (tileToFind != null)
-            {
-                // update the Application Tile
-                tileToFind.Update(newTileData);
+                ftc.ClearFlipTile();
             }
             NotifyComplete();
         }

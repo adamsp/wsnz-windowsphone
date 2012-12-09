@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsShakingNZ.Tests", "Wha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpWebAdapters", "HttpWebAdapters\HttpWebAdapters.csproj", "{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileControls", "TileControls\TileControls.csproj", "{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,18 @@ Global
 		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Release|ARM.Build.0 = Release|ARM
 		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Release|x86.ActiveCfg = Release|x86
 		{A5F1800E-043C-4DF3-A6DC-494C8A2F001E}.Release|x86.Build.0 = Release|x86
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Debug|ARM.Build.0 = Debug|ARM
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Debug|x86.ActiveCfg = Debug|x86
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Debug|x86.Build.0 = Debug|x86
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Release|ARM.ActiveCfg = Release|ARM
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Release|ARM.Build.0 = Release|ARM
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Release|x86.ActiveCfg = Release|x86
+		{0F16221E-BA97-42A9-B57E-1B3D0B6F9645}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
