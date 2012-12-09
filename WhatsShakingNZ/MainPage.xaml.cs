@@ -92,9 +92,9 @@ namespace WhatsShakingNZ
 
         protected override void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            if (ContentPanel.SelectedIndex >= 0)
+            if (ContentPanel.SelectedItem != null)
             {
-                int selectedIndex = ContentPanel.SelectedIndex;
+                int selectedIndex = QuakeContainer.Quakes.IndexOf(ContentPanel.SelectedItem as Earthquake);
                 ContentPanel.SelectedItem = null;
                 NavigateToQuakePage(selectedIndex);
             }

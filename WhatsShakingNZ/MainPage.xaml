@@ -19,7 +19,39 @@
         <local:DepthConverter x:Key="DepthConverter" />
         <local:DateConverter x:Key="DateConverter" />
         <local:FontColourConverter x:Key="FontColourConverter" />
+        <DataTemplate x:Key="QuakeListTemplate">
+            <Grid HorizontalAlignment="Stretch" Margin="12,0,12,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="88" />
+                    <ColumnDefinition Width="330" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+						    HorizontalAlignment="Center"
+                            FontSize="{StaticResource PhoneFontSizeExtraLarge}"
+                            Text="{Binding Path=FormattedMagnitude}"
+                            Foreground="{Binding Converter={StaticResource FontColourConverter}, Path=Magnitude}"/>
+
+                <StackPanel	Grid.Column="1">
+                    <TextBlock
+                                FontSize="{StaticResource PhoneFontSizeLarge}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding Converter={StaticResource DateConverter}}"/>
+                    <TextBlock
+                                FontSize="{StaticResource PhoneFontSizeMedium}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding Path=RelativeLocation}"
+                                TextWrapping="Wrap"
+                                TextAlignment="Center"/>
+                    <Border BorderBrush="{StaticResource PhoneDisabledBrush}" BorderThickness="0,0,0,1" Width="280" HorizontalAlignment="Center" Margin="0,6,0,0" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -38,43 +70,12 @@
             <TextBlock x:Name="ApplicationTitle" Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="{Binding Path=LocalizedResources.PageTitleLatestQuakes, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-        <ListBox Grid.Row="1" x:Name="ContentPanel" ItemsSource="{Binding Quakes}" 
-                         VerticalAlignment="Stretch" Tap="QuakeItem_Tap">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-
-                    <Grid HorizontalAlignment="Stretch" Margin="12,0,12,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="88" />
-                            <ColumnDefinition Width="330" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-						    HorizontalAlignment="Center"
-                            FontSize="{StaticResource PhoneFontSizeExtraLarge}"
-                            Text="{Binding Path=FormattedMagnitude}"
-                            Foreground="{Binding Converter={StaticResource FontColourConverter}, Path=Magnitude}"/>
-
-                        <StackPanel	Grid.Column="1">
-                            <TextBlock
-                                FontSize="{StaticResource PhoneFontSizeLarge}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding Converter={StaticResource DateConverter}}"/>
-                            <TextBlock
-                                FontSize="{StaticResource PhoneFontSizeMedium}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding Path=RelativeLocation}"
-                                TextWrapping="Wrap"
-                                TextAlignment="Center"/>
-                            <Border BorderBrush="{StaticResource PhoneDisabledBrush}" BorderThickness="0,0,0,1" Width="280" HorizontalAlignment="Center" Margin="0,6,0,0" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <phone:LongListSelector Grid.Row="1" 
+                                x:Name="ContentPanel"
+                                ItemTemplate="{StaticResource QuakeListTemplate}"
+                                ItemsSource="{Binding Quakes}" 
+                                VerticalAlignment="Stretch" 
+                                Tap="QuakeItem_Tap" />
     </Grid>
 
     <!--Sample code showing usage of ApplicationBar-->
