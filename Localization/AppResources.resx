@@ -248,9 +248,6 @@ Added an option to see all of the latest recorded earthquakes from around the co
   <data name="LiveTileDefaultTitle" xml:space="preserve">
     <value>Latest NZ Quakes</value>
   </data>
-  <data name="LiveTileQuakeCountFormat" xml:space="preserve">
-    <value>{0} in last 24hrs</value>
-  </data>
   <data name="LiveTileTaskDescription" xml:space="preserve">
     <value>What's Shaking NZ task for live tile</value>
   </data>
@@ -259,6 +256,16 @@ Added an option to see all of the latest recorded earthquakes from around the co
   </data>
   <data name="LiveTileTaskLimitReachedToastTitle" xml:space="preserve">
     <value>cannot use live tile</value>
+  </data>
+  <data name="LiveTileTitleFormat" xml:space="preserve">
+    <value>{0} in last 24hrs</value>
+  </data>
+  <data name="LiveTileWideBackContentFormat" xml:space="preserve">
+    <value>latest quake
+{0} magnitude
+{1} km deep 
+{2}</value>
+    <comment>Where {2} is the relative location (ie "32km north east of Auckland")</comment>
   </data>
   <data name="North" xml:space="preserve">
     <value>north</value>

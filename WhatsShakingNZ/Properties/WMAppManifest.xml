@@ -2,7 +2,7 @@
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
   <App xmlns="" ProductID="{34a9898a-dc24-4423-b6be-1919ecc7f2a2}" Title="What's Shaking NZ" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WhatsShakingNZ author" Description="Sample description" Publisher="WhatsShakingNZ" PublisherID="{b4f40fbb-a9bd-4af2-b7c2-4753cd70d669}">
-    <IconPath IsRelative="true" IsResource="false">Images\icon62_trans.png</IconPath>
+    <IconPath IsRelative="true" IsResource="false">Images\tile_medium_background.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_MAP" />
@@ -16,9 +16,9 @@
     <Tokens>
       <PrimaryToken TokenID="WhatsShakingNZToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsResource="false" IsRelative="true">Images\icon173_trans.png</SmallImageURI>
+          <SmallImageURI IsResource="false" IsRelative="true">Images\tile_small_background.png</SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsResource="false" IsRelative="true">Images\icon173_trans.png</BackgroundImageURI>
+          <BackgroundImageURI IsResource="false" IsRelative="true">Images\tile_medium_background.png</BackgroundImageURI>
           <Title>Latest NZ Quakes</Title>
           <BackContent>
           </BackContent>
@@ -26,9 +26,13 @@
           </BackBackgroundImageURI>
           <BackTitle>
           </BackTitle>
+          <LargeBackgroundImageURI IsRelative="true" IsResource="false">Images\tile_wide_background.png</LargeBackgroundImageURI>
+          <LargeBackContent />
+          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false">
+          </LargeBackBackgroundImageURI>
           <DeviceLockImageURI>
           </DeviceLockImageURI>
-          <HasLarge>false</HasLarge>
+          <HasLarge>True</HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>

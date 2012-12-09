@@ -422,15 +422,6 @@ namespace WhatsShakingNZ.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} in last 24hrs.
-        /// </summary>
-        public static string LiveTileQuakeCountFormat {
-            get {
-                return ResourceManager.GetString("LiveTileQuakeCountFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to What&apos;s Shaking NZ task for live tile.
         /// </summary>
         public static string LiveTileTaskDescription {
@@ -454,6 +445,27 @@ namespace WhatsShakingNZ.Localization {
         public static string LiveTileTaskLimitReachedToastTitle {
             get {
                 return ResourceManager.GetString("LiveTileTaskLimitReachedToastTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} in last 24hrs.
+        /// </summary>
+        public static string LiveTileTitleFormat {
+            get {
+                return ResourceManager.GetString("LiveTileTitleFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to latest quake
+        ///{0} magnitude
+        ///{1} km deep 
+        ///{2}.
+        /// </summary>
+        public static string LiveTileWideBackContentFormat {
+            get {
+                return ResourceManager.GetString("LiveTileWideBackContentFormat", resourceCulture);
             }
         }
         
