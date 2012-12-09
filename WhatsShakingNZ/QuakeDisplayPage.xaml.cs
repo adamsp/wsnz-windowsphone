@@ -24,16 +24,14 @@ namespace WhatsShakingNZ
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            string selectedIndex = string.Empty;
-            int index;
-            if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
+            string quakeQueryString = string.Empty;
+            
+            if (NavigationContext.QueryString.TryGetValue("quake", out quakeQueryString))
             {
-                index = int.Parse(selectedIndex);
+                quake = Earthquake.DeserializeFromQueryString(quakeQueryString);
             }
             else return;
             
-            quake = (Application.Current as App).EarthquakeContainer.Quakes[index];
-
             ContentPanel.DataContext = quake;
 
             QuakeMap.Center = quake.Location;

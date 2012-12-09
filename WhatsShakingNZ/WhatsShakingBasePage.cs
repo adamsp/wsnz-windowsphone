@@ -216,9 +216,9 @@ namespace WhatsShakingNZ
             DownloadNewQuakes();
         }
 
-        protected void NavigateToQuakePage(int selectedIndex)
+        protected void NavigateToQuakePage(Earthquake quake)
         {
-            string navUri = string.Format("/QuakeDisplayPage.xaml?selectedItem={0}", selectedIndex);
+            string navUri = string.Format("/QuakeDisplayPage.xaml?quake={0}", quake.SerializeToQueryString());
             NavigationService.Navigate(new Uri(navUri, UriKind.Relative));
         }
 

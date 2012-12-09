@@ -94,9 +94,7 @@ namespace WhatsShakingNZ
         {
             if (ContentPanel.SelectedItem != null)
             {
-                int selectedIndex = QuakeContainer.Quakes.IndexOf(ContentPanel.SelectedItem as Earthquake);
-                ContentPanel.SelectedItem = null;
-                NavigateToQuakePage(selectedIndex);
+                NavigateToQuakePage(ContentPanel.SelectedItem as Earthquake);
             }
         }
 

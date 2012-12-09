@@ -124,8 +124,7 @@ namespace WhatsShakingNZ
         {
             Pushpin pin = sender as Pushpin;
             // Remember the children have been added in the reverse order to the order they appear in the original list.
-            int selectedIndex = QuakeContainer.Quakes.IndexOf(pin.DataContext as Earthquake);
-            NavigateToQuakePage(selectedIndex);
+            NavigateToQuakePage(pin.DataContext as Earthquake);
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)

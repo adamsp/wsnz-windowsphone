@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using WhatsShakingNZ.Localization;
 using System.Device.Location;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
@@ -68,5 +70,17 @@ namespace WhatsShakingNZ.GeonetHelper
         public string Agency { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; }
+
+        public string SerializeToQueryString()
+        {
+            string output = JsonConvert.SerializeObject(this);
+            return Uri.EscapeDataString(output);
+        }
+
+        public static Earthquake DeserializeFromQueryString(string quakeQueryString)
+        {
+            string json = Uri.UnescapeDataString(quakeQueryString);
+            return JsonConvert.DeserializeObject<Earthquake>(json);
+        }
     }
 }
