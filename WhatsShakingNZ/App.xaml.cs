@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
+using System.Collections.ObjectModel;
 
 namespace WhatsShakingNZ
 {
@@ -73,17 +74,21 @@ namespace WhatsShakingNZ
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
         }
-
+        
+        private string QuakesStateKey = "QuakesState";
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            if(PhoneApplicationService.Current.State.ContainsKey(QuakesStateKey))
+                EarthquakeContainer.Quakes = (ObservableCollection<Earthquake>)PhoneApplicationService.Current.State[QuakesStateKey];
         }
-
+        
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            PhoneApplicationService.Current.State[QuakesStateKey] = EarthquakeContainer.Quakes;
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
@@ -261,7 +266,7 @@ namespace WhatsShakingNZ
         }
         #endregion
 
-        private static readonly EarthquakeContainer _container = new EarthquakeContainer();
+        private static EarthquakeContainer _container;
         /// <summary>
         /// Shared earthquake container so all pages that need to display quake information
         /// can use the same indexes into the collection of quakes, don't have to duplicate
@@ -271,6 +276,7 @@ namespace WhatsShakingNZ
         {
             get
             {
+                if (_container == null) _container = new EarthquakeContainer();
                 return _container;
             }
         }
