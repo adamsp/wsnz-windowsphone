@@ -67,7 +67,7 @@ namespace ScheduledTaskAgent1
             // Application Tile is always the first Tile, even if it is not pinned to Start
             ShellTile TileToFind = ShellTile.ActiveTiles.First();
             // Following code found here: http://stackoverflow.com/questions/8027812/can-i-update-a-live-tile-in-mango-using-local-data
-            if (e != null) // If e is null, we have no data connection
+            if (e != null && e.Status == GeonetSuccessStatus.Success) // If e is null or unsuccesful, we have no data connection
             {
                 List<Earthquake> quakes = new List<Earthquake>();
                 TimeSpan oneDay = new TimeSpan(24,0,0);
@@ -100,7 +100,6 @@ namespace ScheduledTaskAgent1
                 {
                     Title = TileTitle,
                 };
-
             }
             // Application Tile should always be found
             if (TileToFind != null)
