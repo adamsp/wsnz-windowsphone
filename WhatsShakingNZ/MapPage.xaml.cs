@@ -15,7 +15,7 @@ namespace WhatsShakingNZ
 {
     public partial class MapPage : WhatsShakingBasePage
     {
-        private enum ButtonNames { ZoomOutButton = 0, RefreshButton, ListButton, ZoomInButton };
+        private enum ButtonNames { ZoomOutButton = 0, RefreshButton, ZoomInButton };
         
         public MapPage() : base()
         {
@@ -41,10 +41,10 @@ namespace WhatsShakingNZ
             refreshButton.IconUri = new Uri("/Icons/appbar.refresh.rest.png", UriKind.Relative);
             refreshButton.Click += RefreshRecentButton_Click;
 
-            ApplicationBarIconButton listViewButton = new ApplicationBarIconButton();
-            listViewButton.Text = AppResources.AppBarListViewButtonText;
-            listViewButton.IconUri = new Uri("/Icons/appbar.list.png", UriKind.Relative);
-            listViewButton.Click += ListPageButton_Click;
+            //ApplicationBarIconButton listViewButton = new ApplicationBarIconButton();
+            //listViewButton.Text = AppResources.AppBarListViewButtonText;
+            //listViewButton.IconUri = new Uri("/Icons/appbar.list.png", UriKind.Relative);
+            //listViewButton.Click += ListPageButton_Click;
 
             ApplicationBarIconButton zoomInButton = new ApplicationBarIconButton();
             zoomInButton.Text = AppResources.AppBarZoomInButtonText;
@@ -53,7 +53,7 @@ namespace WhatsShakingNZ
 
             buttons.Add(zoomOutButton);
             buttons.Add(refreshButton);
-            buttons.Add(listViewButton);
+            //buttons.Add(listViewButton);
             buttons.Add(zoomInButton);
 
             base.InitializeApplicationBar(buttons);

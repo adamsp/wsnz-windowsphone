@@ -122,35 +122,26 @@
   </data>
   <data name="AboutPageAboutAppText" xml:space="preserve">
     <value>What's Shaking NZ? uses the Geonet.org.nz data feed to provide you with up to date information about the latest earthquakes around New Zealand.
-Please tweet or email us with any problems you find or suggestions for features you'd like to see in the next version.
+Please tweet or email us with any problems you find or suggestions for features you'd like to see in the next version, and check the website for general updates.
+If you've come from the Windows Phone 7 version of the application, the primary new feature you'll notice in the Windows Phone 8 version is multiple live tile sizes.
+There have been quite a few changes behind the scenes, enabling features such as fast app resume, a faster app start up, a more efficient list view and more. Some of these changes provide a better user experience, some are in preparation for new features that are yet to come!
+Thank you for your support!
 </value>
   </data>
-  <data name="AboutPageUpdate11Heading" xml:space="preserve">
-    <value>update 1.1</value>
+  <data name="AboutPageAppBarEmailText" xml:space="preserve">
+    <value>email</value>
   </data>
-  <data name="AboutPageUpdate11Text" xml:space="preserve">
-    <value>Fixed an issue where sometimes the application would crash when the settings page was accessed too quickly.
-Modified the magnitude and depth values to display with the correct number of decimal places, as specified on the Geonet website.
-</value>
+  <data name="AboutPageAppBarOtherAppsText" xml:space="preserve">
+    <value>other apps</value>
   </data>
-  <data name="AboutPageUpdate12Heading" xml:space="preserve">
-    <value>update 1.2</value>
+  <data name="AboutPageAppBarReviewAppText" xml:space="preserve">
+    <value>review</value>
   </data>
-  <data name="AboutPageUpdate12Text" xml:space="preserve">
-    <value>Geonet have recently changed the way they provide their data feed, and we can now only retrieve the latest 30 quakes. Previously we could retrieve the latest N days of quakes - this was limited to a maximum of 3 days within the app. However, quakes are now reported on significantly faster.
-Now you can specify the maximum number of quakes you would like displayed - from 10 to 30. In some cases you may get less than your specified maximum, if your "minimum magnitude to display" value is set high enough.
-Modified the layout of this screen.
-Fixed a bug where the application would occasionally crash on the Map view page.
-</value>
+  <data name="AboutPageAppBarTwitterText" xml:space="preserve">
+    <value>twitter</value>
   </data>
-  <data name="AboutPageUpdate13Heading" xml:space="preserve">
-    <value>update 1.3</value>
-  </data>
-  <data name="AboutPageUpdate13Text" xml:space="preserve">
-    <value>You can now see whether an earthquake has been reviewed by a Geonet technician or is automatically reported.
-The list view now shows earthquake location as a direction and distance from the nearest town or city.
-Added an option to see all of the latest recorded earthquakes from around the country, rather than just the latest earthquakes likely to have been felt by people. This can give you an idea of just how many minor earthquakes happen around New Zealand every day. Note that this is still restricted to the latest 30, in either case (this is a Geonet limitation).
-</value>
+  <data name="AboutPageAppBarWebsiteText" xml:space="preserve">
+    <value>www.whatsshaking.co.nz</value>
   </data>
   <data name="AppBarAboutMenuItemText" xml:space="preserve">
     <value>about</value>
@@ -262,8 +253,7 @@ Added an option to see all of the latest recorded earthquakes from around the co
   </data>
   <data name="LiveTileWideBackContentFormat" xml:space="preserve">
     <value>latest quake
-{0} magnitude
-{1} km deep 
+{0} mag, {1} km deep 
 {2}</value>
     <comment>Where {2} is the relative location (ie "32km north east of Auckland")</comment>
   </data>

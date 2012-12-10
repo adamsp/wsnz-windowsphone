@@ -35,31 +35,12 @@
                     <TextBlock Text="{Binding Path=LocalizedResources.AboutPageAboutAppText, Source={StaticResource LocalizedStrings}}"
                                TextWrapping="Wrap" Margin="12,0,12,0"
                                Name="AboutAppTextBlock"/>
-                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate13Heading, Source={StaticResource LocalizedStrings}}"
-                               Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate13Text, Source={StaticResource LocalizedStrings}}"
-                               TextWrapping="Wrap" Margin="12,0,12,0"
-                               Name="Update13TextBlock"/>
-                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate12Heading, Source={StaticResource LocalizedStrings}}"
-                               Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate12Text, Source={StaticResource LocalizedStrings}}"
-                               TextWrapping="Wrap" Margin="12,0,12,0"
-                               Name="Update12TextBlock"/>
-                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate11Heading, Source={StaticResource LocalizedStrings}}"
-                               Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageUpdate11Text, Source={StaticResource LocalizedStrings}}"
-                               TextWrapping="Wrap" Margin="12,0,12,0"
-                               Name="Update11TextBlock"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.twitter.bird.png" Text="twitter" Click="TwitterButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.email.rest.png" Text="email" Click="EmailButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.favs.rest.png" Text="other apps" Click="OtherApps_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.marketplace.png" Text="review" Click="ReviewApp_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

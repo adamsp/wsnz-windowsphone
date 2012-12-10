@@ -71,8 +71,9 @@ namespace WhatsShakingNZ.Localization {
         
         /// <summary>
         ///   Looks up a localized string similar to What&apos;s Shaking NZ? uses the Geonet.org.nz data feed to provide you with up to date information about the latest earthquakes around New Zealand.
-        ///Please tweet or email us with any problems you find or suggestions for features you&apos;d like to see in the next version.
-        ///.
+        ///Please tweet or email us with any problems you find or suggestions for features you&apos;d like to see in the next version, and check the website for general updates.
+        ///If you&apos;ve come from the Windows Phone 7 version of the application, the primary new feature you&apos;ll notice in the Windows Phone 8 version is multiple live tile sizes.
+        ///There have been quite a few changes b [rest of string was truncated]&quot;;.
         /// </summary>
         public static string AboutPageAboutAppText {
             get {
@@ -81,62 +82,47 @@ namespace WhatsShakingNZ.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update 1.1.
+        ///   Looks up a localized string similar to email.
         /// </summary>
-        public static string AboutPageUpdate11Heading {
+        public static string AboutPageAppBarEmailText {
             get {
-                return ResourceManager.GetString("AboutPageUpdate11Heading", resourceCulture);
+                return ResourceManager.GetString("AboutPageAppBarEmailText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fixed an issue where sometimes the application would crash when the settings page was accessed too quickly.
-        ///Modified the magnitude and depth values to display with the correct number of decimal places, as specified on the Geonet website.
-        ///.
+        ///   Looks up a localized string similar to other apps.
         /// </summary>
-        public static string AboutPageUpdate11Text {
+        public static string AboutPageAppBarOtherAppsText {
             get {
-                return ResourceManager.GetString("AboutPageUpdate11Text", resourceCulture);
+                return ResourceManager.GetString("AboutPageAppBarOtherAppsText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update 1.2.
+        ///   Looks up a localized string similar to review.
         /// </summary>
-        public static string AboutPageUpdate12Heading {
+        public static string AboutPageAppBarReviewAppText {
             get {
-                return ResourceManager.GetString("AboutPageUpdate12Heading", resourceCulture);
+                return ResourceManager.GetString("AboutPageAppBarReviewAppText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Geonet have recently changed the way they provide their data feed, and we can now only retrieve the latest 30 quakes. Previously we could retrieve the latest N days of quakes - this was limited to a maximum of 3 days within the app. However, quakes are now reported on significantly faster.
-        ///Now you can specify the maximum number of quakes you would like displayed - from 10 to 30. In some cases you may get less than your specified maximum, if your &quot;minimum magnitude to display&quot; value is set high enough.
-        ///Mod [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to twitter.
         /// </summary>
-        public static string AboutPageUpdate12Text {
+        public static string AboutPageAppBarTwitterText {
             get {
-                return ResourceManager.GetString("AboutPageUpdate12Text", resourceCulture);
+                return ResourceManager.GetString("AboutPageAppBarTwitterText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update 1.3.
+        ///   Looks up a localized string similar to www.whatsshaking.co.nz.
         /// </summary>
-        public static string AboutPageUpdate13Heading {
+        public static string AboutPageAppBarWebsiteText {
             get {
-                return ResourceManager.GetString("AboutPageUpdate13Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can now see whether an earthquake has been reviewed by a Geonet technician or is automatically reported.
-        ///The list view now shows earthquake location as a direction and distance from the nearest town or city.
-        ///Added an option to see all of the latest recorded earthquakes from around the country, rather than just the latest earthquakes likely to have been felt by people. This can give you an idea of just how many minor earthquakes happen around New Zealand every day. Note that this is still restricted to [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string AboutPageUpdate13Text {
-            get {
-                return ResourceManager.GetString("AboutPageUpdate13Text", resourceCulture);
+                return ResourceManager.GetString("AboutPageAppBarWebsiteText", resourceCulture);
             }
         }
         
@@ -459,8 +445,7 @@ namespace WhatsShakingNZ.Localization {
         
         /// <summary>
         ///   Looks up a localized string similar to latest quake
-        ///{0} magnitude
-        ///{1} km deep 
+        ///{0} mag, {1} km deep 
         ///{2}.
         /// </summary>
         public static string LiveTileWideBackContentFormat {
