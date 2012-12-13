@@ -107,6 +107,7 @@ UpgradeLog*.XML
 # Windows Phone Stuff
 SampleData
 SubmissionInfo
+PerfLogs
 
 # OS generated files #
 ######################
