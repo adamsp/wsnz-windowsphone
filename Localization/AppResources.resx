@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPageAboutAppHeading" xml:space="preserve">
+    <value>the app</value>
+  </data>
+  <data name="AboutPageAboutAppText" xml:space="preserve">
+    <value>What's Shaking NZ? uses the Geonet.org.nz data feed to provide you with up to date information about the latest earthquakes around New Zealand.
+Please tweet or email us with any problems you find or suggestions for features you'd like to see in the next version, and check the website for general updates.
+If you've come from the Windows Phone 7 version of the application, the primary new feature you'll notice in the Windows Phone 8 version is multiple live tile sizes.
+There have been quite a few changes behind the scenes, enabling features such as fast app resume, a faster app start up, a more efficient list view and more. Some of these changes provide a better user experience, some are in preparation for new features that are yet to come!
+Thank you for your support!
+</value>
+  </data>
+  <data name="AboutPageAppBarEmailText" xml:space="preserve">
+    <value>email</value>
+  </data>
+  <data name="AboutPageAppBarOtherAppsText" xml:space="preserve">
+    <value>other apps</value>
+  </data>
+  <data name="AboutPageAppBarReviewAppText" xml:space="preserve">
+    <value>review</value>
+  </data>
+  <data name="AboutPageAppBarTwitterText" xml:space="preserve">
+    <value>twitter</value>
+  </data>
+  <data name="AboutPageAppBarWebsiteText" xml:space="preserve">
+    <value>www.whatsshaking.co.nz</value>
+  </data>
+  <data name="AppBarAboutMenuItemText" xml:space="preserve">
+    <value>about</value>
+  </data>
+  <data name="AppBarListViewButtonText" xml:space="preserve">
+    <value>list view</value>
+  </data>
+  <data name="AppBarMapViewButtonText" xml:space="preserve">
+    <value>map view</value>
+  </data>
+  <data name="AppBarRefreshButtonText" xml:space="preserve">
+    <value>refresh</value>
+  </data>
+  <data name="AppBarSettingsMenuItemText" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="AppBarZoomInButtonText" xml:space="preserve">
+    <value>zoom in</value>
+  </data>
+  <data name="AppBarZoomOutButtonText" xml:space="preserve">
+    <value>zoom out</value>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>WHAT'S SHAKING NZ?</value>
+  </data>
+  <data name="BasePageRestrictiveSettingsToastMessage" xml:space="preserve">
+    <value>There are no quakes available that fit the criteria for your settings. Try lowering the minimum display values.</value>
+  </data>
+  <data name="BasePageRestrictiveSettingsToastTitle" xml:space="preserve">
+    <value>Restrictive Settings</value>
+  </data>
+  <data name="ConverterLongDepthFormat" xml:space="preserve">
+    <value>Depth: {0} kilometers</value>
+  </data>
+  <data name="ConverterShortDepthFormat" xml:space="preserve">
+    <value>{0} km</value>
+  </data>
+  <data name="EarthquakeLocationFormat" xml:space="preserve">
+    <value>{0:N0} km {1} of {2}</value>
+    <comment>X km DIRECTION of LOCATION, eg 10 km north-east of Auckland</comment>
+  </data>
+  <data name="EarthquakeStatusAutomatic" xml:space="preserve">
+    <value>An automatic earthquake location that has not been reviewed by a duty officer or analyst.</value>
+  </data>
+  <data name="EarthquakeStatusDeleted" xml:space="preserve">
+    <value>Oops! This was not a real earthquake and has been deleted.</value>
+  </data>
+  <data name="EarthquakeStatusDuplicate" xml:space="preserve">
+    <value>This earthquake location is a duplicate of another one.</value>
+  </data>
+  <data name="EarthquakeStatusReviewed" xml:space="preserve">
+    <value>This earthquake has been reviewed and confirmed by a duty officer or analyst.</value>
+  </data>
+  <data name="EarthquakeStatusUnknown" xml:space="preserve">
+    <value>We don't know what this status means! :(</value>
+  </data>
+  <data name="East" xml:space="preserve">
+    <value>east</value>
+  </data>
+  <data name="GeonetAllQuakesEndpointSettingEnabledWarningToastMessage" xml:space="preserve">
+    <value>enabling the "all quakes" option will show many more earthquakes than normal, including a large number not felt by people.</value>
+  </data>
+  <data name="GeonetAllQuakesEndpointSettingEnabledWarningToastTitle" xml:space="preserve">
+    <value>warning</value>
+  </data>
+  <data name="GeonetProblemBadGeonetData" xml:space="preserve">
+    <value>Data received from Geonet was unusable. Please try again.</value>
+  </data>
+  <data name="GeonetProblemDefault" xml:space="preserve">
+    <value>There was an unexpected problem downloading data from Geonet. Please try again.</value>
+  </data>
+  <data name="GeonetProblemNetworkFailure" xml:space="preserve">
+    <value>Problem with your internet connection. Please check you have connection and then try again.</value>
+  </data>
+  <data name="GeonetProblemNoGeonetData" xml:space="preserve">
+    <value>Geonet sent no data. Please try again.</value>
+  </data>
+  <data name="GeonetProblemToastTitle" xml:space="preserve">
+    <value>Problem downloading latest quakes</value>
+  </data>
+  <data name="LittleWatsonMessageBoxCaption" xml:space="preserve">
+    <value>Problem Report</value>
+  </data>
+  <data name="LittleWatsonMessageBoxText" xml:space="preserve">
+    <value>A problem occurred the last time you ran this application. Would you like to send an email to report it?</value>
+  </data>
+  <data name="LiveTileBackContentFormat" xml:space="preserve">
+    <value>latest quake
+{0} mag
+{1} k deep</value>
+  </data>
+  <data name="LiveTileBackContentNoQuakes" xml:space="preserve">
+    <value>No quakes in the last 24 hours!</value>
+  </data>
+  <data name="LiveTileDefaultTitle" xml:space="preserve">
+    <value>Latest NZ Quakes</value>
+  </data>
+  <data name="LiveTileTaskDescription" xml:space="preserve">
+    <value>What's Shaking NZ task for live tile</value>
+  </data>
+  <data name="LiveTileTaskLimitReachedToastMessage" xml:space="preserve">
+    <value>scheduled task limit has been reached. please disable other apps scheduled tasks in phone settings.</value>
+  </data>
+  <data name="LiveTileTaskLimitReachedToastTitle" xml:space="preserve">
+    <value>cannot use live tile</value>
+  </data>
+  <data name="LiveTileTitleFormat" xml:space="preserve">
+    <value>{0} in last 24hrs</value>
+  </data>
+  <data name="LiveTileWideBackContentFormat" xml:space="preserve">
+    <value>latest quake
+{0} mag, {1} km deep 
+{2}</value>
+    <comment>Where {2} is the relative location (ie "32km north east of Auckland")</comment>
+  </data>
+  <data name="North" xml:space="preserve">
+    <value>north</value>
+  </data>
+  <data name="NorthEastFormat" xml:space="preserve">
+    <value>{0}-{1}</value>
+    <comment>For example, "north-east" or "south-west" etc.</comment>
+  </data>
+  <data name="PageTitleAbout" xml:space="preserve">
+    <value>about</value>
+  </data>
+  <data name="PageTitleLatestQuakes" xml:space="preserve">
+    <value>latest quakes</value>
+  </data>
+  <data name="PageTitleSettings" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="QuakeDisplayPageDepthHeading" xml:space="preserve">
+    <value>depth</value>
+  </data>
+  <data name="QuakeDisplayPageMagnitudeHeading" xml:space="preserve">
+    <value>magnitude</value>
+  </data>
+  <data name="QuakeDisplayPageStatusHeading" xml:space="preserve">
+    <value>status</value>
+  </data>
+  <data name="QuakeDisplayPageTimeHeading" xml:space="preserve">
+    <value>time</value>
+  </data>
+  <data name="SettingsPageMaximumQuakesToShowHeading" xml:space="preserve">
+    <value>maximum number of quakes to show</value>
+  </data>
+  <data name="SettingsPageMinimumDisplayMagnitudeHeading" xml:space="preserve">
+    <value>minimum magnitude to display</value>
+  </data>
+  <data name="SettingsPageMinimumHighlightMagnitudeHeading" xml:space="preserve">
+    <value>minimum magnitude to highlight</value>
+  </data>
+  <data name="SettingsPageUse24HourClockHeading" xml:space="preserve">
+    <value>use 24 hour clock</value>
+  </data>
+  <data name="SettingsPageUseGeonetAllQuakesEndpointHeading" xml:space="preserve">
+    <value>show all earthquakes (not just those felt)</value>
+  </data>
+  <data name="SettingsPageUseLiveTileHeading" xml:space="preserve">
+    <value>live tile</value>
+  </data>
+  <data name="South" xml:space="preserve">
+    <value>south</value>
+  </data>
+  <data name="West" xml:space="preserve">
+    <value>west</value>
+  </data>
+</root>

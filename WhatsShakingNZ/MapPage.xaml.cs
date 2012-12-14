@@ -1,129 +1,130 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Controls.Maps;
 using System.ComponentModel;
 using System.Device.Location;
-using Coding4Fun.Phone.Controls;
-using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Media;
 using Microsoft.Phone.Shell;
 using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Localization;
+using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Maps.Controls;
 
 namespace WhatsShakingNZ
 {
-    public partial class MapPage : PhoneApplicationPage
+    public partial class MapPage : WhatsShakingBasePage
     {
-        private enum ButtonNames { ZoomOutButton = 0, RefreshButton, ListButton, ZoomInButton };
-        private AppSettings appSettings;
-        public MapPage()
+        private enum ButtonNames { ZoomOutButton = 0, RefreshButton, ZoomInButton };
+        
+        public MapPage() : base()
         {
-            appSettings = new AppSettings();
             InitializeComponent();
+            InitializeApplicationBar();
+        }
+
+        private void InitializeApplicationBar()
+        {
+            /***
+             * Make sure these buttons are added in the same order as the button names in the 
+             * enumeration above. Otherwise we don't know which button is where - see GetQuakes().
+             **/
+            List<ApplicationBarIconButton> buttons = new List<ApplicationBarIconButton>();
+
+            ApplicationBarIconButton zoomOutButton = new ApplicationBarIconButton();
+            zoomOutButton.Text = AppResources.AppBarZoomOutButtonText;
+            zoomOutButton.IconUri = new Uri("/Icons/appbar.minus.rest.png", UriKind.Relative);
+            zoomOutButton.Click += ZoomOutButton_Click;
+
+            ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
+            refreshButton.Text = AppResources.AppBarRefreshButtonText;
+            refreshButton.IconUri = new Uri("/Icons/appbar.refresh.rest.png", UriKind.Relative);
+            refreshButton.Click += RefreshRecentButton_Click;
+
+            //ApplicationBarIconButton listViewButton = new ApplicationBarIconButton();
+            //listViewButton.Text = AppResources.AppBarListViewButtonText;
+            //listViewButton.IconUri = new Uri("/Icons/appbar.list.png", UriKind.Relative);
+            //listViewButton.Click += ListPageButton_Click;
+
+            ApplicationBarIconButton zoomInButton = new ApplicationBarIconButton();
+            zoomInButton.Text = AppResources.AppBarZoomInButtonText;
+            zoomInButton.IconUri = new Uri("/Icons/appbar.add.rest.png", UriKind.Relative);
+            zoomInButton.Click += ZoomInButton_Click;
+
+            buttons.Add(zoomOutButton);
+            buttons.Add(refreshButton);
+            //buttons.Add(listViewButton);
+            buttons.Add(zoomInButton);
+
+            base.InitializeApplicationBar(buttons);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            UpdateMap();
-            (Application.Current as App).PropertyChanged += MapUpdater;
-            GeonetAccessor.GetQuakesCompletedEvent += QuakeListener;
-            if ((Application.Current as App).SettingsChanged)
-            {
-                (Application.Current as App).SettingsChanged = false;
-                // null check added after marketplace submission. Will only crash if someone edits settings before Geonet returns. Eek.
-                if((Application.Current as App).AllLatestQuakes != null)
-                    (Application.Current as App).Quakes = ShakingHelper.GetFilteredQuakes((Application.Current as App).AllLatestQuakes, appSettings);
-            }
             base.OnNavigatedTo(e);
+            RefreshViews();
         }
 
-        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        private void UpdateMap()
         {
-            (Application.Current as App).PropertyChanged -= MapUpdater;
-            GeonetAccessor.GetQuakesCompletedEvent -= QuakeListener;
-            base.OnNavigatedFrom(e);
+            QuakeMap.Layers.Clear();
+            // Select only quakes above the settings magnitude
+            // The OrderBy means that higher magnitude quakes will be pinned on top OrderBy(s => s.Magnitude)
+            double minWarningMagnitude = AppSettingsForPage.MinimumWarningMagnitudeSetting;
+            if (QuakeContainer.Quakes != null)
+            {
+                MapLayer layer = new MapLayer();
+                // Use "reverse" here so newer quakes are on top.
+                foreach (var q in QuakeContainer.Quakes.Reverse())
+                {
+                    Pushpin pin = new Pushpin()
+                    {
+                        GeoCoordinate = q.Location,
+                        Content = q.FormattedMagnitude,
+                        DataContext = q,
+                    };
+                    pin.Tap += QuakeItem_Tap;
+                    if (q.Magnitude >= minWarningMagnitude)
+                        pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
+                    MapOverlay overlay = new MapOverlay();
+                    overlay.Content = pin;
+                    overlay.GeoCoordinate = q.Location;
+                    overlay.PositionOrigin = new Point(0, 1);
+
+                    layer.Add(overlay);
+                    
+                }
+                QuakeMap.Layers.Add(layer);
+            }
         }
 
-        public void QuakeListener(object sender, QuakeEventArgs e)
+        protected override void StartGetQuakes()
+        {
+            /**
+             * Can't put this in the base class because the refresh button has no identifier - so we can't
+             * just find it in the collection. Ugh.
+             * */
+           (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
+            customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
+            customIndeterminateProgressBar.IsIndeterminate = true;
+        }
+
+        protected override void GetQuakesFinished()
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
                 (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = true;
                 customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Collapsed;
                 customIndeterminateProgressBar.IsIndeterminate = false;
-                if (e != null)
-                {
-                    (Application.Current as App).Quakes = ShakingHelper.GetFilteredQuakes(e.Quakes, appSettings);
-                    (Application.Current as App).AllLatestQuakes = e.Quakes;
-                    UpdateMap();
-                }
-                else
-                {
-                    ToastPrompt toast = new ToastPrompt()
-                    {
-                        TextOrientation = System.Windows.Controls.Orientation.Vertical,
-                        Title = "problem retrieving quakes",
-                        Message = "please check your data connection is working"
-                    };
-                    toast.Show();
-                }
+                UpdateMap();
             });
         }
 
-        public void MapUpdater(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Quakes")
-            {
-                UpdateMap();
-            }
-        }
-
-        private void UpdateMap()
-        {
-            QuakeMap.Children.Clear();
-            // Select only quakes above the settings magnitude
-            // The OrderBy means that higher magnitude quakes will be pinned on top OrderBy(s => s.Magnitude)
-            double minDisplayMagnitude = appSettings.MinimumDisplayMagnitudeSetting;
-            double minWarningMagnitude = appSettings.MinimumWarningMagnitudeSetting;
-            if ((Application.Current as App).Quakes != null)
-            {
-                foreach (var q in (Application.Current as App).Quakes.Reverse())
-                {
-                    Pushpin pin = new Pushpin()
-                    {
-                        Location = new GeoCoordinate(q.Location.Latitude, q.Location.Longitude),
-                        Content = q.FormattedMagnitude,
-                        DataContext = q,
-                    };
-                    pin.Tap += QuakePin_Tap;
-                    if (q.Magnitude >= minWarningMagnitude)
-                        pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-                    QuakeMap.Children.Add(pin);
-                }
-            }
-        }
-
-        private void GetQuakes()
-        {
-            GeonetAccessor.GetQuakes();
-            (ApplicationBar.Buttons[(int)ButtonNames.RefreshButton] as ApplicationBarIconButton).IsEnabled = false;
-            customIndeterminateProgressBar.Visibility = System.Windows.Visibility.Visible;
-            customIndeterminateProgressBar.IsIndeterminate = true;
-        }
-
-        private void QuakePin_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        protected override void QuakeItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Pushpin pin = sender as Pushpin;
-            App.SelectedQuake = pin.DataContext as Earthquake;
-            NavigationService.Navigate(new Uri("/QuakeDisplayPage.xaml", UriKind.Relative));
+            // Remember the children have been added in the reverse order to the order they appear in the original list.
+            NavigateToQuakePage(pin.DataContext as Earthquake);
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)
@@ -131,11 +132,6 @@ namespace WhatsShakingNZ
             double zoom;
             zoom = QuakeMap.ZoomLevel;
             QuakeMap.ZoomLevel = ++zoom;
-        }
-
-        private void RefreshRecentButton_Click(object sender, EventArgs e)
-        {
-            GetQuakes();
         }
 
         private void ListPageButton_Click(object sender, EventArgs e)
@@ -153,14 +149,10 @@ namespace WhatsShakingNZ
             QuakeMap.ZoomLevel = --zoom;
         }
 
-        private void SettingsPageMenuItem_Click(object sender, EventArgs e)
+        private void QuakeMap_Loaded(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
-        }
-
-        private void AboutPageMenuItem_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.ApplicationId = ShakingHelper.MapsApplicationId;
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.AuthenticationToken = ShakingHelper.MapsAuthenticationToken;
         }
     }
 }

@@ -1,31 +1,66 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+using System.Device.Location;
+using HttpWebAdapters;
+using HttpWebAdapters.Adapters;
+using Newtonsoft.Json;
+using WhatsShakingNZ.Settings;
 
 namespace WhatsShakingNZ.GeonetHelper
 {
-    public static class GeonetAccessor
+    public enum GeonetSuccessStatus { Success = 0, NetworkFailure, BadGeonetData, NoGeonetData }
+
+    public class GeonetEndpoints
     {
-        public static QuakeEventHandler GetQuakesCompletedEvent;
-        public static void GetQuakes()
+        public const string AllQuakes = "http://geonet.org.nz/quakes/services/all.json";
+        public const string FeltQuakes = "http://geonet.org.nz/quakes/services/felt.json";
+    }
+
+    public class GeonetAccessor
+    {
+        public QuakeEventHandler GetQuakesCompletedEvent;
+
+        private IHttpWebRequestFactory webRequestFactory;
+
+        private AppSettings settings;
+
+        public GeonetAccessor(IHttpWebRequestFactory webRequestFactory)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://beta.geonet.org.nz/quakes/services/felt.json");
+            this.webRequestFactory = webRequestFactory;
+            this.settings = new AppSettings();
+        }
+
+        public void GetQuakes()
+        {
+            string endpoint;
+            if (settings.UseGeonetAllQuakesEndpointSetting)
+                endpoint = GeonetEndpoints.AllQuakes;
+            else
+                endpoint = GeonetEndpoints.FeltQuakes;
+            GetQuakes(endpoint);
+        }
+
+        private void GetQuakes(string uriString)
+        {
+            var request = webRequestFactory.Create(new Uri(uriString));
             request.AllowReadStreamBuffering = true;
             var token = request.BeginGetResponse(ProcessResponse, request);
         }
 
-        static void ProcessResponse(IAsyncResult result)
+        void ProcessResponse(IAsyncResult result)
         {
-            HttpWebRequest request = result.AsyncState as HttpWebRequest;
+            IHttpWebRequest request = result.AsyncState as IHttpWebRequest;
             string responseJson = "";
             if (request != null)
             {
                 try
                 {
-                    WebResponse response = request.EndGetResponse(result);
+                    var response = request.EndGetResponse(result);
                     using (var stream = response.GetResponseStream())
                     {
                         using (StreamReader reader = new StreamReader(stream))
@@ -34,56 +69,61 @@ namespace WhatsShakingNZ.GeonetHelper
                         }
                     }
                 }
-                catch (WebException e)
+                catch (WebException)
                 {
-                    if(null != GetQuakesCompletedEvent)
-                        GetQuakesCompletedEvent(null, null);
+                    Completed(null, GeonetSuccessStatus.NetworkFailure);
                     return;
                 }
             }
-            List<Earthquake> quakes = new List<Earthquake>();
+            IEnumerable<Earthquake> quakes;
             if (!string.IsNullOrEmpty(responseJson))
             {
-                
+
                 try
                 {
-                    JObject o = JObject.Parse(responseJson);
-                    
-                    foreach (var q in o["features"].Children())
-                    {
-                        Earthquake quake = new Earthquake
-                        {
-                            Location = new Location()
-                            {
-                                Longitude = q["geometry"]["coordinates"].Values<double>().ElementAt(0),
-                                Latitude = q["geometry"]["coordinates"].Values<double>().ElementAt(1)
-                            },
-                            Depth = (double)q["properties"]["depth"],
-                            Magnitude = (double)q["properties"]["magnitude"],
-                            Reference = (string)q["properties"]["publicid"],
-                            // origintime=2012-08-13 05:25:24.727000  (that's in UTC)
-                            Date = DateTime.Parse((string)q["properties"]["origintime"] + "Z"),
-                            Agency = (string)q["properties"]["agency"]
-                        };
-                        quakes.Add(quake);
-                    }
-                    quakes = new List<Earthquake>(quakes.OrderByDescending(q => q.Date));
+                    GeonetJsonParser jsonParser = new GeonetJsonParser();
+                    quakes = jsonParser.ParseJsonToQuakes(responseJson);
+                    Completed(quakes, GeonetSuccessStatus.Success);
                 }
-                catch {}
+                catch (JsonException e)
+                {
+                    Completed(null, GeonetSuccessStatus.BadGeonetData);
+                }
             }
-            if(null != GetQuakesCompletedEvent)
-                GetQuakesCompletedEvent(null, new QuakeEventArgs(quakes));
+            else
+            {
+                Completed(null, GeonetSuccessStatus.NoGeonetData);
+            }
+        }
+
+        private void Completed(IEnumerable<Earthquake> quakes, GeonetSuccessStatus success)
+        {
+            if (null != GetQuakesCompletedEvent)
+                GetQuakesCompletedEvent(this, new QuakeEventArgs(quakes, success));
         }
     }
+
     public delegate void QuakeEventHandler(object sender, QuakeEventArgs e);
     public class QuakeEventArgs : EventArgs
     {
-        private List<Earthquake> _quakes;
-        public QuakeEventArgs(List<Earthquake> quakes)
+        private ObservableCollection<Earthquake> _quakes;
+        private GeonetSuccessStatus _status;
+        public QuakeEventArgs(IEnumerable<Earthquake> quakes, GeonetSuccessStatus status)
         {
-            _quakes = quakes;
+            if (quakes != null)
+                _quakes = new ObservableCollection<Earthquake>(quakes);
+            else
+                _quakes = new ObservableCollection<Earthquake>();
+            _status = status;
         }
-        public List<Earthquake> Quakes
+        public GeonetSuccessStatus Status
+        {
+            get
+            {
+                return _status;
+            }
+        }
+        public ObservableCollection<Earthquake> Quakes
         {
             get
             {

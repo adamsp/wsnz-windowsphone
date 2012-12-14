@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Windows;
 using Microsoft.Phone.Tasks;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -52,7 +53,7 @@ namespace WhatsShakingNZ
                 }
                 if (contents != null)
                 {
-                    if (MessageBox.Show("A problem occurred the last time you ran this application. Would you like to send an email to report it?", "Problem Report", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    if (MessageBox.Show(AppResources.LittleWatsonMessageBoxText, AppResources.LittleWatsonMessageBoxCaption, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         EmailComposeTask email = new EmailComposeTask();
                         email.To = "wp7-support@speakman.net.nz";

@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
+using WhatsShakingNZ.Localization;
+using Microsoft.Phone.Shell;
 
 namespace WhatsShakingNZ
 {
@@ -24,12 +17,48 @@ namespace WhatsShakingNZ
         public AboutPage()
         {
             InitializeComponent();
+            InitializeApplicationBar();
             ImageBrush backgroundImage = new ImageBrush();
             backgroundImage.ImageSource = ShakingHelper.GetBackgroundImage();
             backgroundImage.Stretch = Stretch.None;
             backgroundImage.AlignmentY = AlignmentY.Top;
             LayoutRoot.Background = backgroundImage;
-            PopulateAboutPage();
+        }
+
+        private void InitializeApplicationBar()
+        {
+            /**
+             * Because the app bar isn't a Silverlight control (wtf) we can't use binding in it,
+             * so if we want localisation we have to create all these in code. Sigh.
+             **/
+            ApplicationBarIconButton twitterButton = new ApplicationBarIconButton();
+            twitterButton.Text = AppResources.AboutPageAppBarTwitterText;
+            twitterButton.IconUri = new Uri("/Icons/appbar.twitter.bird.png", UriKind.Relative);
+            twitterButton.Click += TwitterButton_Click;
+            ApplicationBar.Buttons.Add(twitterButton);
+
+            ApplicationBarIconButton emailButton = new ApplicationBarIconButton();
+            emailButton.Text = AppResources.AboutPageAppBarEmailText;
+            emailButton.IconUri = new Uri("/Icons/appbar.feature.email.rest.png", UriKind.Relative);
+            emailButton.Click += EmailButton_Click;
+            ApplicationBar.Buttons.Add(emailButton);
+
+            ApplicationBarIconButton otherAppsButton = new ApplicationBarIconButton();
+            otherAppsButton.Text = AppResources.AboutPageAppBarOtherAppsText;
+            otherAppsButton.IconUri = new Uri("/Icons/appbar.marketplace.png", UriKind.Relative);
+            otherAppsButton.Click += OtherApps_Click;
+            ApplicationBar.Buttons.Add(otherAppsButton);
+
+            ApplicationBarIconButton reviewAppButton = new ApplicationBarIconButton();
+            reviewAppButton.Text = AppResources.AboutPageAppBarReviewAppText;
+            reviewAppButton.IconUri = new Uri("/Icons/appbar.favs.rest.png", UriKind.Relative);
+            reviewAppButton.Click += ReviewApp_Click;
+            ApplicationBar.Buttons.Add(reviewAppButton);
+
+            ApplicationBarMenuItem websiteMenuItem = new ApplicationBarMenuItem();
+            websiteMenuItem.Text = AppResources.AboutPageAppBarWebsiteText;
+            websiteMenuItem.Click += WebsiteMenuItem_Click;
+            ApplicationBar.MenuItems.Add(websiteMenuItem);
         }
 
         private void ReviewApp_Click(object sender, EventArgs e)
@@ -41,27 +70,6 @@ namespace WhatsShakingNZ
         {
             searchTask.SearchTerms = "Adam Speakman";
             searchTask.Show();
-        }
-
-        private void PopulateAboutPage()
-        {
-            AboutAppTextBlock.Text = "What's Shaking NZ? uses the Geonet.org.nz data feed "
-            + "to provide you with up to date information about the latest earthquakes around New Zealand.\n"
-            + "Please tweet or email us with any problems you find or suggestions for features you'd like "
-            + "to see in the next version.\n";
-            Update12TextBlock.Text = "Geonet have recently changed the way they provide their data feed, and "
-            + "we can now only retrieve the latest 30 quakes. Previously we could retrieve the latest N days "
-            + "of quakes - this was limited to a maximum of 3 days within the app. However, quakes are now "
-            + "reported on significantly faster.\n"
-            + "Now you can specify the maximum number of quakes you would like displayed - from 10 to 30. In "
-            + "some cases you may get less than your specified maximum, if your \"minimum magnitude to display\" "
-            + "value is set high enough.\n"
-            + "Modified the layout of this screen.\n"
-            + "Fixed a bug where the application would occasionally crash on the Map view page.\n";
-            Update11TextBlock.Text = "Fixed an issue where sometimes the application would crash when the "
-            + "settings page was accessed too quickly.\n"
-            + "Modified the magnitude and depth values to display with the correct number of decimal places, "
-            + "as specified on the Geonet website.";
         }
 
         private void TwitterButton_Click(object sender, EventArgs e)
@@ -79,6 +87,13 @@ namespace WhatsShakingNZ
             emailComposeTask.To = "wp7-support@speakman.net.nz";
 
             emailComposeTask.Show();
+        }
+
+        private void WebsiteMenuItem_Click(object sender, EventArgs e)
+        {
+            WebBrowserTask browserTask = new WebBrowserTask();
+            browserTask.Uri = new Uri("http://www.whatsshaking.co.nz", UriKind.Absolute);
+            browserTask.Show();
         }
 
         private void UpgradeApp_Click(object sender, EventArgs e)

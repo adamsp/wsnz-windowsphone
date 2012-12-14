@@ -1,38 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
 using System.Device.Location;
-using Microsoft.Phone.Controls.Maps;
+using System.Windows;
+using System.Windows.Media;
+using Microsoft.Phone.Controls;
+using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Settings;
+using Coding4Fun.Phone.Controls;
+using WhatsShakingNZ.Localization;
+using Microsoft.Phone.Maps.Toolkit;
+using Microsoft.Phone.Maps.Controls;
 
 namespace WhatsShakingNZ
 {
     public partial class QuakeDisplayPage : PhoneApplicationPage
     {
         private AppSettings appSettings;
+        private Earthquake quake;
         public QuakeDisplayPage()
         {
             appSettings = new AppSettings();
             InitializeComponent();
-            ContentPanel.DataContext = App.SelectedQuake;
-            GeoCoordinate location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude);
-            QuakeMap.Center = location;
-            Pushpin pin = new Pushpin()
-                    {
-                        Location = new GeoCoordinate(App.SelectedQuake.Location.Latitude, App.SelectedQuake.Location.Longitude),
-                        Content = App.SelectedQuake.FormattedMagnitude
-                    };
-            if (App.SelectedQuake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            string quakeQueryString = string.Empty;
+            
+            if (NavigationContext.QueryString.TryGetValue("quake", out quakeQueryString))
+            {
+                quake = Earthquake.DeserializeFromQueryString(quakeQueryString);
+            }
+            else return;
+            
+            ContentPanel.DataContext = quake;
+
+            QuakeMap.Center = quake.Location;
+            Pushpin pin = new Pushpin
+            {
+                GeoCoordinate = quake.Location,
+                Content = quake.FormattedMagnitude
+            };
+            if (quake.Magnitude >= appSettings.MinimumWarningMagnitudeSetting)
                 pin.Background = Application.Current.Resources["PhoneAccentBrush"] as SolidColorBrush;
-            QuakeMap.Children.Add(pin);
+
+            MapOverlay overlay = new MapOverlay();
+            overlay.Content = pin;
+            overlay.GeoCoordinate = quake.Location;
+            overlay.PositionOrigin = new Point(0, 1);
+
+            MapLayer layer = new MapLayer();
+            layer.Add(overlay);
+            QuakeMap.Layers.Add(layer);
+
+            base.OnNavigatedTo(e);
         }
 
         private void ZoomInButton_Click(object sender, EventArgs e)
@@ -47,6 +67,51 @@ namespace WhatsShakingNZ
             double zoom;
             zoom = QuakeMap.ZoomLevel;
             QuakeMap.ZoomLevel = --zoom;
+        }
+
+        private void StatusTextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            /**
+             * These messages come from Geonet. If you go to http://www.geonet.org.nz/quakes/region/newzealand
+             * and go to any quake page, then click the little question mark next to "Status", these
+             * messages popup in a wee window.
+             */
+            if (null == quake) return;
+            string toastMessage;
+            if (quake.Status.Equals("reviewed", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = AppResources.EarthquakeStatusReviewed;
+            }
+            else if (quake.Status.Equals("automatic", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = AppResources.EarthquakeStatusAutomatic;
+            }
+            else if (quake.Status.Equals("deleted", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = AppResources.EarthquakeStatusDeleted;
+            }
+            else if (quake.Status.Equals("duplicate", StringComparison.OrdinalIgnoreCase))
+            {
+                toastMessage = AppResources.EarthquakeStatusDuplicate;
+            }
+            else
+            {
+                toastMessage = AppResources.EarthquakeStatusUnknown;
+            }
+            ToastPrompt toast = new ToastPrompt()
+            {
+                TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                TextWrapping = System.Windows.TextWrapping.Wrap,
+                Title = quake.Status,
+                Message = toastMessage
+            };
+            toast.Show();
+        }
+
+        private void QuakeMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.ApplicationId = ShakingHelper.MapsApplicationId;
+            Microsoft.Phone.Maps.MapsSettings.ApplicationContext.AuthenticationToken = ShakingHelper.MapsAuthenticationToken;
         }
     }
 }
