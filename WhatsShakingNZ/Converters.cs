@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using WhatsShakingNZ.GeonetHelper;
+using WhatsShakingNZ.Settings;
+using WhatsShakingNZ.Localization;
 
 namespace WhatsShakingNZ
 {
@@ -44,7 +38,7 @@ namespace WhatsShakingNZ
             Earthquake quake = value as Earthquake;
             if (quake == null)
                 return null;
-            return String.Format("Depth: {0} kilometers", quake.FormattedDepth); ;
+            return String.Format(AppResources.ConverterLongDepthFormat, quake.FormattedDepth); ;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -63,7 +57,7 @@ namespace WhatsShakingNZ
             Earthquake quake = value as Earthquake;
             if (quake == null)
                 return null;
-            return String.Format("{0} km", quake.FormattedDepth); ;
+            return String.Format(AppResources.ConverterShortDepthFormat, quake.FormattedDepth); ;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -86,6 +80,7 @@ namespace WhatsShakingNZ
             if (settings == null)
                 settings = new AppSettings();
             DateTime localTime = quake.Date.ToLocalTime();
+            // TODO Figure out localisation for these.
             if (settings.TwentyFourHourClockSetting)
                 return localTime.ToString("d") + " " + localTime.ToString("HH:mm:ss");
             else

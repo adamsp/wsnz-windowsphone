@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.IO.IsolatedStorage;
+using Settings;
 
-namespace WhatsShakingNZ
+namespace WhatsShakingNZ.Settings
 {
     public class AppSettings
     {
         // Our isolated storage settings
         IsolatedStorageSettings settings;
+
+        public static SettingsChangedEventHandler SettingsChangedEvent;
+        public delegate void SettingsChangedEventHandler();
 
         // The isolated storage key names of our settings
         const string MinimumDisplayMagnitudeKey = "MinimumDisplayMagnitude";
@@ -23,14 +18,7 @@ namespace WhatsShakingNZ
         const string TwentyFourHourClockKey = "TwentyFourHourClock";
         const string ShowLiveTileKey = "ShowLiveTile";
         const string NumberOfQuakesToShowKey = "QuakesToShow";
-
-        
-        // The default value of our settings
-        const double MinimumDisplayMagnitudeDefaultValue = 2.0;
-        const double MinimumWarningMagnitudeDefaultValue = 4.0;
-        const bool TwentyFourHourClockDefaultValue = false;
-        const bool ShowLiveTileDefaultValue = false;
-        const int NumberOfQuakesToShowDefaultValue = 10;
+        const string UseGeonetAllQuakesEndpointKey = "UseGeonetAllQuakesEndpoint";
 
         /// <summary>
         /// Constructor that gets the application settings.
@@ -111,7 +99,8 @@ namespace WhatsShakingNZ
         public void Save()
         {
             settings.Save();
-            (Application.Current as App).SettingsChanged = true;
+            if (null != SettingsChangedEvent)
+                SettingsChangedEvent();
         }
 
 
@@ -122,7 +111,7 @@ namespace WhatsShakingNZ
         {
             get
             {
-                return GetValueOrDefault<double>(MinimumDisplayMagnitudeKey, MinimumDisplayMagnitudeDefaultValue);
+                return GetValueOrDefault<double>(MinimumDisplayMagnitudeKey, DefaultSettings.MinimumDisplayMagnitudeDefaultValue);
             }
             set
             {
@@ -141,7 +130,7 @@ namespace WhatsShakingNZ
         {
             get
             {
-                return GetValueOrDefault<double>(MinimumWarningMagnitudeKey, MinimumWarningMagnitudeDefaultValue);
+                return GetValueOrDefault<double>(MinimumWarningMagnitudeKey, DefaultSettings.MinimumWarningMagnitudeDefaultValue);
             }
             set
             {
@@ -159,7 +148,7 @@ namespace WhatsShakingNZ
         {
             get
             {
-                return GetValueOrDefault<int>(NumberOfQuakesToShowKey, NumberOfQuakesToShowDefaultValue);
+                return GetValueOrDefault<int>(NumberOfQuakesToShowKey, DefaultSettings.NumberOfQuakesToShowDefaultValue);
             }
             set
             {
@@ -178,7 +167,7 @@ namespace WhatsShakingNZ
         {
             get
             {
-                return GetValueOrDefault<bool>(TwentyFourHourClockKey, TwentyFourHourClockDefaultValue);
+                return GetValueOrDefault<bool>(TwentyFourHourClockKey, DefaultSettings.TwentyFourHourClockDefaultValue);
             }
             set
             {
@@ -191,17 +180,36 @@ namespace WhatsShakingNZ
 
 
         /// <summary>
-        /// Property to get and set a whether to show the Live Tile or not.
+        /// Property to get and set whether to show the Live Tile or not.
         /// </summary>
         public bool ShowLiveTileSetting
         {
             get
             {
-                return GetValueOrDefault<bool>(ShowLiveTileKey, ShowLiveTileDefaultValue);
+                return GetValueOrDefault<bool>(ShowLiveTileKey, DefaultSettings.ShowLiveTileDefaultValue);
             }
             set
             {
                 if (AddOrUpdateValue(ShowLiveTileKey, value))
+                {
+                    Save();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Property to get and set whether to use the all quakes endpoint or not.
+        /// Defaults to false, meaning use the 'felt' endpoint.
+        /// </summary>
+        public bool UseGeonetAllQuakesEndpointSetting
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(UseGeonetAllQuakesEndpointKey, DefaultSettings.UseGeonetAllQuakesEndpointDefaultValue);
+            }
+            set
+            {
+                if (AddOrUpdateValue(UseGeonetAllQuakesEndpointKey, value))
                 {
                     Save();
                 }

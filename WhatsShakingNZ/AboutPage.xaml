@@ -22,33 +22,25 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="WHAT'S SHAKING NZ?" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="about" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path=LocalizedResources.PageTitleAbout, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ScrollViewer>
                 <StackPanel>
-                    <TextBlock Text="the app" Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock TextWrapping="Wrap" Margin="12,0,12,0"
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageAboutAppHeading, Source={StaticResource LocalizedStrings}}"
+                               Style="{StaticResource PhoneTextSmallStyle}" />
+                    <TextBlock Text="{Binding Path=LocalizedResources.AboutPageAboutAppText, Source={StaticResource LocalizedStrings}}"
+                               TextWrapping="Wrap" Margin="12,0,12,0"
                                Name="AboutAppTextBlock"/>
-                    <TextBlock Text="update 1.2" Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock TextWrapping="Wrap" Margin="12,0,12,0"
-                               Name="Update12TextBlock"/>
-                    <TextBlock Text="update 1.1" Style="{StaticResource PhoneTextSmallStyle}" />
-                    <TextBlock TextWrapping="Wrap" Margin="12,0,12,0"
-                               Name="Update11TextBlock"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.twitter.bird.png" Text="twitter" Click="TwitterButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.email.rest.png" Text="email" Click="EmailButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.favs.rest.png" Text="other apps" Click="OtherApps_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.marketplace.png" Text="review" Click="ReviewApp_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

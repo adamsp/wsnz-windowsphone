@@ -4,10 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:unsupported="clr-namespace:Microsoft.Phone.Controls.Unsupported">
+    xmlns:unsupported="clr-namespace:Microsoft.Phone.Controls.Unsupported"
+    xmlns:local="clr-namespace:WhatsShakingNZ.Localization;assembly=WhatsShakingNZ.Localization">
 
     <!--Application Resources-->
     <Application.Resources>
+        <local:LocalizedStrings x:Key="LocalizedStrings" />
         <Style x:Key="CustomIndeterminateProgressBar" TargetType="ProgressBar">
             <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}"/>
             <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>

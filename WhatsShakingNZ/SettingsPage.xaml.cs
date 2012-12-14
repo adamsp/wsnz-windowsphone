@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Scheduler;
 using Coding4Fun.Phone.Controls;
+using Microsoft.Phone.Controls;
+using WhatsShakingNZ.Localization;
+using TileControls;
 
 namespace WhatsShakingNZ
 {
@@ -27,24 +19,42 @@ namespace WhatsShakingNZ
             LayoutRoot.Background = backgroundImage;
         }
 
-        private void ToggleSwitch_Checked(object sender, RoutedEventArgs e)
+        private void LiveTileToggleSwitch_Checked(object sender, RoutedEventArgs e)
         {
             if(!ScheduledTaskHelper.Add())
             {
                 ToastPrompt toast = new ToastPrompt()
                 {
                     TextOrientation = System.Windows.Controls.Orientation.Vertical,
-                    Title = "cannot use live tile",
-                    Message = "scheduled task limit has been reached. please disable other apps scheduled tasks in phone settings."
+                    Title = AppResources.LiveTileTaskLimitReachedToastTitle,
+                    Message = AppResources.LiveTileTaskLimitReachedToastMessage,
+                    TextWrapping = TextWrapping.Wrap
                 };
                 toast.Show();
                 LiveTileToggle.IsChecked = false;
             }
         }
 
-        private void ToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
+        private void LiveTileToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
             ScheduledTaskHelper.Remove();
+            var ftc = new FlipTileController();
+            ftc.ClearFlipTile();
+        }
+
+        private void GeonetEndpointToggle_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as ToggleSwitch).IsChecked ?? false)
+            {
+                ToastPrompt toast = new ToastPrompt()
+                {
+                    TextOrientation = System.Windows.Controls.Orientation.Vertical,
+                    Title = AppResources.GeonetAllQuakesEndpointSettingEnabledWarningToastTitle,
+                    Message = AppResources.GeonetAllQuakesEndpointSettingEnabledWarningToastMessage,
+                    TextWrapping = TextWrapping.Wrap,
+                };
+                toast.Show();
+            }
         }
     }
 }

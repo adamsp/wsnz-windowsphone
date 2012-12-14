@@ -1,24 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{98af7251-0b4c-4d50-9c43-d2190e79ef09}" Title="What's Shaking NZ" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WhatsShakingNZ author" Description="Sample description" Publisher="WhatsShakingNZ">
-    <IconPath IsRelative="true" IsResource="false">Images\icon62_trans.png</IconPath>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
+  <DefaultLanguage xmlns="" code="en-US" />
+  <App xmlns="" ProductID="{34a9898a-dc24-4423-b6be-1919ecc7f2a2}" Title="What's Shaking NZ" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="WhatsShakingNZ author" Description="Sample description" Publisher="WhatsShakingNZ" PublisherID="{b4f40fbb-a9bd-4af2-b7c2-4753cd70d669}">
+    <IconPath IsRelative="true" IsResource="false">Images\icon_300_trans.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
+      <Capability Name="ID_CAP_MAP" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume" />
       <ExtendedTask Name="BackgroundTask">
         <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="ScheduledTaskAgent1" Source="ScheduledTaskAgent1" Type="ScheduledTaskAgent1.ScheduledAgent" />
       </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="WhatsShakingNZToken" TaskName="_default">
-        <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Images\icon173_trans.png</BackgroundImageURI>
+        <TemplateFlip>
+          <SmallImageURI IsResource="false" IsRelative="true">Images\tile_small_background.png</SmallImageURI>
           <Count>0</Count>
+          <BackgroundImageURI IsResource="false" IsRelative="true">Images\tile_medium_background.png</BackgroundImageURI>
           <Title>Latest NZ Quakes</Title>
-        </TemplateType5>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI>
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
+          <LargeBackgroundImageURI IsRelative="true" IsResource="false">Images\tile_wide_background.png</LargeBackgroundImageURI>
+          <LargeBackContent />
+          <LargeBackBackgroundImageURI IsRelative="true" IsResource="false">
+          </LargeBackBackgroundImageURI>
+          <DeviceLockImageURI>
+          </DeviceLockImageURI>
+          <HasLarge>True</HasLarge>
+        </TemplateFlip>
       </PrimaryToken>
     </Tokens>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+    </ScreenResolutions>
   </App>
 </Deployment>
